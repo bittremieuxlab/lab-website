@@ -6,6 +6,7 @@ import { Cite } from '@citation-js/core';
 import { getCollection } from 'astro:content';
 import HomeLayout from '../layouts/HomeLayout.astro';
 import { SITE } from '../config';
+import '../styles/home.scss';
 
 type Author = { given?: string; family?: string };
 
@@ -36,13 +37,18 @@ const recentNews = allNews
 <HomeLayout>
   <!-- Hero -->
   <section class="hero-section d-flex align-items-center">
-    <canvas id="hero-canvas"></canvas>
+    <img
+      src="/assets/geralt-dna-3539309_1920.jpg"
+      alt="Bioinformatics banner image"
+      aria-hidden="true"
+      class="hero-bg-img"
+    />
     <div class="container text-center py-5 position-relative">
-      <p class="text-uppercase fw-semibold small letter-spacing mb-3 opacity-75">
+      <p class="text-uppercase fw-semibold small letter-spacing mb-3 text-white">
         {SITE.university}
       </p>
-      <h1 class="display-4 fw-bold mb-4">{SITE.heroTitle}</h1>
-      <p class="lead mb-5 mx-auto hero-subtitle">{SITE.heroSubtitle}</p>
+      <h1 class="display-4 fw-bold mb-4 text-white">{SITE.heroTitle}</h1>
+      <p class="lead mb-5 mx-auto hero-subtitle text-white">{SITE.heroSubtitle}</p>
       <div class="d-flex gap-3 justify-content-center flex-wrap">
         <a href="/publications" class="btn btn-primary btn-lg px-4">View Publications</a>
         <a href="/people" class="btn btn-outline-primary btn-lg px-4">Meet the Team</a>
@@ -131,120 +137,4 @@ const recentNews = allNews
       </div>
     </div>
   </section>
-
-  <script is:inline>
-    const canvas = document.getElementById('hero-canvas');
-    const ctx = canvas.getContext('2d');
-    const mouse = { x: -9999, y: -9999 };
-
-    function resize() {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    canvas.parentElement.addEventListener('mousemove', (e) => {
-      const r = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - r.left;
-      mouse.y = e.clientY - r.top;
-    });
-    canvas.parentElement.addEventListener('mouseleave', () => {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    });
-
-    const LINK = 130;
-    const MOUSE_R = 220;
-
-    const mobile = window.innerWidth < 768;
-    const N = mobile ? 30 : 70;
-    const MAX_SPD = mobile ? 0.5 : 1;
-    const HARD_CAP = mobile ? 2 : 4;
-    const INIT_VEL = mobile ? 0.3 : 0.5;
-
-    const pts = Array.from({ length: N }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * INIT_VEL,
-      vy: (Math.random() - 0.5) * INIT_VEL,
-      r: Math.random() * 2 + 1.5,
-    }));
-
-    function frame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (const p of pts) {
-        const dx = p.x - mouse.x,
-          dy = p.y - mouse.y;
-        const d = Math.hypot(dx, dy);
-        if (d < MOUSE_R) {
-          const f = (1 - d / MOUSE_R) * 0.12;
-          p.vx += (dx / d) * f;
-          p.vy += (dy / d) * f;
-        }
-        const spd = Math.hypot(p.vx, p.vy);
-        if (spd > MAX_SPD) {
-          p.vx *= 0.97;
-          p.vy *= 0.97;
-        }
-        if (spd > HARD_CAP) {
-          p.vx *= HARD_CAP / spd;
-          p.vy *= HARD_CAP / spd;
-        }
-        p.x = (p.x + p.vx + canvas.width) % canvas.width;
-        p.y = (p.y + p.vy + canvas.height) % canvas.height;
-      }
-
-      for (let i = 0; i < N; i++) {
-        for (let j = i + 1; j < N; j++) {
-          const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
-          if (d < LINK) {
-            ctx.beginPath();
-            ctx.moveTo(pts[i].x, pts[i].y);
-            ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.strokeStyle = `rgba(30,100,220,${0.5 * (1 - d / LINK)})`;
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-          }
-        }
-        ctx.beginPath();
-        ctx.arc(pts[i].x, pts[i].y, pts[i].r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(30,100,220,0.85)';
-        ctx.fill();
-      }
-      requestAnimationFrame(frame);
-    }
-    frame();
-  </script>
 </HomeLayout>
-
-<style>
-  .hero-section {
-    position: relative;
-    min-height: 70vh;
-    overflow: hidden;
-  }
-  #hero-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .hero-subtitle {
-    max-width: 600px;
-    opacity: 0.85;
-  }
-  .letter-spacing {
-    letter-spacing: 0.12em;
-  }
-  .pub-card {
-    transition:
-      transform 0.15s ease,
-      box-shadow 0.15s ease;
-  }
-  .pub-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12) !important;
-  }
-</style>

@@ -69,3 +69,13 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+# References
+
+geralt-dna-9483532_1920.jpg
+
+- https://pixabay.com/illustrations/dna-artificial-intelligence-research-9483532/
+
+geralt-dna-3539309_1920.jpg
+
+- https://pixabay.com/illustrations/dna-analysis-research-3539309/
