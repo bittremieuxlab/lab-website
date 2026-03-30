@@ -171,14 +171,14 @@ export default function PeopleGrid({ people, baseUrl }: Props) {
                   {person.tags.length > 0 && (
                     <div class="d-flex flex-wrap gap-1 justify-content-center mt-2">
                       {person.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"
-                        >
+                        <span key={tag} class="badge bg-secondary">
                           {tag}
                         </span>
                       ))}
                     </div>
+                  )}
+                  {person.status === 'collaborator' && (
+                    <span class="badge bg-info m-2">External Collaborator</span>
                   )}
                 </div>
               </a>

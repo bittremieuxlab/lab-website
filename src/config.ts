@@ -4,7 +4,7 @@ export const SITE = {
   //   description: 'A lightweight, modern static website template for academic labs and scholars.',
   //   title: 'Scholar-Lite',
   //   ogImage: 'astropaper-og.jpg',
-  //   lightAndDarkMode: true,
+  lightAndDarkMode: true,
   //   postPerPage: 3,
   //   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 
@@ -21,3 +21,19 @@ export const SITE = {
     'We develop algorithms and software tools to advance the analysis of mass spectrometry data for proteomics and metabolomics.',
   featuredPublications: ['cvpr2025transformer', 'gpt4', 'neurips2024diffusion'],
 };
+
+export const navLinks = [
+  { href: '/research', label: 'Research' },
+  { href: '/people', label: 'People' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/softwareTools', label: 'Software & Tools' },
+  {
+    label: 'Career',
+    children: [
+      { href: '/positions', label: 'Positions' },
+      { href: '/thesis', label: 'Thesis' },
+    ],
+  },
+  { href: '/news', label: 'News' },
+  { href: '/contact', label: 'Contact' },
+];

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "bachelor",
+        "master",
+        "bachelor/master",
+        "phd"
+      ]
+    },
+    "topics": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "default": "available",
+      "type": "string",
+      "enum": [
+        "available",
+        "ongoing",
+        "completed"
+      ]
+    },
+    "student": {
+      "type": "string"
+    },
+    "year": {
+      "type": "number"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "topics",
+    "status"
+  ],
+  "additionalProperties": false
+}

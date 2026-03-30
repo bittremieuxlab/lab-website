@@ -13,8 +13,12 @@
       "type": "string",
       "enum": [
         "active",
-        "alumni"
+        "alumni",
+        "collaborator"
       ]
+    },
+    "affiliation": {
+      "type": "string"
     },
     "pronouns": {
       "type": "string"
@@ -92,6 +96,12 @@
       }
     },
     "education": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "collaborations": {
       "type": "array",
       "items": {
         "type": "string"

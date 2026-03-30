@@ -23,6 +23,7 @@ const {
   name,
   role,
   status,
+  affiliation,
   pronouns,
   bio_short,
   email,
@@ -33,6 +34,7 @@ const {
   education,
   awards,
   selected_publications,
+  collaborations,
 } = person.data;
 
 const personPublications = (() => {
@@ -186,15 +188,30 @@ const personPublications = (() => {
             </span>
           )
         }
+        {
+          status === 'collaborator' && (
+            <span class="badge bg-info" data-pagefind-filter="status">
+              External Collaborator
+            </span>
+          )
+        }
       </div>
 
+      {
+        affiliation && (
+          <p class="text-muted mb-2">
+            <i class="bi bi-building me-1" />
+            {affiliation}
+          </p>
+        )
+      }
       {bio_short && <p class="lead mb-3">{bio_short}</p>}
 
       {
         tags.length > 0 && (
           <div class="d-flex flex-wrap gap-1 mb-3">
             {tags.map((tag) => (
-              <span class="badge bg-primary" data-pagefind-filter="tag">
+              <span class="badge bg-secondary" data-pagefind-filter="tag">
                 {tag}
               </span>
             ))}
@@ -221,6 +238,19 @@ const personPublications = (() => {
             <h2 class="h6 text-uppercase text-muted mb-1">Awards</h2>
             <ul class="list-unstyled mb-0">
               {awards.map((a) => (
+                <li class="small">{a}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        collaborations && collaborations.length > 0 && (
+          <div class="mb-3">
+            <h2 class="h6 text-uppercase text-muted mb-1">Collaborating with:</h2>
+            <ul class="mb-0">
+              {collaborations.map((a) => (
                 <li class="small">{a}</li>
               ))}
             </ul>

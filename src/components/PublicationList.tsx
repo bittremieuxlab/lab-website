@@ -44,6 +44,20 @@ export default function PublicationList({ publications, showFilters }: Props) {
       ? publications.filter((p) => selectedYears.includes(p.year))
       : publications;
 
+  // Group filtered publications by year for section headers
+  const pubsByYear = filtered.reduce(
+    (acc, pub) => {
+      const yr = pub.year || 0;
+      if (!acc[yr]) acc[yr] = [];
+      acc[yr].push(pub);
+      return acc;
+    },
+    {} as Record<number, Publication[]>
+  );
+  const displayYears = Object.keys(pubsByYear)
+    .map(Number)
+    .sort((a, b) => b - a);
+
   return (
     <div>
       {showFilters && years.length > 0 && (
@@ -70,41 +84,50 @@ export default function PublicationList({ publications, showFilters }: Props) {
         </div>
       )}
 
-      {filtered.length === 0 ? (
+      {displayYears.length === 0 ? (
         <p class="text-muted">No publications match the selected years.</p>
       ) : (
-        <ul class="list-unstyled">
-          {filtered.map((pub) => (
-            <li key={pub.id} class="mb-4 pb-4 border-bottom">
-              <div class="mb-1">
-                {pub.note && <span class="badge bg-secondary me-1">{pub.note}</span>}
-              </div>
-              <h5 class="mb-1">
-                {pub.url ? (
-                  <a href={pub.url} target="_blank" rel="noopener">
-                    {pub.title}
-                  </a>
-                ) : (
-                  pub.title
-                )}
-              </h5>
-              <div class="text-muted small mb-1">{pub.authors}</div>
-              <div class="text-muted small mb-2">
-                <em>{pub.venue}</em>
-                {pub.venue && pub.year ? ', ' : ''}
-                {pub.year || ''}
-              </div>
-              {pub.abstract && (
-                <details class="mb-2">
-                  <summary class="small text-muted" style="cursor:pointer">
-                    Abstract
-                  </summary>
-                  <p class="small mt-1">{pub.abstract}</p>
-                </details>
-              )}
-            </li>
-          ))}
-        </ul>
+        displayYears.map((year) => (
+          <section key={year}>
+            <h3
+              class="h6 fw-bold text-muted text-uppercase border-bottom pb-2 mb-3 mt-4"
+              id={`year-${year}`}
+            >
+              {year || 'Unknown'}
+            </h3>
+            <ul class="publication-list list-unstyled mb-0">
+              {pubsByYear[year].map((pub) => (
+                <li key={pub.id} id={pub.id} class="mt-2 pb-2">
+                  <div class="lh-sm mb-1">
+                    {pub.url ? (
+                      <a href={pub.url} target="_blank" rel="noopener" class="fw-semibold">
+                        {pub.title}
+                      </a>
+                    ) : (
+                      <span class="fw-semibold">{pub.title}</span>
+                    )}
+                    {pub.note && <span class="badge bg-secondary mx-2">{pub.note}</span>}
+                  </div>
+                  <div class="text-muted small lh-sm">
+                    {pub.authors}
+                    {pub.authors && (pub.venue || pub.year) ? ' · ' : ''}
+                    <em>{pub.venue}</em>
+                    {pub.venue && pub.year ? ', ' : ''}
+                    {pub.year || ''}
+                  </div>
+                  {/* {pub.abstract && (
+                    <details>
+                      <summary class="small text-muted" style="cursor:pointer">
+                        Abstract
+                      </summary>
+                      <p class="small mt-1 mb-0">{pub.abstract}</p>
+                    </details>
+                  )} */}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
       )}
     </div>
   );

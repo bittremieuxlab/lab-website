@@ -69,4 +69,19 @@ const pageTitle = 'Publications';
 
 <BaseLayout pageTitle={pageTitle}>
   <PublicationList publications={publications} showFilters={true} client:load />
+
+  <!-- Indexed by Pagefind at build time. Off-screen but not aria-hidden so Pagefind picks it up.
+       Each publication gets an <h3 id> so Pagefind creates per-publication sub_results with
+       anchor URLs like /publications#citation-key. -->
+  <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden"
+       data-pagefind-body>
+    {publications.map((pub: any) => (
+      <section>
+        <h3 id={pub.id}>{pub.title}</h3>
+        <p>{pub.authors}</p>
+        <p>{pub.venue}{pub.venue && pub.year ? ', ' : ''}{pub.year || ''}</p>
+        {pub.abstract && <p>{pub.abstract}</p>}
+      </section>
+    ))}
+  </div>
 </BaseLayout>

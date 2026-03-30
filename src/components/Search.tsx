@@ -12,13 +12,19 @@ type Result = {
 type Filters = Record<string, Record<string, number>>;
 type EnabledFilters = Record<string, string[]>;
 
+// Match /publications, /publications/, /publications#..., /publications/#...
+function isPublicationsResult(url: string) {
+  return /^\/publications(\/|#|$)/.test(url);
+}
+
 export default function Search() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Result[]>([]);
   const [filters, setFilters] = useState<Filters>({});
   const [enabled, setEnabled] = useState<EnabledFilters>({});
+  const [pubsOnly, setPubsOnly] = useState(false);
 
-  // read ?q= from URL and load pagefind filters once
+  // Read ?q= from URL and load pagefind filters once
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get('q') ?? '';
     if (q) setQuery(q);
@@ -26,11 +32,16 @@ export default function Search() {
     (async () => {
       const pf = await import(/* @vite-ignore */ pagefindPath);
       await pf.init();
-      setFilters(await pf.filters());
+      const allFilters = await pf.filters();
+      // Hide 'section' from UI — used internally
+      const visibleFilters = Object.fromEntries(
+        Object.entries(allFilters as Filters).filter(([key]) => key !== 'section')
+      );
+      setFilters(visibleFilters);
     })();
   }, []);
 
-  // re-run search when query or active filters change
+  // Re-run search when query, active filters, or mode changes
   useEffect(() => {
     (async () => {
       const pf = await import(/* @vite-ignore */ pagefindPath);
@@ -38,10 +49,30 @@ export default function Search() {
         Object.entries(enabled).filter(([, vals]) => vals.length > 0)
       );
       const res = await pf.search(query || null, { filters: activeFilters });
-      const data: Result[] = await Promise.all(res.results.map((r: any) => r.data()));
-      setResults(data);
+      const rawData: any[] = await Promise.all(res.results.map((r: any) => r.data()));
+
+      // Expand publication page sub_results into individual items
+      const seen = new Set<string>();
+      const expanded: Result[] = [];
+
+      for (const r of rawData) {
+        if (r.sub_results?.length && isPublicationsResult(r.url)) {
+          for (const sub of r.sub_results) {
+            if (!seen.has(sub.url)) {
+              seen.add(sub.url);
+              expanded.push({ url: sub.url, meta: { title: sub.title }, excerpt: sub.excerpt });
+            }
+          }
+        } else if (!seen.has(r.url)) {
+          seen.add(r.url);
+          expanded.push(r);
+        }
+      }
+
+      // Publications-only mode: keep only results from the publications page
+      setResults(pubsOnly ? expanded.filter((r) => isPublicationsResult(r.url)) : expanded);
     })();
-  }, [query, enabled]);
+  }, [query, enabled, pubsOnly]);
 
   function toggleFilter(group: string, value: string) {
     setEnabled((prev) => {
@@ -53,38 +84,61 @@ export default function Search() {
     });
   }
 
+  const hasActiveSearch = query || pubsOnly || Object.values(enabled).some((v) => v.length > 0);
+
   return (
     <div>
+      <div class="btn-group mb-3" role="group" aria-label="Search mode">
+        <button
+          type="button"
+          class={`btn btn-sm ${!pubsOnly ? 'btn-primary' : 'btn-outline-primary'}`}
+          onClick={() => {
+            setPubsOnly(false);
+            setEnabled({});
+          }}
+        >
+          All Content
+        </button>
+        <button
+          type="button"
+          class={`btn btn-sm ${pubsOnly ? 'btn-primary' : 'btn-outline-primary'}`}
+          onClick={() => setPubsOnly(true)}
+        >
+          Publications
+        </button>
+      </div>
+
       <input
         type="search"
         value={query}
         onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
         placeholder="Search…"
-        class="form-control mb-4"
+        class="form-control mb-3"
       />
 
-      {Object.entries(filters).map(([group, valueMap]) => (
-        <fieldset key={group} class="mb-3">
-          <legend class="h6 text-uppercase text-muted small">{group}</legend>
-          <div class="d-flex flex-wrap gap-2">
-            {Object.entries(valueMap).map(([value, count]) => {
-              const active = (enabled[group] ?? []).includes(value);
-              return (
-                <button
-                  key={value}
-                  type="button"
-                  class={`btn btn-sm ${active ? 'btn-primary' : 'btn-outline-secondary'}`}
-                  onClick={() => toggleFilter(group, value)}
-                >
-                  {value} <span class="badge bg-secondary ms-1">{count}</span>
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-      ))}
+      {!pubsOnly &&
+        Object.entries(filters).map(([group, valueMap]) => (
+          <fieldset key={group} class="mb-3 border-0 p-0">
+            <legend class="h6 text-uppercase text-muted small mb-1">{group}</legend>
+            <div class="d-flex flex-wrap gap-1">
+              {Object.entries(valueMap).map(([value, count]) => {
+                const active = (enabled[group] ?? []).includes(value);
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    class={`btn btn-sm ${active ? 'btn-primary' : 'btn-outline-secondary'}`}
+                    onClick={() => toggleFilter(group, value)}
+                  >
+                    {value} <span class="badge bg-secondary ms-1">{count}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+        ))}
 
-      {(query || Object.values(enabled).some((v) => v.length > 0)) && (
+      {hasActiveSearch && (
         <ul class="list-unstyled mt-4">
           {results.length === 0 && <li class="text-muted">No results.</li>}
           {results.map((r) => (

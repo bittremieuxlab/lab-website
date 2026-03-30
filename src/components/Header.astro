@@ -1,34 +1,27 @@
 ---
 import { SITE } from '../config';
+import { navLinks } from '../config';
 
-const topLevel = import.meta.glob('../pages/*.astro');
-const subIndex = import.meta.glob('../pages/*/index.astro');
 const currentPath = Astro.url.pathname;
 
-const navLinks = [
-  ...Object.keys(topLevel).map((path) => {
-    const filename = path.split('/').pop()?.replace('.astro', '') ?? '';
-    return { segment: filename, href: filename === 'index' ? '/' : `/${filename}` };
-  }),
-  ...Object.keys(subIndex).map((path) => {
-    const segment = path.split('/').at(-2) ?? '';
-    return { segment, href: `/${segment}` };
-  }),
-]
-  .filter(({ segment }) => segment !== '[slug]' && segment !== 'index')
-  .map(({ segment, href }) => {
-    const label = segment === 'index' ? 'Home' : segment.charAt(0).toUpperCase() + segment.slice(1);
-    const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
-    return { href, label, isActive };
-  })
-  .sort((a, b) => a.label.localeCompare(b.label));
+const isChildActive = (children: { href: string }[]) =>
+  children.some((child) => currentPath === child.href || currentPath.startsWith(child.href));
 ---
 
-<!-- source: https://getbootstrap.com/docs/5.3/components/navbar/#toggler -->
-<!-- <header class="d-flex justify-content-center py-3"> -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">{SITE.labName}</a>
+<!-- source: https://getbootstrap.com/docs/5.3/components/navbar/#toggler --><!-- <header class="d-flex justify-content-center py-3"> -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand" href="/">{SITE.labName}</a>
+
+    <div class="d-flex align-items-center">
+      <a
+        href="/search"
+        class="btn btn-link text-body d-lg-none me-2"
+        title="Search"
+        aria-label="Search"
+      >
+        <i class="bi bi-search"></i>
+      </a>
       <button
         class="navbar-toggler"
         type="button"
@@ -40,29 +33,104 @@ const navLinks = [
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          {navLinks.map(({ href, label, isActive }) => (
-            <li class="nav-item">
-              <a
-                class={`nav-link${isActive ? ' active' : ''}`}
-                aria-current={isActive ? 'page' : undefined}
-                href={href}
-              >{label}</a>
-            </li>
-          ))}
-        </ul>
-        <form class="d-flex" role="search" action="/search" method="get">
-          <input
-            class="form-control me-2"
-            type="search"
-            name="q"
-            placeholder="Search people & publications…"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-secondary" type="submit">Search</button>
-        </form>
-      </div>
     </div>
-  </nav>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {
+          navLinks.map((link) => {
+            if (link.children) {
+              const isActive = isChildActive(link.children);
+              return (
+                <li class="nav-item dropdown">
+                  <a
+                    class={`nav-link dropdown-toggle${isActive ? ' active' : ''}`}
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {link.label}
+                  </a>
+                  <ul class="dropdown-menu">
+                    {link.children.map((child) => {
+                      const isChildActive =
+                        currentPath === child.href ||
+                        (child.href !== '/' && currentPath.startsWith(child.href));
+                      return (
+                        <li>
+                          <a
+                            class={`dropdown-item${isChildActive ? ' active' : ''}`}
+                            href={child.href}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            } else {
+              const isActive =
+                currentPath === link.href ||
+                (link.href !== '/' && currentPath.startsWith(link.href));
+              return (
+                <li class="nav-item">
+                  <a
+                    class={`nav-link${isActive ? ' active' : ''}`}
+                    aria-current={isActive ? 'page' : undefined}
+                    href={link.href}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            }
+          })
+        }
+      </ul>
+      <!-- <form class="d-flex" role="search" action="/search" method="get">
+        <input
+          class="form-control me-2"
+          type="search"
+          name="q"
+          placeholder="Search people & publications…"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      </form> -->
+      <form
+        class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-none d-lg-block"
+        role="search"
+        action="/search"
+        method="get"
+      >
+        <input
+          type="search"
+          class="form-control"
+          name="q"
+          placeholder="Search..."
+          aria-label="Search"
+        />
+      </form>
+      <button
+        id="cbf-toggle"
+        type="button"
+        class="btn btn-sm btn-outline-secondary ms-2"
+        title="Toggle color-blind friendly mode"
+        aria-label="Toggle color-blind friendly mode"
+        aria-pressed="false"
+      >
+        <i class="bi bi-eye"></i>
+      </button>
+      <button
+        id="theme-toggle"
+        type="button"
+        class="btn btn-sm btn-outline-secondary ms-2"
+        title="Toggle theme"
+        aria-label="Toggle theme"></button>
+    </div>
+  </div>
+</nav>
 <!-- </header> -->

@@ -13,9 +13,32 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      // Apply color-blind mode and theme before first paint to avoid flash of unstyled content
+      if (localStorage.getItem('cbf') === '1') document.documentElement.classList.add('cbf');
+      
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+      document.documentElement.setAttribute('data-bs-theme', theme);
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="d-flex flex-column min-vh-100">
     <Header />
@@ -23,6 +46,39 @@ const { title } = Astro.props;
     <Footer />
     <script>
       import 'bootstrap/dist/js/bootstrap';
+
+      // Color-blind friendly mode toggle
+      const btn = document.getElementById('cbf-toggle');
+      if (btn) {
+        const update = () => {
+          const on = document.documentElement.classList.contains('cbf');
+          btn.setAttribute('aria-pressed', String(on));
+          btn.classList.toggle('active', on);
+        };
+        update();
+        btn.addEventListener('click', () => {
+          document.documentElement.classList.toggle('cbf');
+          localStorage.setItem('cbf', document.documentElement.classList.contains('cbf') ? '1' : '0');
+          update();
+        });
+      }
+
+      // Theme toggle
+      const themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        const updateThemeBtn = () => {
+          const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+          themeBtn.innerHTML = isDark ? '<i class="bi bi-moon-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
+        };
+        updateThemeBtn();
+        themeBtn.addEventListener('click', () => {
+          const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+          const newTheme = isDark ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-bs-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+          updateThemeBtn();
+        });
+      }
     </script>
   </body>
 </html>

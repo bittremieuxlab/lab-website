@@ -15,6 +15,8 @@ education:
 selected_publications:
   - vaswani2017attention
   - he2016deep
+collaborations:
+  - 'University x'
 ---
 
 Custom text starting from here: Max is working on his master's thesis on applying deep learning methods to medical image segmentation.

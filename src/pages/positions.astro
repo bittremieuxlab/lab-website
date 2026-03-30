@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = 'Open Positions';
+
+const allPositions = await getCollection('positions');
+
+const typeOrder = ['phd', 'postdoc', 'internship', 'other'];
+const sectionLabel: Record<string, string> = {
+  phd: 'PhD Positions',
+  postdoc: 'Postdoctoral Positions',
+  internship: 'Internships',
+  other: 'Other Positions',
+};
+
+const byType = typeOrder
+  .map((type) => ({
+    type,
+    items: allPositions.filter((p) => p.data.type === type),
+  }))
+  .filter(({ items }) => items.length > 0);
+
+async function getContent(entry: (typeof allPositions)[number]) {
+  const { Content } = await render(entry);
+  return Content;
+}
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <p class="lead text-muted mb-5">
+    We are always looking for motivated researchers to join the lab. Below are currently available
+    positions.
+  </p>
+
+  {
+    byType.map(async ({ type, items }) => (
+      <section class="mb-5">
+        <h2 class="h4 border-bottom pb-2 mb-4">{sectionLabel[type]}</h2>
+        {await Promise.all(
+          items.map(async (position) => {
+            const Content = await getContent(position);
+            const isOpen = position.data.status === 'open';
+            return (
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
+                    <h3 class="h5 mb-0">{position.data.title}</h3>
+                    <span class={`badge ${isOpen ? 'bg-primary' : 'bg-secondary'}`}>
+                      {isOpen ? 'Open' : 'Closed'}
+                    </span>
+                  </div>
+                  {(position.data.duration || position.data.location) && (
+                    <p class="text-muted small mb-3">
+                      {[
+                        position.data.duration ? `Full-time · ${position.data.duration}` : null,
+                        position.data.location,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </p>
+                  )}
+                  <div class="small">
+                    <Content />
+                  </div>
+                  {isOpen && (
+                    <a href="/contact" class="btn btn-primary btn-sm mt-3">
+                      Apply / Inquire
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        )}
+      </section>
+    ))
+  }
+
+  <!-- Postdoc placeholder if no postdoc entries exist -->
+  {
+    !allPositions.some((p) => p.data.type === 'postdoc') && (
+      <section class="mb-5">
+        <h2 class="h4 border-bottom pb-2 mb-4">Postdoctoral Positions</h2>
+        <p class="text-muted">
+          No postdoctoral positions are currently advertised. We welcome unsolicited applications
+          from exceptional candidates — see below.
+        </p>
+      </section>
+    )
+  }
+
+  <!-- Student Theses & Internships -->
+  <section class="mb-5">
+    <h2 class="h4 border-bottom pb-2 mb-4">Student Projects &amp; Theses</h2>
+    <p>
+      We regularly offer master thesis and internship projects for motivated students. See the
+      <a href="/thesis">Thesis page</a> for available topics and how to apply.
+    </p>
+  </section>
+
+  <!-- Unsolicited Applications -->
+  <section class="mb-5">
+    <h2 class="h4 border-bottom pb-2 mb-4">Unsolicited Applications</h2>
+    <p>
+      If you are interested in joining the lab but don&rsquo;t see a suitable position, feel free to
+      send a spontaneous application. Please include:
+    </p>
+    <ul>
+      <li>A brief description of your research interests and motivation</li>
+      <li>Your CV</li>
+      <li>Contact details of 2&ndash;3 references</li>
+    </ul>
+    <a href="/contact" class="btn btn-outline-primary">Get in Touch</a>
+  </section>
+</BaseLayout>

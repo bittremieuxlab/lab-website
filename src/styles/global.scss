@@ -53,27 +53,54 @@
   }
 }
 
-html.dark {
-  background-color: #0d0950;
-  color: #fff;
+// ----- themes and colors -----
+
+// :root {
+//   --link-color: #0d6efd; // Bootstrap primary
+//   --link-hover-color: #0a58ca;
+// }
+
+[data-bs-theme='dark'] {
+  --link-color: white;
+  --link-hover-color: white;
 }
 
-.dark .menu {
-  background-color: #fff;
-  color: #000;
-}
+// color-blind friendly mode (Okabe-Ito palette, triggered by html.cbf)
 
-.dark .nav-links a:hover,
-.dark .nav-links a:focus {
-  color: #0d0950;
-}
+html.cbf {
+  // Bootstrap utility classes use --bs-primary-rgb for bg-primary, text-primary, border-primary
+  --bs-primary-rgb: 0, 114, 178; // Okabe-Ito blue  (#0072B2)
+  --bs-primary-bg-subtle: #cce3f3;
+  --bs-primary-border-subtle: #80bbdf;
+  --bs-primary-text-emphasis: #004d7a;
 
-.dark .nav-links a {
-  color: #fff;
-}
+  // Override compiled button values (Bootstrap 5 buttons expose CSS vars per-component)
+  .btn-primary {
+    --bs-btn-bg: #0072b2;
+    --bs-btn-border-color: #0072b2;
+    --bs-btn-hover-bg: #005a8e;
+    --bs-btn-hover-border-color: #005280;
+    --bs-btn-active-bg: #004d7a;
+    --bs-btn-active-border-color: #004370;
+    --bs-btn-focus-shadow-rgb: 38, 143, 204;
+  }
 
-.dark a {
-  color: #ff9776;
+  .btn-outline-primary {
+    --bs-btn-color: #0072b2;
+    --bs-btn-border-color: #0072b2;
+    --bs-btn-hover-bg: #0072b2;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-border-color: #0072b2;
+    --bs-btn-active-bg: #0072b2;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-border-color: #0072b2;
+    --bs-btn-focus-shadow-rgb: 38, 143, 204;
+  }
+
+  // Active state indicator on the CBF toggle button itself
+  #cbf-toggle {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
 // ----- footer
@@ -116,4 +143,10 @@ html.dark {
       color: white;
     }
   }
+}
+
+// ----- publications
+
+.publication-list {
+  margin-left: 4rem;
 }
