@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import ResearchGrid from "../../components/ResearchGrid";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const allResearch = (await getCollection("research")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+const researchData = allResearch.map((r) => ({
+  id: r.id,
+  name: r.data.name,
+  description: r.data.description,
+  tags: r.data.tags,
+}));
+
+const pageTitle = "Research";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <ResearchGrid research={researchData} baseUrl="/research" client:load />
+</BaseLayout>

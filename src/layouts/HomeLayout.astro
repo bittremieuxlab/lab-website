@@ -1,0 +1,10 @@
+---
+import RootLayout from './RootLayout.astro';
+import { SITE } from '../config';
+---
+
+<RootLayout title={SITE.labName}>
+  <main data-pagefind-body>
+    <slot />
+  </main>
+</RootLayout>

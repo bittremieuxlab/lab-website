@@ -1,0 +1,11 @@
+---
+import RootLayout from './RootLayout.astro';
+const { pageTitle } = Astro.props;
+---
+
+<RootLayout title={pageTitle}>
+  <div class="container py-4" data-pagefind-body>
+    <h1 class="mb-4 text-center" data-pagefind-weight="10">{pageTitle}</h1>
+    <slot />
+  </div>
+</RootLayout>

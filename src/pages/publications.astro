@@ -1,0 +1,72 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import '@citation-js/plugin-bibtex';
+import { Cite } from '@citation-js/core';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationList from '../components/PublicationList.tsx';
+
+// NOTE: Add the following block only if special fields should also be extracted
+//
+// // citation-js only maps standard CSL fields; extract custom fields manually
+// function parseRawBibFields(bibContent: string): Record<string, Record<string, string>> {
+//   const result: Record<string, Record<string, string>> = {};
+//   for (const entry of bibContent.split(/(?=@\w+\{)/)) {
+//     const keyMatch = entry.match(/@\w+\{([^,\s]+),/);
+//     if (!keyMatch) continue;
+//     const fields: Record<string, string> = {};
+//     const fieldStartRegex = /(\w+)\s*=\s*\{/g;
+//     let m;
+//     while ((m = fieldStartRegex.exec(entry)) !== null) {
+//       const start = m.index + m[0].length;
+//       let depth = 1, i = start;
+//       while (i < entry.length && depth > 0) {
+//         if (entry[i] === '{') depth++;
+//         else if (entry[i] === '}') depth--;
+//         i++;
+//       }
+//       fields[m[1].toLowerCase()] = entry.slice(start, i - 1).trim();
+//     }
+//     result[keyMatch[1]] = fields;
+//   }
+//   return result;
+// }
+
+type Author = { given?: string; family?: string };
+
+const bibContent = readFileSync(join(process.cwd(), 'src/data/publications.bib'), 'utf-8');
+const cite = new Cite(bibContent);
+// const rawFields = parseRawBibFields(bibContent);
+
+const publications = cite.data
+  .map((entry: any) => {
+    // const raw = rawFields[entry['citation-key']] ?? {};
+    return {
+      id: entry['citation-key'] as string,
+      type: entry.type as string,
+      title: entry.title as string,
+      authors: (entry.author as Author[] ?? [])
+        .map(a => [a.given, a.family].filter(Boolean).join(' '))
+        .join(', '),
+      year: entry.issued?.['date-parts']?.[0]?.[0] ?? 0,
+      venue: (entry['container-title'] ?? '') as string,
+      url: (entry.URL ?? '') as string,
+      abstract: (entry.abstract ?? '') as string,
+      note: (entry.note ?? '') as string,
+      // featured: raw.featured === 'true',
+      // code: raw.code ?? '',
+      // slides: raw.slides ?? '',
+      // video: raw.video ?? '',
+      // website: raw.website ?? '',
+      // demo: raw.demo ?? '',
+      // project: raw.project ?? '',
+    };
+  })
+  .sort((a: any, b: any) => b.year - a.year);
+
+const pageTitle = 'Publications';
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <PublicationList publications={publications} showFilters={true} client:load />
+</BaseLayout>

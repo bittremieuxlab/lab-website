@@ -1,0 +1,250 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import '@citation-js/plugin-bibtex';
+import { Cite } from '@citation-js/core';
+import { getCollection } from 'astro:content';
+import HomeLayout from '../layouts/HomeLayout.astro';
+import { SITE } from '../config';
+
+type Author = { given?: string; family?: string };
+
+// Featured publications
+const bibContent = readFileSync(join(process.cwd(), 'src/data/publications.bib'), 'utf-8');
+const cite = new Cite(bibContent);
+const featuredPubs = cite.data
+  .filter((e: any) => SITE.featuredPublications.includes(e['citation-key']))
+  .map((e: any) => ({
+    id: e['citation-key'] as string,
+    title: e.title as string,
+    authors: ((e.author as Author[]) ?? [])
+      .map((a) => [a.given, a.family].filter(Boolean).join(' '))
+      .join(', '),
+    year: e.issued?.['date-parts']?.[0]?.[0] ?? 0,
+    venue: (e['container-title'] ?? e.booktitle ?? '') as string,
+    url: (e.URL ?? '') as string,
+  }))
+  .sort((a: any, b: any) => b.year - a.year);
+
+// Recent news
+const allNews = await getCollection('news');
+const recentNews = allNews
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<HomeLayout>
+  <!-- Hero -->
+  <section class="hero-section d-flex align-items-center">
+    <canvas id="hero-canvas"></canvas>
+    <div class="container text-center py-5 position-relative">
+      <p class="text-uppercase fw-semibold small letter-spacing mb-3 opacity-75">
+        {SITE.university}
+      </p>
+      <h1 class="display-4 fw-bold mb-4">{SITE.heroTitle}</h1>
+      <p class="lead mb-5 mx-auto hero-subtitle">{SITE.heroSubtitle}</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="/publications" class="btn btn-primary btn-lg px-4">View Publications</a>
+        <a href="/people" class="btn btn-outline-primary btn-lg px-4">Meet the Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Publications -->
+  <section class="py-5 bg-body-secondary">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-baseline mb-4">
+        <h2 class="h4 fw-bold mb-0">Selected Publications</h2>
+        <a href="/publications" class="text-muted small">View all &rarr;</a>
+      </div>
+      <div class="row g-4">
+        {
+          featuredPubs.map((pub) => (
+            <div class="col-md-4">
+              <div class="card h-100 border-0 shadow-sm pub-card">
+                <div class="card-body d-flex flex-column p-4">
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill small">
+                      {pub.year}
+                    </span>
+                    {pub.venue && <span class="text-muted small text-truncate">{pub.venue}</span>}
+                  </div>
+                  <h5 class="card-title fw-semibold mb-2 flex-grow-1">
+                    {pub.url ? (
+                      <a
+                        href={pub.url}
+                        target="_blank"
+                        rel="noopener"
+                        class="text-body text-decoration-none stretched-link"
+                      >
+                        {pub.title}
+                      </a>
+                    ) : (
+                      pub.title
+                    )}
+                  </h5>
+                  <p class="card-text text-muted small mb-0">{pub.authors}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent News -->
+  <section class="py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-baseline mb-4">
+        <h2 class="h4 fw-bold mb-0">Latest News</h2>
+        <a href="/news" class="text-muted small">All news &rarr;</a>
+      </div>
+      <div class="row g-4">
+        {
+          recentNews.map((item) => (
+            <div class="col-md-4">
+              <div class="card h-100 border-0 shadow-sm pub-card">
+                <div class="card-body d-flex flex-column p-4">
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill small">
+                      {item.data.date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                      })}
+                    </span>
+                  </div>
+                  <h5 class="card-title fw-semibold mb-2 flex-grow-1">
+                    <a
+                      href={`/news/${item.id}`}
+                      class="text-body text-decoration-none stretched-link"
+                    >
+                      {item.data.title}
+                    </a>
+                  </h5>
+                  <p class="card-text text-muted small mb-0">{item.data.description}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    const mouse = { x: -9999, y: -9999 };
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    canvas.parentElement.addEventListener('mousemove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    canvas.parentElement.addEventListener('mouseleave', () => {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
+
+    const LINK = 130;
+    const MOUSE_R = 220;
+
+    const mobile = window.innerWidth < 768;
+    const N = mobile ? 30 : 70;
+    const MAX_SPD = mobile ? 0.5 : 1;
+    const HARD_CAP = mobile ? 2 : 4;
+    const INIT_VEL = mobile ? 0.3 : 0.5;
+
+    const pts = Array.from({ length: N }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * INIT_VEL,
+      vy: (Math.random() - 0.5) * INIT_VEL,
+      r: Math.random() * 2 + 1.5,
+    }));
+
+    function frame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of pts) {
+        const dx = p.x - mouse.x,
+          dy = p.y - mouse.y;
+        const d = Math.hypot(dx, dy);
+        if (d < MOUSE_R) {
+          const f = (1 - d / MOUSE_R) * 0.12;
+          p.vx += (dx / d) * f;
+          p.vy += (dy / d) * f;
+        }
+        const spd = Math.hypot(p.vx, p.vy);
+        if (spd > MAX_SPD) {
+          p.vx *= 0.97;
+          p.vy *= 0.97;
+        }
+        if (spd > HARD_CAP) {
+          p.vx *= HARD_CAP / spd;
+          p.vy *= HARD_CAP / spd;
+        }
+        p.x = (p.x + p.vx + canvas.width) % canvas.width;
+        p.y = (p.y + p.vy + canvas.height) % canvas.height;
+      }
+
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+          if (d < LINK) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(30,100,220,${0.5 * (1 - d / LINK)})`;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+          }
+        }
+        ctx.beginPath();
+        ctx.arc(pts[i].x, pts[i].y, pts[i].r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(30,100,220,0.85)';
+        ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    frame();
+  </script>
+</HomeLayout>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 70vh;
+    overflow: hidden;
+  }
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-subtitle {
+    max-width: 600px;
+    opacity: 0.85;
+  }
+  .letter-spacing {
+    letter-spacing: 0.12em;
+  }
+  .pub-card {
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .pub-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+  }
+</style>

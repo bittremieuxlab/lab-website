@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const research = await getCollection('research');
+  return research.map((research) => ({
+    params: { slug: research.id },
+    props: { research },
+  }));
+}
+
+const { research } = Astro.props;
+const { Content } = await render(research);
+const { name, description, tags } = research.data;
+---
+
+<BaseLayout pageTitle={name}>
+  <p>{ description }</p>
+  {tags && tags.length > 0 && (
+    <div class="d-flex flex-wrap gap-1 mt-3">
+      {tags.map((tag: string) => <span class="badge bg-primary" data-pagefind-filter="tag">{tag}</span>)}
+    </div>
+  )}
+</BaseLayout>

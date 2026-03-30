@@ -1,0 +1,68 @@
+---
+import { SITE } from '../config';
+
+const topLevel = import.meta.glob('../pages/*.astro');
+const subIndex = import.meta.glob('../pages/*/index.astro');
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  ...Object.keys(topLevel).map((path) => {
+    const filename = path.split('/').pop()?.replace('.astro', '') ?? '';
+    return { segment: filename, href: filename === 'index' ? '/' : `/${filename}` };
+  }),
+  ...Object.keys(subIndex).map((path) => {
+    const segment = path.split('/').at(-2) ?? '';
+    return { segment, href: `/${segment}` };
+  }),
+]
+  .filter(({ segment }) => segment !== '[slug]' && segment !== 'index')
+  .map(({ segment, href }) => {
+    const label = segment === 'index' ? 'Home' : segment.charAt(0).toUpperCase() + segment.slice(1);
+    const isActive = currentPath === href || (href !== '/' && currentPath.startsWith(href));
+    return { href, label, isActive };
+  })
+  .sort((a, b) => a.label.localeCompare(b.label));
+---
+
+<!-- source: https://getbootstrap.com/docs/5.3/components/navbar/#toggler -->
+<!-- <header class="d-flex justify-content-center py-3"> -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">{SITE.labName}</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {navLinks.map(({ href, label, isActive }) => (
+            <li class="nav-item">
+              <a
+                class={`nav-link${isActive ? ' active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
+                href={href}
+              >{label}</a>
+            </li>
+          ))}
+        </ul>
+        <form class="d-flex" role="search" action="/search" method="get">
+          <input
+            class="form-control me-2"
+            type="search"
+            name="q"
+            placeholder="Search people & publications…"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<!-- </header> -->

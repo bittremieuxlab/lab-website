@@ -1,0 +1,249 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import '@citation-js/plugin-bibtex';
+import { Cite } from '@citation-js/core';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationList from '../../components/PublicationList.tsx';
+
+type Author = { given?: string; family?: string };
+
+export async function getStaticPaths() {
+  const people = await getCollection('people');
+  return people.map((person) => ({
+    params: { slug: person.id },
+    props: { person },
+  }));
+}
+
+const { person } = Astro.props;
+const { Content } = await render(person);
+const {
+  name,
+  role,
+  status,
+  pronouns,
+  bio_short,
+  email,
+  photo,
+  links,
+  team,
+  tags,
+  education,
+  awards,
+  selected_publications,
+} = person.data;
+
+const personPublications = (() => {
+  if (!selected_publications || selected_publications.length === 0) return [];
+  const bibContent = readFileSync(join(process.cwd(), 'src/data/publications.bib'), 'utf-8');
+  const cite = new Cite(bibContent);
+  return cite.data
+    .filter((entry: any) => selected_publications.includes(entry['citation-key']))
+    .map((entry: any) => ({
+      id: entry['citation-key'] as string,
+      type: entry.type as string,
+      title: entry.title as string,
+      authors: ((entry.author as Author[]) ?? [])
+        .map((a) => [a.given, a.family].filter(Boolean).join(' '))
+        .join(', '),
+      year: entry.issued?.['date-parts']?.[0]?.[0] ?? 0,
+      venue: (entry['container-title'] ?? '') as string,
+      url: (entry.URL ?? '') as string,
+      abstract: (entry.abstract ?? '') as string,
+      note: (entry.note ?? '') as string,
+    }))
+    .sort((a: any, b: any) => b.year - a.year);
+})();
+---
+
+<BaseLayout pageTitle={name}>
+  <div class="row g-4">
+    <div class="col-md-3 text-center">
+      {
+        photo ? (
+          <img
+            src={'/profile-images/' + photo}
+            alt={`Photo of ${name}`}
+            class="rounded-circle object-fit-cover mb-3"
+            style="width:180px;height:180px"
+          />
+        ) : (
+          <div
+            class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center mb-3"
+            style="width:180px;height:180px"
+          >
+            <span class="text-white fs-1">{name.charAt(0)}</span>
+          </div>
+        )
+      }
+
+      <div class="d-flex flex-column gap-2 align-items-center">
+        {
+          email && (
+            <a href={`mailto:${email}`} class="btn btn-sm btn-outline-secondary w-100">
+              Email
+            </a>
+          )
+        }
+        {
+          links?.website && (
+            <a
+              href={links.website}
+              class="btn btn-sm btn-outline-secondary w-100"
+              target="_blank"
+              rel="noopener"
+            >
+              Website
+            </a>
+          )
+        }
+        {
+          links?.github && (
+            <a
+              href={links.github}
+              class="btn btn-sm btn-outline-secondary w-100"
+              target="_blank"
+              rel="noopener"
+            >
+              GitHub
+            </a>
+          )
+        }
+        {
+          links?.scholar && (
+            <a
+              href={links.scholar}
+              class="btn btn-sm btn-outline-secondary w-100"
+              target="_blank"
+              rel="noopener"
+            >
+              Google Scholar
+            </a>
+          )
+        }
+        {
+          links?.orcid && (
+            <a
+              href={`https://orcid.org/${links.orcid}`}
+              class="btn btn-sm btn-outline-secondary w-100"
+              target="_blank"
+              rel="noopener"
+            >
+              ORCID
+            </a>
+          )
+        }
+        {
+          links?.linkedin && (
+            <a
+              href={links.linkedin}
+              class="btn btn-sm btn-outline-secondary w-100"
+              target="_blank"
+              rel="noopener"
+            >
+              LinkedIn
+            </a>
+          )
+        }
+        {
+          links?.twitter && (
+            <a
+              href={links.twitter}
+              class="btn btn-sm btn-outline-secondary w-100"
+              target="_blank"
+              rel="noopener"
+            >
+              Twitter / X
+            </a>
+          )
+        }
+      </div>
+
+      {
+        team && team.length > 0 && (
+          <div class="mt-3 text-center">
+            <p class="text-muted small fw-semibold text-uppercase mb-2">Team</p>
+            <div class="d-flex flex-wrap gap-1 justify-content-center">
+              {team.map((t) => (
+                <span class="badge bg-secondary">{t}</span>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="col-md-9">
+      <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+        <span class="text-muted" data-pagefind-filter="role">{role}</span>
+        {pronouns && <span class="text-muted small">({pronouns})</span>}
+        {
+          status === 'alumni' && (
+            <span class="badge bg-secondary" data-pagefind-filter="status">
+              Alumni
+            </span>
+          )
+        }
+      </div>
+
+      {bio_short && <p class="lead mb-3">{bio_short}</p>}
+
+      {
+        tags.length > 0 && (
+          <div class="d-flex flex-wrap gap-1 mb-3">
+            {tags.map((tag) => (
+              <span class="badge bg-primary" data-pagefind-filter="tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        education && education.length > 0 && (
+          <div class="mb-3">
+            <h2 class="h6 text-uppercase text-muted mb-1">Education</h2>
+            <ul class="list-unstyled mb-0">
+              {education.map((e) => (
+                <li class="small">{e}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        awards && awards.length > 0 && (
+          <div class="mb-3">
+            <h2 class="h6 text-uppercase text-muted mb-1">Awards</h2>
+            <ul class="list-unstyled mb-0">
+              {awards.map((a) => (
+                <li class="small">{a}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <hr class="mb-4" />
+
+      <div class="mt-3">
+        <Content />
+      </div>
+
+      <hr class="mb-4" />
+
+      {
+        personPublications.length > 0 && (
+          <div class="mt-4">
+            <h2 class="mb-3">Publications</h2>
+            <PublicationList publications={personPublications} showFilters={false} client:load />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>

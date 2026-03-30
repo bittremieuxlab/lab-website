@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PeopleGrid from "../../components/PeopleGrid";
+
+const allPeople = (await getCollection("people")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+const peopleData = allPeople.map((p) => ({
+  id: p.id,
+  name: p.data.name,
+  role: p.data.role,
+  status: p.data.status,
+  bio_short: p.data.bio_short,
+  photo: p.data.photo,
+  tags: p.data.tags,
+  teams: p.data.team
+}));
+
+const pageTitle = "People";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <PeopleGrid people={peopleData} baseUrl="/people" client:load />
+  <!-- <ul>
+    {
+      allPeople.map((person) => (
+        <PeopleSiteLink url={`/people/${person.id}`} title={person.data.name} />
+      ))
+    }
+  </ul> -->
+</BaseLayout>
