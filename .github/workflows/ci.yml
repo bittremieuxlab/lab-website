@@ -1,0 +1,43 @@
+# CI checks for pull requests and pushes
+#
+# Runs linting, formatting, and build validation so issues are caught before
+# merging. Uses the same Node.js version as the deploy workflow.
+#
+# Uses:
+#   - actions/checkout@v5
+#     https://github.com/actions/checkout
+#   - actions/setup-node@v4 — GitHub's official Node.js setup action
+#     https://github.com/actions/setup-node
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build site
+        run: npm run build

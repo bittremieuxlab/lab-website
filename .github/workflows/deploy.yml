@@ -1,0 +1,60 @@
+# Deploy Astro site to GitHub Pages
+#
+# Based on the official Astro deployment guide:
+#   https://docs.astro.build/en/guides/deploy/github/
+#
+# Uses:
+#   - withastro/action@v5  — official Astro build+upload action
+#     https://github.com/withastro/action
+#   - actions/deploy-pages@v4 — GitHub's official Pages deployment action
+#     https://github.com/actions/deploy-pages
+#
+# Prerequisites:
+#   1. Set Pages source to "GitHub Actions" in repo Settings > Pages
+#   2. Set `site` in astro.config.mjs to your domain
+#   3. If using a custom domain, add public/CNAME and configure DNS
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN for GitHub Pages deployment
+# https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the
+# run in-progress and latest queued. Do NOT cancel in-progress runs to
+# allow production deployments to complete.
+# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/control-the-concurrency-of-workflows
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install, build, and upload site
+        uses: withastro/action@v5
+        with:
+          node-version: 22
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
