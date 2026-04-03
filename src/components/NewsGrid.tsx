@@ -22,9 +22,7 @@ export default function NewsGrid({ news, baseUrl }: Props) {
             href={href}
             class="card text-decoration-none text-reset border-0 shadow-sm"
             style="transition: box-shadow 0.15s"
-            onMouseOver={(e) =>
-              (e.currentTarget.style.boxShadow = '0 .5rem 1rem rgba(0,0,0,.15)')
-            }
+            onMouseOver={(e) => (e.currentTarget.style.boxShadow = '0 .5rem 1rem rgba(0,0,0,.15)')}
             onMouseOut={(e) => (e.currentTarget.style.boxShadow = '')}
           >
             <div class="card-body">

@@ -61,13 +61,13 @@
 
 // ----- themes and colors -----
 
-// :root {
-//   --link-color: #0d6efd; // Bootstrap primary
-//   --link-hover-color: #0a58ca;
-// }
+:root {
+  --link-color: rgba(0, 0, 0, 0.55);
+  --link-hover-color: rgba(0, 0, 0, 0.9);
+}
 
 [data-bs-theme='dark'] {
-  --link-color: white;
+  --link-color: rgba(255, 255, 255, 0.55);
   --link-hover-color: white;
 }
 
@@ -119,13 +119,13 @@ html.cbf {
 }
 
 .footer-link {
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--link-color);
   text-decoration: none;
   font-size: 0.875rem;
   transition: color 0.15s ease-in-out;
 
   &:hover {
-    color: white;
+    color: var(--link-hover-color);
   }
 }
 
@@ -135,22 +135,14 @@ html.cbf {
   gap: 1rem;
 
   a {
-    color: rgba(0, 0, 0, 0.55);
+    color: var(--link-color);
     font-size: 1.25rem;
     line-height: 1;
     transition: color 0.15s ease-in-out;
 
     &:hover {
-      color: black;
+      color: var(--link-hover-color);
     }
-  }
-}
-
-[data-bs-theme='dark'] .footer-social a {
-  color: rgba(255, 255, 255, 0.55);
-
-  &:hover {
-    color: white;
   }
 }
 

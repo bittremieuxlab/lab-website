@@ -10,6 +10,10 @@
 // @import 'bootstrap/scss/badge';
 // @import 'bootstrap/scss/buttons';
 // ... only what the site actually uses
-$font-family-sans-serif: 'Inter', system-ui, -apple-system, sans-serif;
+$font-family-sans-serif:
+  'Inter',
+  system-ui,
+  -apple-system,
+  sans-serif;
 
 @import 'bootstrap/scss/bootstrap';
