@@ -11,9 +11,11 @@ tags: ['machine learning', 'mass spectrometry']
 
 # OPTIONAL — omit any field you don't want shown
 photo:
-  'firstname-lastname.jpg' # Place the file in public/profile-images/
-  # Requirements: JPEG, square crop, min 300×300 px, max 1 MB
+  'firstname-lastname.jpg' # Place the file in src/assets/profile-images/
+  # Requirements: square crop, min 360×360 px, max 5 MB
   # Filename: lowercase, hyphen-separated
+  # Supported formats: jpg, jpeg, png, webp, avif
+  # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
 bio_short: 'One to three sentences describing your research focus.'
 pronouns: 'pronouns string'
 

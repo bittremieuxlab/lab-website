@@ -1,13 +1,13 @@
 # Contributing to the Lab Website
 
-This guide explains how to add and update content on the lab website. Most contributions only require editing Markdown files — no programming knowledge needed.
+This guide explains how to add and update content on the lab website. Most contributions only require editing Markdown files.
 
 ## Workflow
 
-1. Fork or create a branch from `main`
-2. Make your changes (see sections below)
-3. Open a pull request — the CI checks will run automatically
-4. A maintainer reviews and merges
+1. Fork or create a branch from `main`.
+2. Make your changes (see sections below).
+3. Open a pull request — the CI checks will run automatically.
+4. A maintainer reviews and merges.
 
 The CI pipeline runs formatting, linting, and a full build check on every PR. If any check fails, it will be shown on the PR.
 
@@ -17,16 +17,16 @@ The CI pipeline runs formatting, linting, and a full build check on every PR. If
    - Use lowercase, hyphen-separated filename (e.g., `jane-smith.md`)
 2. Fill in the frontmatter fields (required fields are marked in the template)
 3. Optionally write a longer bio below the frontmatter `---` separator
-4. Add a profile photo to `public/profile-images/`
+4. Add a profile photo to `src/assets/profile-images/`
 
 **Photo requirements:**
 
-- Format: JPEG
+- Format: JPEG, PNG, WebP, or AVIF
 - Crop: square
-- Minimum size: 300 × 300 px
-- Maximum file size: 1 MB
+- Minimum size: 360 × 360 px
 - Filename: `firstname-lastname.jpg` (lowercase, hyphens, matching the Markdown filename)
-- Compress before uploading: use [Squoosh](https://squoosh.app/) or similar
+
+No manual compression is needed — Astro automatically converts photos to WebP and resizes them at build time. See the README for details.
 
 **Roles:** use a clear display title such as `PhD Student`, `Postdoc`, `Professor`, `Research Engineer`, `Master Student`, `Intern`.
 
@@ -106,7 +106,7 @@ npm run lint          # check for code issues
 npm run build         # full build (catches schema errors, broken imports)
 ```
 
-Pre-commit hooks (Husky + lint-staged) run formatting and linting automatically when you commit, so most issues are caught before you push.
+Pre-commit hooks (Husky + lint-staged) check formatting and linting on every commit. They will block the commit if issues are found — run `npm run format` or `npm run lint:fix` to fix them, then stage the changes and commit again.
 
 ## IDE setup
 

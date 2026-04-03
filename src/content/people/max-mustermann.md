@@ -5,7 +5,7 @@ role: 'MSc Student'
 status: 'active'
 team: ['Mass Spectrometry']
 tags: ['computer vision', 'deep learning', 'medical imaging']
-photo: 'john-doe.jpg'
+photo: 'john-doe.png'
 bio_short: 'Working on computer vision and deep learning for medical image analysis.'
 links:
   github: 'https://github.com/maxmustermann'

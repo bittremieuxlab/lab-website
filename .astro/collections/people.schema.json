@@ -5,11 +5,23 @@
     "name": {
       "type": "string"
     },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+    },
     "role": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "PhD Student",
+        "Software Engineer",
+        "MSc Student",
+        "Postdoc",
+        "Professor",
+        "PI"
+      ]
     },
     "status": {
-      "default": "active",
       "type": "string",
       "enum": [
         "active",
@@ -17,26 +29,43 @@
         "collaborator"
       ]
     },
-    "affiliation": {
-      "type": "string"
+    "team": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Mass Spectrometry",
+          "Metabolomics"
+        ]
+      }
     },
-    "pronouns": {
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "photo": {
       "type": "string"
     },
     "bio_short": {
       "type": "string"
     },
-    "email": {
-      "type": "string",
-      "format": "email",
-      "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+    "pronouns": {
+      "type": "string"
     },
-    "photo": {
+    "affiliation": {
       "type": "string"
     },
     "links": {
       "type": "object",
       "properties": {
+        "website": {
+          "type": "string",
+          "format": "uri"
+        },
         "github": {
           "type": "string",
           "format": "uri"
@@ -51,37 +80,9 @@
         "linkedin": {
           "type": "string",
           "format": "uri"
-        },
-        "twitter": {
-          "type": "string",
-          "format": "uri"
-        },
-        "website": {
-          "type": "string",
-          "format": "uri"
         }
       },
       "additionalProperties": false
-    },
-    "team": {
-      "default": [],
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "tags": {
-      "default": [],
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "projects": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
     },
     "selected_publications": {
       "type": "array",
@@ -101,18 +102,13 @@
         "type": "string"
       }
     },
-    "collaborations": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "$schema": {
       "type": "string"
     }
   },
   "required": [
     "name",
+    "email",
     "role",
     "status",
     "team",

@@ -3,9 +3,18 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import '@citation-js/plugin-bibtex';
 import { Cite } from '@citation-js/core';
+import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PublicationList from '../../components/PublicationList.tsx';
+
+const profileImagesGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/profile-images/*.{jpg,jpeg,png,webp,avif}',
+  { eager: true }
+);
+const profileImages: Record<string, ImageMetadata> = Object.fromEntries(
+  Object.entries(profileImagesGlob).map(([path, mod]) => [path.split('/').pop()!, mod.default])
+);
 
 type Author = { given?: string; family?: string };
 
@@ -19,6 +28,8 @@ export async function getStaticPaths() {
 
 const { person } = Astro.props;
 const { Content } = await render(person);
+
+const photoMeta = person.data.photo ? profileImages[person.data.photo] : undefined;
 const {
   name,
   email,
@@ -63,10 +74,12 @@ const personPublications = (() => {
   <div class="row g-4">
     <div class="col-md-3 text-center">
       {
-        photo ? (
-          <img
-            src={'/profile-images/' + photo}
+        photoMeta ? (
+          <Image
+            src={photoMeta}
             alt={`Photo of ${name}`}
+            width={360}
+            height={360}
             class="rounded-circle object-fit-cover mb-3"
             style="width:180px;height:180px"
           />

@@ -14,6 +14,7 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
+    "validate-images": "node scripts/validate-images.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -21,7 +22,8 @@
       "eslint",
       "prettier --check"
     ],
-    "**/*.{astro,scss,css,md,json}": "prettier --check"
+    "**/*.{astro,scss,css,md,json}": "prettier --check",
+    "src/assets/profile-images/*.{jpg,jpeg,png,webp,avif}": "node scripts/validate-images.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "^5.0.0",

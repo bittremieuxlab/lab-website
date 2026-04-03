@@ -5,7 +5,7 @@ role: 'MSc Student'
 status: 'collaborator'
 team: ['Mass Spectrometry']
 tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
-photo: 'john-doe.jpg'
+photo: 'john-doe.png'
 bio_short: 'Working on ....'
 links:
   github: 'https://github.com/johndoe'

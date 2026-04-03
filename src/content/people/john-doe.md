@@ -5,7 +5,7 @@ role: 'PhD Student'
 status: 'active'
 team: ['Metabolomics']
 tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
-photo: 'john-doe.jpg'
+photo: 'john-doe.png'
 bio_short: 'Working on natural language processing, code generation, and human-AI interaction.'
 pronouns: 'he/him'
 links:

@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PeopleGrid from '../../components/PeopleGrid';
@@ -7,18 +8,37 @@ const allPeople = (await getCollection('people')).sort((a, b) =>
   a.data.name.localeCompare(b.data.name)
 );
 
-// Separate collaborators from lab members
+const profileImagesGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/profile-images/*.{jpg,jpeg,png,webp,avif}',
+  { eager: true }
+);
+const profileImages: Record<string, ImageMetadata> = Object.fromEntries(
+  Object.entries(profileImagesGlob).map(([path, mod]) => [path.split('/').pop()!, mod.default])
+);
 
-const peopleData = allPeople.map((p) => ({
-  id: p.id,
-  name: p.data.name,
-  role: p.data.role,
-  status: p.data.status,
-  bio_short: p.data.bio_short,
-  photo: p.data.photo,
-  tags: p.data.tags,
-  teams: p.data.team,
-}));
+async function resolvePhoto(filename: string | undefined): Promise<string | undefined> {
+  if (!filename || !profileImages[filename]) return undefined;
+  const { src } = await getImage({
+    src: profileImages[filename],
+    width: 360,
+    height: 360,
+    format: 'webp',
+  });
+  return src;
+}
+
+const peopleData = await Promise.all(
+  allPeople.map(async (p) => ({
+    id: p.id,
+    name: p.data.name,
+    role: p.data.role,
+    status: p.data.status,
+    bio_short: p.data.bio_short,
+    photo: await resolvePhoto(p.data.photo),
+    tags: p.data.tags,
+    teams: p.data.team,
+  }))
+);
 
 const pageTitle = 'People';
 ---
