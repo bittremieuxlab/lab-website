@@ -23,7 +23,7 @@ const isChildActive = (children: { href: string }[]) =>
         <i class="bi bi-search"></i>
       </a>
       <button
-        class="navbar-toggler"
+        class="navbar-toggler border-0"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarTogglerDemo02"
@@ -31,7 +31,7 @@ const isChildActive = (children: { href: string }[]) =>
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <i class="bi bi-list fs-4"></i>
       </button>
     </div>
 
@@ -114,22 +114,34 @@ const isChildActive = (children: { href: string }[]) =>
           aria-label="Search"
         />
       </form>
-      <button
-        id="cbf-toggle"
-        type="button"
-        class="btn btn-sm btn-outline-secondary ms-2"
-        title="Toggle color-blind friendly mode"
-        aria-label="Toggle color-blind friendly mode"
-        aria-pressed="false"
-      >
-        <i class="bi bi-eye"></i>
-      </button>
-      <button
-        id="theme-toggle"
-        type="button"
-        class="btn btn-sm btn-outline-secondary ms-2"
-        title="Toggle theme"
-        aria-label="Toggle theme"></button>
+      <div class="dropdown ms-2">
+        <button
+          id="theme-dropdown-btn"
+          type="button"
+          class="btn btn-sm btn-outline-secondary dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          title="Select display mode"
+          aria-label="Select display mode"
+        ></button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <button class="dropdown-item" data-theme-mode="light">
+              <i class="bi bi-sun-fill me-2"></i>Light
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item" data-theme-mode="dark">
+              <i class="bi bi-moon-fill me-2"></i>Dark
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item" data-theme-mode="colorblind">
+              <i class="bi bi-eye me-2"></i>Color blind
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

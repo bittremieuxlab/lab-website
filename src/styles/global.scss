@@ -53,6 +53,12 @@
   }
 }
 
+// ----- navbar toggler -----
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
 // ----- themes and colors -----
 
 // :root {
@@ -96,11 +102,6 @@ html.cbf {
     --bs-btn-active-border-color: #0072b2;
     --bs-btn-focus-shadow-rgb: 38, 143, 204;
   }
-
-  // Active state indicator on the CBF toggle button itself
-  #cbf-toggle {
-    background-color: rgba(255, 255, 255, 0.15);
-  }
 }
 
 // ----- footer
@@ -134,14 +135,22 @@ html.cbf {
   gap: 1rem;
 
   a {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(0, 0, 0, 0.55);
     font-size: 1.25rem;
     line-height: 1;
     transition: color 0.15s ease-in-out;
 
     &:hover {
-      color: white;
+      color: black;
     }
+  }
+}
+
+[data-bs-theme='dark'] .footer-social a {
+  color: rgba(255, 255, 255, 0.55);
+
+  &:hover {
+    color: white;
   }
 }
 

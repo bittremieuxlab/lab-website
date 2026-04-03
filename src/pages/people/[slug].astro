@@ -264,10 +264,9 @@ const personPublications = (() => {
         <Content />
       </div>
 
-      <hr class="mb-4" />
-
       {
         personPublications.length > 0 && (
+          <hr class="mb-4" />
           <div class="mt-4">
             <h2 class="mb-3">Publications</h2>
             <PublicationList publications={personPublications} showFilters={false} client:load />
