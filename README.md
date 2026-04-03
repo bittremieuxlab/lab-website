@@ -1,81 +1,83 @@
-# lab-website
+# Bittremieux Lab Website
 
-Bittremieux lab website
+Academic research lab website built with [Astro](https://astro.build/), [Preact](https://preactjs.com/), and [Bootstrap 5](https://getbootstrap.com/). Content is managed via Markdown files with YAML frontmatter; publications are generated from a BibTeX file.
 
-## Linter
+## Getting Started
 
-### Run
+**Requirements:** Node.js >= 22.12.0
 
-Only checks:
-
-```
-npm run lint          # Check code quality
-npm run format:check  # Check if formatting is needed
-```
-
-Before committing, run:
-
-```
-npm run format      # Auto-fix formatting with Prettier
+```bash
+npm install            # Install dependencies
+npm run dev            # Dev server at localhost:4321
+npm run build          # Production build (includes Pagefind search indexing)
+npm run preview        # Preview production build locally
 ```
 
-IDE configuration: auto-formats on save and fixes prettier issues automatically
+## Project Structure
 
+```text
+src/
+├── components/        # Preact (TSX) interactive components + Astro components
+├── content/           # Markdown content collections
+│   ├── news/          #   News articles
+│   ├── people/        #   Team member profiles
+│   ├── positions/     #   Job openings
+│   ├── research/      #   Research areas
+│   └── theses/        #   Thesis opportunities
+├── data/
+│   └── publications.bib   # BibTeX file (parsed at build time by citation-js)
+├── layouts/           # Astro page layouts
+├── pages/             # File-based routing
+├── styles/            # SCSS stylesheets (Bootstrap + custom)
+└── config.ts          # Site configuration (lab name, featured publications, nav)
+public/
+├── assets/            # Static images and logos
+└── profile-images/    # Team member photos
 ```
+
+## CI/CD
+
+Two GitHub Actions workflows run automatically:
+
+### CI (`.github/workflows/ci.yml`)
+
+Runs on every **pull request** and push to `main`. Checks:
+
+1. Code formatting (Prettier)
+2. Linting (ESLint)
+3. Full production build (catches broken imports, BibTeX parse errors, schema violations)
+
+### Deploy (`.github/workflows/deploy.yml`)
+
+Runs on push to `main`. Builds the site and deploys to GitHub Pages using the official [withastro/action](https://github.com/withastro/action).
+
+**First-time setup:**
+
+1. Update `site` in `astro.config.mjs` to your actual domain or GitHub Pages URL.
+2. In the GitHub repo, go to **Settings > Pages** and set the source to **GitHub Actions**.
+3. If using a custom domain: add a `public/CNAME` file containing the domain and configure DNS.
+
+## Code Quality
+
+```bash
+npm run lint           # ESLint check
+npm run lint:fix       # ESLint auto-fix
+npm run format         # Prettier auto-format
+npm run format:check   # Prettier check only
+```
+
+**IDE setup:** Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and enable format-on-save:
+
+```json
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
 ```
 
-### How it works:
+ESLint and Prettier are configured to not conflict (`eslint-config-prettier` disables overlapping rules).
 
-[Prettier](https://prettier.io/) for code formatting. - enforces consistent formatting (spacing, quotes, line length) - `.prettierrc.json` — Prettier configuration
-[ESLint](https://eslint.org/) for static code analysis. - code quality issues (unused variables, potential bugs) - `eslint.config.js` — ESLint configuration (flat config format for ESLint 9)
+## Image Credits
 
-They're configured to not conflict with each other: - `eslint-config-prettier` is installed and disables all ESLint formatting rules that Prettier handles.
-
-TODO: Husky and lint-staged for pre-commit checks.
-TODO: Maybe opt-in auto-fixer for ESLint so that `npm run lint:fix` would work.
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-# References
-
-geralt-dna-9483532_1920.jpg
-
-- https://pixabay.com/illustrations/dna-artificial-intelligence-research-9483532/
-
-geralt-dna-3539309_1920.jpg
-
-- https://pixabay.com/illustrations/dna-analysis-research-3539309/
+- `geralt-dna-9483532_1920.jpg` — https://pixabay.com/illustrations/dna-artificial-intelligence-research-9483532/
+- `geralt-dna-3539309_1920.jpg` — https://pixabay.com/illustrations/dna-analysis-research-3539309/
