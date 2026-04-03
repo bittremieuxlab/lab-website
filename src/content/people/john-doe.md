@@ -1,26 +1,22 @@
 ---
 name: 'John Doe'
+email: 'john.doe@university.edu'
 role: 'PhD Student'
 status: 'active'
-pronouns: 'he/him'
-bio_short: 'Working on natural language processing, code generation, and human-AI interaction.'
-email: 'john.doe@university.edu'
+team: ['Metabolomics']
+tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
 photo: 'john-doe.jpg'
+bio_short: 'Working on natural language processing, code generation, and human-AI interaction.'
+pronouns: 'he/him'
 links:
   github: 'https://github.com/johndoe'
   scholar: 'https://scholar.google.com'
-  twitter: 'https://twitter.com/johndoe'
-team: ['nlp']
-tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
 education:
   - 'B.Sc. Computer Science, University of Example, 2021'
 awards:
   - 'Best Paper Award, NLP Workshop 2023'
 selected_publications:
   - 'he2016deep'
-collaborations:
-  - 'University x'
-  - 'University y'
 ---
 
 Custom markdown content starting from here.

@@ -1,22 +1,20 @@
 ---
 name: 'Max Mustermann'
-role: 'Master Student'
-status: 'active'
-bio_short: 'Working on computer vision and deep learning for medical image analysis.'
 email: 'max.mustermann@university.edu'
+role: 'MSc Student'
+status: 'active'
+team: ['Mass Spectrometry']
+tags: ['computer vision', 'deep learning', 'medical imaging']
 photo: 'john-doe.jpg'
+bio_short: 'Working on computer vision and deep learning for medical image analysis.'
 links:
   github: 'https://github.com/maxmustermann'
   linkedin: 'https://linkedin.com/in/maxmustermann'
-team: ['vision']
-tags: ['computer vision', 'deep learning', 'medical imaging']
 education:
   - 'B.Sc. Computer Science, TU Example, 2022'
 selected_publications:
   - vaswani2017attention
   - he2016deep
-collaborations:
-  - 'University x'
 ---
 
 Custom markdown content starting from here.

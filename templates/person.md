@@ -1,31 +1,28 @@
 ---
 # REQUIRED
 name: 'Firstname Lastname'
-role: 'PhD Student' # Display title, e.g. PhD Student, Postdoc, Professor, ...
+email: 'firstname.lastname@uantwerpen.be'
+role: 'PhD Student' # PhD Student | Software Engineer | MSc Student | Postdoc | Professor | PI
 status: 'active' # active | alumni | collaborator
+# team: group membership for filtering on the people page
+team: ['Mass Spectrometry'] # Mass Spectrometry | Metabolomics
+# tags: keywords shown on your card and used for filtering
+tags: ['machine learning', 'mass spectrometry']
 
 # OPTIONAL — omit any field you don't want shown
-pronouns: 'they/them'
-bio_short: 'One to three sentences describing your research focus.'
-email: 'firstname.lastname@uantwerpen.be'
 photo:
   'firstname-lastname.jpg' # Place the file in public/profile-images/
   # Requirements: JPEG, square crop, min 300×300 px, max 1 MB
   # Filename: lowercase, hyphen-separated
+bio_short: 'One to three sentences describing your research focus.'
+pronouns: 'pronouns string'
 
 links:
+  website: 'https://yourwebsite.com'
   github: 'https://github.com/username'
   scholar: 'https://scholar.google.com/citations?user=XXXXXXX'
   orcid: '0000-0000-0000-0000'
   linkedin: 'https://www.linkedin.com/in/username'
-  twitter: 'https://twitter.com/username'
-  website: 'https://yourwebsite.com'
-
-# team: group membership for filtering on the people page
-team: ['proteomics'] # e.g. proteomics, metabolomics, software
-
-# tags: keywords shown on your card and used for filtering
-tags: ['machine learning', 'mass spectrometry']
 
 # selected_publications: citation keys from src/data/publications.bib
 selected_publications:
@@ -39,8 +36,7 @@ education:
 awards:
   - 'Best Poster Award, HUPO 2024'
 
-# collaborations: shown on the individual person page
-collaborations:
+affiliation:
   - 'Collaborating University Name'
 
 # For alumni: add the following field

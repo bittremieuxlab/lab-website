@@ -21,20 +21,19 @@ const { person } = Astro.props;
 const { Content } = await render(person);
 const {
   name,
+  email,
   role,
   status,
-  affiliation,
-  pronouns,
-  bio_short,
-  email,
-  photo,
-  links,
   team,
   tags,
-  education,
-  awards,
+  photo,
+  bio_short,
+  pronouns,
+  affiliation,
+  links,
   selected_publications,
-  collaborations,
+  awards,
+  education,
 } = person.data;
 
 const personPublications = (() => {
@@ -149,18 +148,6 @@ const personPublications = (() => {
             </a>
           )
         }
-        {
-          links?.twitter && (
-            <a
-              href={links.twitter}
-              class="btn btn-sm btn-outline-secondary w-100"
-              target="_blank"
-              rel="noopener"
-            >
-              Twitter / X
-            </a>
-          )
-        }
       </div>
 
       {
@@ -245,19 +232,6 @@ const personPublications = (() => {
         )
       }
 
-      {
-        collaborations && collaborations.length > 0 && (
-          <div class="mb-3">
-            <h2 class="h6 text-uppercase text-muted mb-1">Collaborating with:</h2>
-            <ul class="mb-0">
-              {collaborations.map((a) => (
-                <li class="small">{a}</li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
-
       <hr class="mb-4" />
 
       <div class="mt-3">
@@ -266,10 +240,12 @@ const personPublications = (() => {
 
       {
         personPublications.length > 0 && (
-          <hr class="mb-4" />
-          <div class="mt-4">
-            <h2 class="mb-3">Publications</h2>
-            <PublicationList publications={personPublications} showFilters={false} client:load />
+          <div>
+            <hr class="mb-4" />
+            <div class="mt-4">
+              <h2 class="mb-3">Publications</h2>
+              <PublicationList publications={personPublications} showFilters={false} client:load />
+            </div>
           </div>
         )
       }
