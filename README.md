@@ -2,6 +2,10 @@
 
 Academic research lab website built with [Astro](https://astro.build/), [Preact](https://preactjs.com/), and [Bootstrap 5](https://getbootstrap.com/). Content is managed via Markdown files with YAML frontmatter; publications are generated from a BibTeX file.
 
+## How to contribute
+
+See [CONTRIBUTING](CONTRIBUTING.md).
+
 ## Getting Started
 
 **Requirements:** Node.js >= 22.12.0
@@ -27,7 +31,7 @@ src/
 ├── data/
 │   └── publications.bib   # BibTeX file (parsed at build time by citation-js)
 ├── layouts/           # Astro page layouts
-├── pages/             # File-based routing
+├── pages/             # Website pages
 ├── styles/            # SCSS stylesheets (Bootstrap + custom)
 ├── assets/
 │   └── profile-images/    # Team member photos (optimized at build time)
@@ -59,7 +63,7 @@ Runs on push to `main`. Builds the site and deploys to GitHub Pages using the of
 2. In the GitHub repo, go to **Settings > Pages** and set the source to **GitHub Actions**.
 3. If using a custom domain: add a `public/CNAME` file containing the domain and configure DNS.
 
-## Code Quality
+## Linter
 
 ```bash
 npm run lint           # ESLint check
@@ -107,7 +111,7 @@ Photos are validated automatically by `scripts/validate-images.mjs` using `sharp
 
 Validation runs in two places:
 
-- **Pre-commit hook** (Husky + lint-staged) — checks any staged profile image on local commits
+- **Pre-commit hook** (Husky + lint-staged) — checks all profile images on local commits
 - **CI workflow** — checks all images on every push and pull request
 
 Run it manually with:

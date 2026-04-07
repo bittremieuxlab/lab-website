@@ -4,14 +4,16 @@ This guide explains how to add and update content on the lab website. Most contr
 
 ## Workflow
 
-1. Fork or create a branch from `main`.
+1. Fork branch from `main` or work on existing branch to add content.
 2. Make your changes (see sections below).
 3. Open a pull request — the CI checks will run automatically.
 4. A maintainer reviews and merges.
 
 The CI pipeline runs formatting, linting, and a full build check on every PR. If any check fails, it will be shown on the PR.
 
-## Adding or updating a person
+## Content Contributions
+
+### Adding or updating a person
 
 1. Copy `templates/person.md` to `src/content/people/firstname-lastname.md`
    - Use lowercase, hyphen-separated filename (e.g., `jane-smith.md`)
@@ -36,7 +38,7 @@ No manual compression is needed — Astro automatically converts photos to WebP 
 - `alumni` — former member (shown in the alumni section)
 - `collaborator` — external collaborator (add `affiliation:` for their institution)
 
-## Adding a publication
+### Adding a publication
 
 Publications are managed in `src/data/publications.bib`. Add a new BibTeX entry to this file.
 
@@ -54,19 +56,11 @@ Publications are managed in `src/data/publications.bib`. Add a new BibTeX entry 
 }
 ```
 
-**Optional custom fields** (supported by the website):
-
-```bibtex
-  code    = {https://github.com/lab/repo},
-  website = {https://project-website.com},
-  slides  = {https://link-to-slides},
-```
-
 The CI build will fail if the BibTeX cannot be parsed, catching syntax errors early.
 
 To feature a publication on the home page, add its citation key to `featuredPublications` in `src/config.ts`. To show it on a person's page, add the key to their `selected_publications` list.
 
-## Adding a news item
+### Adding a news item
 
 1. Copy `templates/news.md` to `src/content/news/YYYY-MM-short-title.md`
    - Example: `2025-06-grant-awarded.md`
@@ -75,27 +69,29 @@ To feature a publication on the home page, add its citation key to `featuredPubl
 
 News items have no body text — only the frontmatter fields are displayed.
 
-## Adding a position
+### Adding a position
 
 1. Copy `templates/position.md` to `src/content/positions/short-title.md`
 2. Set `type` to `phd`, `postdoc`, `internship`, or `other`
 3. Write the full position description in the body (Markdown)
 4. When the position is filled, set `status: closed` rather than deleting the file
 
-## Adding a thesis topic
+### Adding a thesis topic
 
 1. Copy `templates/thesis.md` to `src/content/theses/short-title.md`
 2. Set `type` to `bachelor`, `master`, `bachelor/master`, or `phd`
 3. Update `status` as the project progresses:
    - `available` → `ongoing` (add `student: 'Name'`) → `completed` (add `year: 20XX`)
 
-## Adding a research area
+### Adding a research area
 
 1. Copy `templates/research.md` to `src/content/research/short-name.md`
 2. Fill in `name`, `description`, and `tags`
 3. Write a detailed description in the body
 
-## Running checks locally
+## Code Contribution
+
+### Running checks locally
 
 Before opening a PR, verify your changes build correctly:
 
@@ -106,9 +102,14 @@ npm run lint          # check for code issues
 npm run build         # full build (catches schema errors, broken imports)
 ```
 
-Pre-commit hooks (Husky + lint-staged) check formatting and linting on every commit. They will block the commit if issues are found — run `npm run format` or `npm run lint:fix` to fix them, then stage the changes and commit again.
+Pre-commit hooks (Husky + lint-staged) run on every commit and check:
 
-## IDE setup
+- **Formatting** (Prettier) and **linting** (ESLint) on code files
+- **Profile image validation** when a profile image is staged
+
+If a check fails, fix the issue (`npm run format`, `npm run lint:fix`, correct the image, or other fixes), re-stage the files, and commit again.
+
+### IDE setup
 
 Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and enable format-on-save:
 

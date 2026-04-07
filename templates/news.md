@@ -7,3 +7,5 @@ description: 'One or two sentences summarising the news item. Shown on the news 
 # OPTIONAL
 url: 'https://link-to-external-article-or-doi.com' # e.g. paper DOI, press release, blog post
 ---
+
+Write a longer content here in Markdown (optional).

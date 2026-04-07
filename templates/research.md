@@ -14,4 +14,3 @@ You can include:
 - Scientific background
 - Lab-specific approaches
 - Key collaborations or tools
-- Links to relevant publications (reference by citation key from `src/data/publications.bib`)

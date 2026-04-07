@@ -43,6 +43,7 @@ affiliation:
 
 # For alumni: add the following field
 # status: 'alumni'
+
 # For collaborators from another institution: also add
 # affiliation: 'Institution Name'
 ---
