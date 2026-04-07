@@ -1,2 +1,3 @@
 # bittremieux-lab.com
-# Uncomment this and configure DNS when ready to use the custom domain
+# Uncomment this and configure DNS when ready to use the custom domain.
+# Also remove base from astro.config.mjs and update site to 'https://bittremieux-lab.com'.
