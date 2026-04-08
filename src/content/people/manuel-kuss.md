@@ -16,9 +16,9 @@ photo:
   # Supported formats: jpg, jpeg, png, webp, avif
   # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
 
-bio_short: 'I am a Software Engineer with a background in Software Engineering, Internet Computing, IT Security, and Information Systems.'
+bio_short: 'Software Engineer with a background in Software Engineering, Internet Computing, IT Security, and Information Systems.'
 
-pronouns: 'pronouns string'
+# pronouns: 'pronouns string'
 
 links:
   github: 'https://github.com/manuelkuss'
