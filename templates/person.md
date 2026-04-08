@@ -5,7 +5,7 @@ email: 'firstname.lastname@uantwerpen.be'
 role: 'PhD Student' # Professor | Assistant Professor | PI | Postdoc | PhD Student | MSc Student | Software Engineer | Machine Learning Engineer
 status: 'active' # active | alumni | collaborator
 
-# OPTIONAL — omit any field you don't want shown
+# OPTIONAL — remove (comment) any field you don't want shown
 # tags: keywords shown on your personal page (lowercase, space-separated)
 tags: ['machine learning', 'mass spectrometry']
 
