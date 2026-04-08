@@ -1,10 +1,10 @@
 # Contributing to the Lab Website
 
-This guide explains how to add and update content on the lab website. Most contributions only require editing Markdown files.
+This guide explains how to add and update the lab website. Content contributions only require editing Markdown files.
 
 ## Workflow
 
-1. Fork branch from `main` or work on existing branch to add content.
+1. Create a branch from `main` or work on existing branch to add content.
 2. Make your changes (see sections below).
 3. Open a pull request — the CI checks will run automatically.
 4. A maintainer reviews and merges.
@@ -13,13 +13,22 @@ The CI pipeline runs formatting, linting, and a full build check on every PR. If
 
 ## Content Contributions
 
+Content that can be added:
+
+- [Person](#adding-or-updating-a-person)
+- [Publication](#adding-a-publication)
+- [News](#adding-a-news-item)
+- [Research Area](#adding-a-research-area)
+- [Position](#adding-a-position)
+- [Thesis](#adding-a-thesis-topic)
+
 ### Adding or updating a person
 
 1. Copy `templates/person.md` to `src/content/people/firstname-lastname.md`
    - Use lowercase, hyphen-separated filename (e.g., `jane-smith.md`)
 2. Fill in the frontmatter fields (required fields are marked in the template)
-3. Optionally write a longer bio below the frontmatter `---` separator
-4. Add a profile photo to `src/assets/profile-images/`
+3. Optionally write a longer text below the frontmatter `---` separator
+4. Add a profile photo to `src/assets/profile-images/` and reference it properly in the frontmatter field `photo`.
 
 **Photo requirements:**
 
@@ -28,9 +37,9 @@ The CI pipeline runs formatting, linting, and a full build check on every PR. If
 - Minimum size: 360 × 360 px
 - Filename: `firstname-lastname.jpg` (lowercase, hyphens, matching the Markdown filename)
 
-No manual compression is needed — Astro automatically converts photos to WebP and resizes them at build time. See the README for details.
+No manual compression is needed — Astro automatically converts photos to WebP and resizes them at build time. See the [README](README.md) for details.
 
-**Roles:** use a clear display title such as `PhD Student`, `Postdoc`, `Professor`, `Research Engineer`, `Master Student`, `Intern`.
+**Roles:** Choose from the list of possible values indicated in the template.
 
 **Status values:**
 
@@ -42,19 +51,11 @@ No manual compression is needed — Astro automatically converts photos to WebP 
 
 Publications are managed in `src/data/publications.bib`. Add a new BibTeX entry to this file.
 
-**Supported entry types:** `@article`, `@inproceedings`, `@book`, `@thesis`, `@misc` (for preprints)
+Publications are linked as follows:
 
-**Recommended fields:**
-
-```bibtex
-@article{authoryear,
-  author  = {Last, First and Last2, First2},
-  title   = {Title of the Paper},
-  journal = {Journal Name},
-  year    = {2025},
-  doi     = {10.xxxx/xxxxx},
-}
-```
+- If the entry has a `url` field, that link is displayed
+- If no `url` but a `doi` field exists, the publication links to `https://doi.org/{doi}`
+- If neither `url` nor `doi` are present, the publication is not linked
 
 The CI build will fail if the BibTeX cannot be parsed, catching syntax errors early.
 
@@ -67,7 +68,10 @@ To feature a publication on the home page, add its citation key to `featuredPubl
 2. Fill in the frontmatter — `title`, `date`, `description` are required
 3. Add a `url` if there is an external link (DOI, press release, etc.)
 
-News items have no body text — only the frontmatter fields are displayed.
+### Adding a research area
+
+1. Copy `templates/research.md` to `src/content/research/short-name.md`
+2. Fill in `name`, `description`, `tags`, and optionally further content below the frontmatter.
 
 ### Adding a position
 
@@ -80,14 +84,9 @@ News items have no body text — only the frontmatter fields are displayed.
 
 1. Copy `templates/thesis.md` to `src/content/theses/short-title.md`
 2. Set `type` to `bachelor`, `master`, `bachelor/master`, or `phd`
-3. Update `status` as the project progresses:
+3. Add `topics` — keywords used for display and filtering (lowercase, space-separated)
+4. Update `status` as the project progresses:
    - `available` → `ongoing` (add `student: 'Name'`) → `completed` (add `year: 20XX`)
-
-### Adding a research area
-
-1. Copy `templates/research.md` to `src/content/research/short-name.md`
-2. Fill in `name`, `description`, and `tags`
-3. Write a detailed description in the body
 
 ## Code Contribution
 
@@ -105,13 +104,19 @@ npm run build         # full build (catches schema errors, broken imports)
 Pre-commit hooks (Husky + lint-staged) run on every commit and check:
 
 - **Formatting** (Prettier) and **linting** (ESLint) on code files
-- **Profile image validation** when a profile image is staged
+- **Profile image validation**: validates all images in `src/assets/profile-images/`
 
 If a check fails, fix the issue (`npm run format`, `npm run lint:fix`, correct the image, or other fixes), re-stage the files, and commit again.
 
 ### IDE setup
 
-Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and enable format-on-save:
+Recommended VS Code extensions:
+
+- [Astro](https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode) — syntax highlighting and intellisense for `.astro` files
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) — code formatting
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) — linting feedback
+
+Enable format-on-save in your VS Code settings:
 
 ```json
 {

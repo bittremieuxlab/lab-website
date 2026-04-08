@@ -21,7 +21,7 @@ const people = defineCollection({
     email: z.email(),
     role: personRoles,
     status: personStatuses,
-    tags: z.array(z.string()).default([]),
+    tags: z.array(z.string().toLowerCase()).default([]),
     photo: z.string().optional(),
     bio_short: z.string().optional(),
     pronouns: z.string().optional(),
@@ -46,7 +46,7 @@ const research = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    tags: z.array(z.string()).default([]),
+    tags: z.array(z.string().toLowerCase()).default([]),
   }),
 });
 

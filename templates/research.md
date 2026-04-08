@@ -3,7 +3,7 @@
 name: 'Research Area Name'
 description: 'One to two sentences summarising this research area. Shown on the research index card.'
 
-# tags: keywords used for filtering on the research page
+# tags: keywords used for filtering on the research page (lowercase, space-separated)
 tags: ['machine learning', 'proteomics']
 ---
 

@@ -1,6 +1,6 @@
 # Bittremieux Lab Website
 
-Academic research lab website built with [Astro](https://astro.build/), [Preact](https://preactjs.com/), and [Bootstrap 5](https://getbootstrap.com/). Content is managed via Markdown files with YAML frontmatter; publications are generated from a BibTeX file.
+Lab website built with [Astro](https://astro.build/), [Preact](https://preactjs.com/), and [Bootstrap 5](https://getbootstrap.com/). Content is managed via Markdown files with YAML frontmatter; publications are generated from a BibTeX file.
 
 ## How to contribute
 
@@ -70,15 +70,6 @@ npm run lint           # ESLint check
 npm run lint:fix       # ESLint auto-fix
 npm run format         # Prettier auto-format
 npm run format:check   # Prettier check only
-```
-
-**IDE setup:** Install the [Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and enable format-on-save:
-
-```json
-{
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
-}
 ```
 
 ESLint and Prettier are configured to not conflict (`eslint-config-prettier` disables overlapping rules).
