@@ -1,6 +1,5 @@
 ---
-import { SITE } from '../config';
-import { navLinks } from '../config';
+import { SITE, navLinks } from '../config';
 
 const currentPath = Astro.url.pathname;
 
@@ -8,26 +7,23 @@ const isChildActive = (children: { href: string }[]) =>
   children.some((child) => currentPath === child.href || currentPath.startsWith(child.href));
 ---
 
-<!-- source: https://getbootstrap.com/docs/5.3/components/navbar/#toggler --><!-- <header class="d-flex justify-content-center py-3"> -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container">
     <a class="navbar-brand" href="/">{SITE.labName}</a>
 
-    <div class="d-flex align-items-center">
-      <a
-        href="/search"
-        class="btn btn-link text-body d-lg-none me-2"
-        title="Search"
-        aria-label="Search"
-      >
+    <!-- Outside collapse: search icon (mobile only) + hamburger.
+         Search icon is d-lg-none so it only shows on mobile next to the hamburger.
+         On lg+, a second icon inside the collapse handles lg, and the search bar handles xl+. -->
+    <div class="d-flex align-items-center gap-1">
+      <a href="/search" class="btn btn-link text-body d-lg-none" title="Search" aria-label="Search">
         <i class="bi bi-search"></i>
       </a>
       <button
         class="navbar-toggler border-0"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
@@ -35,8 +31,11 @@ const isChildActive = (children: { href: string }[]) =>
       </button>
     </div>
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <!-- Collapsible section: expanded at lg+, toggled by hamburger below lg -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul
+        class="navbar-nav me-auto mb-2 mb-lg-0 text-center text-lg-start align-items-center align-items-lg-start"
+      >
         {
           navLinks.map((link) => {
             if (link.children) {
@@ -54,13 +53,13 @@ const isChildActive = (children: { href: string }[]) =>
                   </a>
                   <ul class="dropdown-menu">
                     {link.children.map((child) => {
-                      const isChildActive =
+                      const childIsActive =
                         currentPath === child.href ||
                         (child.href !== '/' && currentPath.startsWith(child.href));
                       return (
                         <li>
                           <a
-                            class={`dropdown-item${isChildActive ? ' active' : ''}`}
+                            class={`dropdown-item${childIsActive ? ' active' : ''}`}
                             href={child.href}
                           >
                             {child.label}
@@ -90,18 +89,20 @@ const isChildActive = (children: { href: string }[]) =>
           })
         }
       </ul>
-      <!-- <form class="d-flex" role="search" action="/search" method="get">
-        <input
-          class="form-control me-2"
-          type="search"
-          name="q"
-          placeholder="Search people & publications…"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
-      </form> -->
+
+      <!-- Search icon: lg only (mobile icon is outside collapse, search bar handles xl+) -->
+      <a
+        href="/search"
+        class="btn btn-link text-body d-none d-lg-block d-xl-none me-1"
+        title="Search"
+        aria-label="Search"
+      >
+        <i class="bi bi-search"></i>
+      </a>
+
+      <!-- Search bar: xl+ only -->
       <form
-        class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-none d-lg-block"
+        class="d-none d-xl-block col-xl-auto mb-3 mb-xl-0 me-xl-3"
         role="search"
         action="/search"
         method="get"
@@ -114,7 +115,8 @@ const isChildActive = (children: { href: string }[]) =>
           aria-label="Search"
         />
       </form>
-      <div class="dropdown ms-2">
+
+      <div class="dropdown ms-2 text-end">
         <button
           id="theme-dropdown-btn"
           type="button"
@@ -144,4 +146,3 @@ const isChildActive = (children: { href: string }[]) =>
     </div>
   </div>
 </nav>
-<!-- </header> -->
