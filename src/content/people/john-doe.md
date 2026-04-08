@@ -1,32 +1,24 @@
 ---
 name: 'John Doe'
+email: 'john.doe@university.edu'
 role: 'PhD Student'
 status: 'active'
-pronouns: 'he/him'
+team: ['Metabolomics']
+tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
+photo: 'john-doe.png'
 bio_short: 'Working on natural language processing, code generation, and human-AI interaction.'
-email: 'john.doe@university.edu'
-photo: 'john-doe.jpg'
+pronouns: 'he/him'
 links:
   github: 'https://github.com/johndoe'
   scholar: 'https://scholar.google.com'
-  twitter: 'https://twitter.com/johndoe'
-team: ['nlp']
-tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
 education:
   - 'B.Sc. Computer Science, University of Example, 2021'
 awards:
   - 'Best Paper Award, NLP Workshop 2023'
 selected_publications:
   - 'he2016deep'
-collaborations:
-  - 'University x'
-  - 'University y'
 ---
 
 Custom markdown content starting from here.
-
-John is investigating how LLMs can better understand and generate complex software systems. He is also interested in the intersection of programming languages and AI.
-
-**Research Interests**
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

@@ -140,7 +140,7 @@ export default function PeopleGrid({ people, baseUrl }: Props) {
                 <div class="card-img-top d-flex justify-content-center pt-4">
                   {person.photo ? (
                     <img
-                      src={'/profile-images/' + person.photo}
+                      src={person.photo}
                       alt={`Photo of ${person.name}`}
                       class="rounded-circle object-fit-cover"
                       style="width:120px;height:120px"

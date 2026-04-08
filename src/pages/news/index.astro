@@ -4,13 +4,17 @@ import NewsGrid from '../../components/NewsGrid';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const allNews = (await getCollection('news')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
 const newsData = allNews.map((item) => ({
   id: item.id,
   title: item.data.title,
-  date: item.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+  date: item.data.date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }),
   description: item.data.description,
   url: item.data.url,
 }));

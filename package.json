@@ -13,7 +13,17 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write src",
-    "format:check": "prettier --check src"
+    "format:check": "prettier --check src",
+    "validate-images": "node scripts/validate-images.mjs",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,mjs}": [
+      "eslint",
+      "prettier --check"
+    ],
+    "**/*.{astro,scss,css,md,json}": "prettier --check",
+    "src/assets/profile-images/*.{jpg,jpeg,png,webp,avif}": "node scripts/validate-images.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "^5.0.0",
@@ -35,6 +45,7 @@
     "eslint-plugin-react": "^7.37.5",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }

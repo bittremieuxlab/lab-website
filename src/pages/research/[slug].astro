@@ -16,10 +16,17 @@ const { name, description, tags } = research.data;
 ---
 
 <BaseLayout pageTitle={name}>
-  <p>{ description }</p>
-  {tags && tags.length > 0 && (
-    <div class="d-flex flex-wrap gap-1 mt-3">
-      {tags.map((tag: string) => <span class="badge bg-primary" data-pagefind-filter="tag">{tag}</span>)}
-    </div>
-  )}
+  <p>{description}</p>
+  {
+    tags && tags.length > 0 && (
+      <div class="d-flex flex-wrap gap-1 my-3">
+        {tags.map((tag: string) => (
+          <span class="badge bg-primary" data-pagefind-filter="tag">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )
+  }
+  <Content />
 </BaseLayout>

@@ -140,3 +140,9 @@ vite.config.ts.timestamp-*
 
 # Claude
 CLAUDE.md
+
+# Astro generated cache
+.astro/
+
+# Claude Code local settings (personal, not shared)
+.claude/

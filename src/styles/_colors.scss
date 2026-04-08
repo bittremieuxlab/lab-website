@@ -1,0 +1,229 @@
+// =============================================================================
+// Color Themes
+// =============================================================================
+// This file centralises all color definitions for the site.
+// To change the look of the site, edit the values here.
+//
+// Three layers:
+//   1. Light mode  — html[data-bs-theme='light']
+//   2. Dark mode   — html[data-bs-theme='dark']
+//   3. Color-blind-friendly (CBF) mode — Okabe-Ito palette, activated by
+//                           adding the `cbf` class to <html>
+//
+// Use html[data-bs-theme='...'] (not :root) for Bootstrap variables — the html
+// prefix raises specificity above Bootstrap's own :root,[data-bs-theme=light]
+// rule so overrides win regardless of stylesheet load order.
+//
+// Full reference: https://getbootstrap.com/docs/5.3/customize/css-variables/
+
+// -----------------------------------------------------------------------------
+// 1. Light mode
+// -----------------------------------------------------------------------------
+
+html[data-bs-theme='light'] {
+  --link-color: rgba(0, 0, 0, 0.55);
+  --link-hover-color: rgba(0, 0, 0, 0.9);
+
+  // Backgrounds
+  --bs-body-bg: #ffffff;
+  --bs-body-secondary-bg: #f8f9fa;
+
+  // Text
+  --bs-body-color: #212529;
+  --bs-heading-color: #212529;
+  --bs-secondary-color: #6c757d;
+
+  // Brand / primary
+  --bs-primary: #0d6efd;
+  --bs-primary-rgb: 13, 110, 253;
+
+  // Links
+  --bs-link-color: #0d6efd;
+  --bs-link-hover-color: #0a58ca;
+
+  // Borders
+  --bs-border-color: #dee2e6;
+
+  // Navbar
+  --bs-navbar-color: rgba(0, 0, 0, 0.55);
+  --bs-navbar-hover-color: rgba(0, 0, 0, 0.7);
+  --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
+}
+
+// -----------------------------------------------------------------------------
+// 2. Dark mode
+// -----------------------------------------------------------------------------
+
+html[data-bs-theme='dark'] {
+  --link-color: rgba(255, 255, 255, 0.55);
+  --link-hover-color: white;
+
+  // Backgrounds
+  --bs-body-bg: #212529;
+  --bs-body-secondary-bg: #2b3035;
+
+  // Text
+  --bs-body-color: #dee2e6;
+  --bs-heading-color: #dee2e6;
+  --bs-secondary-color: #adb5bd;
+
+  // Brand / primary (lighter shade for dark backgrounds)
+  --bs-primary: #6ea8fe;
+  --bs-primary-rgb: 110, 168, 254;
+
+  // Links
+  --bs-link-color: #6ea8fe;
+  --bs-link-hover-color: #9ec5fe;
+
+  // Borders
+  --bs-border-color: #495057;
+
+  // Navbar
+  --bs-navbar-color: rgba(255, 255, 255, 0.55);
+  --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
+  --bs-navbar-active-color: rgba(255, 255, 255, 0.9);
+
+  // Button secondary
+  .btn-secondary {
+    --bs-btn-color: #000;
+    --bs-btn-bg: #adb5bd;
+    --bs-btn-border-color: #adb5bd;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #9399a1;
+    --bs-btn-hover-border-color: #898f96;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #898f96;
+    --bs-btn-active-border-color: #808990;
+    --bs-btn-focus-shadow-rgb: 173, 181, 189;
+  }
+  .btn-outline-secondary {
+    --bs-btn-color: #adb5bd;
+    --bs-btn-border-color: #adb5bd;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #adb5bd;
+    --bs-btn-hover-border-color: #adb5bd;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #adb5bd;
+    --bs-btn-active-border-color: #adb5bd;
+    --bs-btn-focus-shadow-rgb: 173, 181, 189;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 3. Color-blind-friendly (CBF) mode — Okabe-Ito palette
+//    https://jfly.uni-koeln.de/color/
+//
+// Full Okabe-Ito palette (distinguishable for deuteranopia, protanopia,
+// tritanopia, and monochromacy):
+//
+//   Blue           #0072B2  → primary   (5.2:1 on white — white text ✓)
+//   Reddish Purple #CC79A7  → secondary (3.1:1 on white — dark text required)
+//   Bluish Green   #009E73  → success   (3.4:1 on white — dark text required)
+//   Vermillion     #D55E00  → danger    (3.9:1 on white — dark text required)
+//   Orange         #E69F00  → warning   (2.3:1 on white — dark text required)
+//   Sky Blue       #56B4E9  → info      (2.3:1 on white — dark text required)
+//   Yellow         #F0E442  → (not used — insufficient contrast on white)
+//
+// Only primary can use white button text (≥ 4.5:1 WCAG AA). All others use
+// dark text (#000) to meet contrast requirements.
+// -----------------------------------------------------------------------------
+
+html.cbf {
+  // --- Primary: Okabe-Ito Blue ---
+  --bs-primary: #0072b2;
+  --bs-primary-rgb: 0, 114, 178;
+  --bs-primary-bg-subtle: #cce3f3;
+  --bs-primary-border-subtle: #80b9d9;
+  --bs-primary-text-emphasis: #00426a;
+  --bs-link-color: #0072b2;
+  --bs-link-hover-color: #005a8e;
+
+  // --- Secondary: Okabe-Ito Reddish Purple ---
+  --bs-secondary: #cc79a7;
+  --bs-secondary-rgb: 204, 121, 167;
+  --bs-secondary-bg-subtle: #f5e4ed;
+  --bs-secondary-border-subtle: #e6bcd3;
+  --bs-secondary-text-emphasis: #523043;
+
+  // --- Success: Okabe-Ito Bluish Green ---
+  --bs-success: #009e73;
+  --bs-success-rgb: 0, 158, 115;
+  --bs-success-bg-subtle: #ccece3;
+  --bs-success-border-subtle: #80cfb9;
+  --bs-success-text-emphasis: #003f2e;
+
+  // --- Danger: Okabe-Ito Vermillion ---
+  --bs-danger: #d55e00;
+  --bs-danger-rgb: 213, 94, 0;
+  --bs-danger-bg-subtle: #f7dfcc;
+  --bs-danger-border-subtle: #eaaf80;
+  --bs-danger-text-emphasis: #552600;
+
+  // --- Warning: Okabe-Ito Orange ---
+  --bs-warning: #e69f00;
+  --bs-warning-rgb: 230, 159, 0;
+  --bs-warning-bg-subtle: #faeccc;
+  --bs-warning-border-subtle: #f3cf80;
+  --bs-warning-text-emphasis: #5c4000;
+
+  // --- Info: Okabe-Ito Sky Blue ---
+  --bs-info: #56b4e9;
+  --bs-info-rgb: 86, 180, 233;
+  --bs-info-bg-subtle: #ddf0fb;
+  --bs-info-border-subtle: #abdaf4;
+  --bs-info-text-emphasis: #22485d;
+
+  // Button components expose their own CSS vars and must be overridden
+  // separately — Bootstrap does not derive them from the semantic variables.
+
+  .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #0072b2;
+    --bs-btn-border-color: #0072b2;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #005a8e;
+    --bs-btn-hover-border-color: #005280;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #004d7a;
+    --bs-btn-active-border-color: #004370;
+    --bs-btn-focus-shadow-rgb: 0, 114, 178;
+  }
+
+  .btn-outline-primary {
+    --bs-btn-color: #0072b2;
+    --bs-btn-border-color: #0072b2;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #0072b2;
+    --bs-btn-hover-border-color: #0072b2;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #0072b2;
+    --bs-btn-active-border-color: #0072b2;
+    --bs-btn-focus-shadow-rgb: 0, 114, 178;
+  }
+
+  // Secondary buttons use dark text — contrast with #cc79a7 is only 3.1:1 with white.
+  .btn-secondary {
+    --bs-btn-color: #000;
+    --bs-btn-bg: #cc79a7;
+    --bs-btn-border-color: #cc79a7;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #ad678e;
+    --bs-btn-hover-border-color: #a05e84;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #995b7d;
+    --bs-btn-active-border-color: #8f5575;
+    --bs-btn-focus-shadow-rgb: 204, 121, 167;
+  }
+
+  .btn-outline-secondary {
+    --bs-btn-color: #cc79a7;
+    --bs-btn-border-color: #cc79a7;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #cc79a7;
+    --bs-btn-hover-border-color: #cc79a7;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #cc79a7;
+    --bs-btn-active-border-color: #cc79a7;
+    --bs-btn-focus-shadow-rgb: 204, 121, 167;
+  }
+}
