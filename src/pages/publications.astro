@@ -45,8 +45,8 @@ const publications = cite.data
       id: entry['citation-key'] as string,
       type: entry.type as string,
       title: entry.title as string,
-      authors: (entry.author as Author[] ?? [])
-        .map(a => [a.given, a.family].filter(Boolean).join(' '))
+      authors: ((entry.author as Author[]) ?? [])
+        .map((a) => [a.given, a.family].filter(Boolean).join(' '))
         .join(', '),
       year: entry.issued?.['date-parts']?.[0]?.[0] ?? 0,
       venue: (entry['container-title'] ?? '') as string,
@@ -73,15 +73,23 @@ const pageTitle = 'Publications';
   <!-- Indexed by Pagefind at build time. Off-screen but not aria-hidden so Pagefind picks it up.
        Each publication gets an <h3 id> so Pagefind creates per-publication sub_results with
        anchor URLs like /publications#citation-key. -->
-  <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden"
-       data-pagefind-body>
-    {publications.map((pub: any) => (
-      <section>
-        <h3 id={pub.id}>{pub.title}</h3>
-        <p>{pub.authors}</p>
-        <p>{pub.venue}{pub.venue && pub.year ? ', ' : ''}{pub.year || ''}</p>
-        {pub.abstract && <p>{pub.abstract}</p>}
-      </section>
-    ))}
+  <div
+    style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden"
+    data-pagefind-body
+  >
+    {
+      publications.map((pub: any) => (
+        <section>
+          <h3 id={pub.id}>{pub.title}</h3>
+          <p>{pub.authors}</p>
+          <p>
+            {pub.venue}
+            {pub.venue && pub.year ? ', ' : ''}
+            {pub.year || ''}
+          </p>
+          {pub.abstract && <p>{pub.abstract}</p>}
+        </section>
+      ))
+    }
   </div>
 </BaseLayout>
