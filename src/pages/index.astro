@@ -78,8 +78,7 @@ const recentNews = allNews
                   <h5 class="card-title fw-semibold mb-2 flex-grow-1">
                     {pub.url ? (
                       <a
-                        href={pub.url}
-                        target="_blank"
+                        href={`/publications#${pub.id}`}
                         rel="noopener"
                         class="text-body text-decoration-none stretched-link"
                       >

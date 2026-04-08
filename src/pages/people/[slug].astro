@@ -243,7 +243,12 @@ const personPublications = (() => {
             <hr class="mb-4" />
             <div class="mt-4">
               <h2 class="mb-3">Publications</h2>
-              <PublicationList publications={personPublications} showFilters={false} client:load />
+              <PublicationList
+                publications={personPublications}
+                showFilters={false}
+                pageLinks
+                client:load
+              />
             </div>
           </div>
         )

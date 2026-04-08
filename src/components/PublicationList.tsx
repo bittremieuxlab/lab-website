@@ -15,9 +15,10 @@ type Publication = {
 type Props = {
   publications: Publication[];
   showFilters: Boolean;
+  pageLinks?: boolean;
 };
 
-export default function PublicationList({ publications, showFilters }: Props) {
+export default function PublicationList({ publications, showFilters, pageLinks }: Props) {
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
   const lastClickedYear = useRef<number | null>(null);
 
@@ -99,7 +100,11 @@ export default function PublicationList({ publications, showFilters }: Props) {
               {pubsByYear[year].map((pub) => (
                 <li key={pub.id} id={pub.id} class="mt-2 pb-2">
                   <div class="lh-sm mb-1">
-                    {pub.url ? (
+                    {pageLinks ? (
+                      <a href={`/publications#${pub.id}`} class="fw-semibold">
+                        {pub.title}
+                      </a>
+                    ) : pub.url ? (
                       <a href={pub.url} target="_blank" rel="noopener" class="fw-semibold">
                         {pub.title}
                       </a>
