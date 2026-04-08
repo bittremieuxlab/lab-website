@@ -5,6 +5,7 @@ import '@citation-js/plugin-bibtex';
 import { Cite } from '@citation-js/core';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PublicationList from '../components/PublicationList.tsx';
+import { sanitizeTitle } from '../scripts/bibtex.ts';
 
 // NOTE: Add the following block only if special fields should also be extracted
 //
@@ -44,13 +45,13 @@ const publications = cite.data
     return {
       id: entry['citation-key'] as string,
       type: entry.type as string,
-      title: entry.title as string,
+      title: sanitizeTitle(entry.title) as string,
       authors: ((entry.author as Author[]) ?? [])
         .map((a) => [a.given, a.family].filter(Boolean).join(' '))
         .join(', '),
       year: entry.issued?.['date-parts']?.[0]?.[0] ?? 0,
       venue: (entry['container-title'] ?? '') as string,
-      url: (entry.URL ?? '') as string,
+      url: (entry.URL ?? (entry.DOI ? `https://doi.org/${entry.DOI}` : '')) as string,
       abstract: (entry.abstract ?? '') as string,
       note: (entry.note ?? '') as string,
       // featured: raw.featured === 'true',

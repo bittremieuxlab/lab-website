@@ -2,21 +2,22 @@
 # REQUIRED
 name: 'Firstname Lastname'
 email: 'firstname.lastname@uantwerpen.be'
-role: 'PhD Student' # PhD Student | Software Engineer | MSc Student | Postdoc | Professor | PI
+role: 'PhD Student' # Professor | Assistant Professor | PI | Postdoc | PhD Student | MSc Student | Software Engineer | Machine Learning Engineer
 status: 'active' # active | alumni | collaborator
-# team: group membership for filtering on the people page
-team: ['Mass Spectrometry'] # Mass Spectrometry | Metabolomics
-# tags: keywords shown on your card and used for filtering
-tags: ['machine learning', 'mass spectrometry']
 
 # OPTIONAL — omit any field you don't want shown
+# tags: keywords shown on your personal page (lowercase, space-separated)
+tags: ['machine learning', 'mass spectrometry']
+
 photo:
   'firstname-lastname.jpg' # Place the file in src/assets/profile-images/
   # Requirements: square crop, min 360×360 px, max 5 MB
   # Filename: lowercase, hyphen-separated
   # Supported formats: jpg, jpeg, png, webp, avif
   # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+
 bio_short: 'One to three sentences describing your research focus.'
+
 pronouns: 'pronouns string'
 
 links:
@@ -36,16 +37,11 @@ education:
   - 'B.Sc. Computer Science, KU Leuven, 2021'
 
 awards:
-  - 'Best Poster Award, HUPO 2024'
+  - 'Award X, CONFERENCE 2024'
+  - 'Award Y, ... 2025'
 
-affiliation:
-  - 'Collaborating University Name'
-
-# For alumni: add the following field
-# status: 'alumni'
-
-# For collaborators from another institution: also add
-# affiliation: 'Institution Name'
+# FOR COLLABORATORS from another institution: also add
+affiliation: 'Collaborating University Name'
 ---
 
 Write a longer bio here in Markdown (optional). This appears on the individual person page.

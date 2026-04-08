@@ -3,15 +3,16 @@ import { glob } from 'astro/loaders';
 import { z } from 'zod';
 
 const personRoles = z.enum([
-  'PhD Student',
-  'Software Engineer',
-  'MSc Student',
-  'Postdoc',
   'Professor',
+  'Assistant Professor',
   'PI',
+  'Postdoc',
+  'PhD Student',
+  'MSc Student',
+  'Software Engineer',
+  'Machine Learning Engineer',
 ]);
 const personStatuses = z.enum(['active', 'alumni', 'collaborator']);
-const personTeams = z.enum(['Mass Spectrometry', 'Metabolomics']);
 
 const people = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
@@ -20,8 +21,7 @@ const people = defineCollection({
     email: z.email(),
     role: personRoles,
     status: personStatuses,
-    team: z.array(personTeams).default([]),
-    tags: z.array(z.string()).default([]),
+    tags: z.array(z.string().toLowerCase()).default([]),
     photo: z.string().optional(),
     bio_short: z.string().optional(),
     pronouns: z.string().optional(),
@@ -46,7 +46,7 @@ const research = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    tags: z.array(z.string()).default([]),
+    tags: z.array(z.string().toLowerCase()).default([]),
   }),
 });
 

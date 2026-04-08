@@ -35,7 +35,6 @@ const {
   email,
   role,
   status,
-  team,
   tags,
   photo,
   bio_short,
@@ -162,19 +161,6 @@ const personPublications = (() => {
           )
         }
       </div>
-
-      {
-        team && team.length > 0 && (
-          <div class="mt-3 text-center">
-            <p class="text-muted small fw-semibold text-uppercase mb-2">Team</p>
-            <div class="d-flex flex-wrap gap-1 justify-content-center">
-              {team.map((t) => (
-                <span class="badge bg-secondary">{t}</span>
-              ))}
-            </div>
-          </div>
-        )
-      }
     </div>
 
     <div class="col-md-9">
@@ -257,7 +243,12 @@ const personPublications = (() => {
             <hr class="mb-4" />
             <div class="mt-4">
               <h2 class="mb-3">Publications</h2>
-              <PublicationList publications={personPublications} showFilters={false} client:load />
+              <PublicationList
+                publications={personPublications}
+                showFilters={false}
+                pageLinks
+                client:load
+              />
             </div>
           </div>
         )

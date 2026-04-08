@@ -15,9 +15,40 @@ type Publication = {
 type Props = {
   publications: Publication[];
   showFilters: Boolean;
+  pageLinks?: boolean;
 };
 
-export default function PublicationList({ publications, showFilters }: Props) {
+const AUTHOR_COLLAPSE_THRESHOLD = 10;
+
+function CollapsibleAuthors({ authors }: { authors: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const names = authors.split(', ');
+  if (names.length <= AUTHOR_COLLAPSE_THRESHOLD) return <span>{authors}</span>;
+  return (
+    <span>
+      {expanded ? authors : `${names.slice(0, AUTHOR_COLLAPSE_THRESHOLD).join(', ')}`}
+      {!expanded ? (
+        <button
+          class="btn btn-link btn-sm p-0 ms-1 align-baseline text-muted"
+          style="font-size:inherit"
+          onClick={() => setExpanded(true)}
+        >
+          et al.
+        </button>
+      ) : (
+        <button
+          class="btn btn-link btn-sm p-0 ms-1 align-baseline text-muted"
+          style="font-size:inherit"
+          onClick={() => setExpanded(false)}
+        >
+          show less
+        </button>
+      )}
+    </span>
+  );
+}
+
+export default function PublicationList({ publications, showFilters, pageLinks }: Props) {
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
   const lastClickedYear = useRef<number | null>(null);
 
@@ -99,7 +130,11 @@ export default function PublicationList({ publications, showFilters }: Props) {
               {pubsByYear[year].map((pub) => (
                 <li key={pub.id} id={pub.id} class="mt-2 pb-2">
                   <div class="lh-sm mb-1">
-                    {pub.url ? (
+                    {pageLinks ? (
+                      <a href={`/publications#${pub.id}`} class="fw-semibold">
+                        {pub.title}
+                      </a>
+                    ) : pub.url ? (
                       <a href={pub.url} target="_blank" rel="noopener" class="fw-semibold">
                         {pub.title}
                       </a>
@@ -109,7 +144,7 @@ export default function PublicationList({ publications, showFilters }: Props) {
                     {pub.note && <span class="badge bg-secondary mx-2">{pub.note}</span>}
                   </div>
                   <div class="text-muted small lh-sm">
-                    {pub.authors}
+                    <CollapsibleAuthors authors={pub.authors} />
                     {pub.authors && (pub.venue || pub.year) ? ' · ' : ''}
                     <em>{pub.venue}</em>
                     {pub.venue && pub.year ? ', ' : ''}

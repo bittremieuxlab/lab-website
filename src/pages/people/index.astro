@@ -36,7 +36,6 @@ const peopleData = await Promise.all(
     bio_short: p.data.bio_short,
     photo: await resolvePhoto(p.data.photo),
     tags: p.data.tags,
-    teams: p.data.team,
   }))
 );
 
