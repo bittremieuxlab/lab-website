@@ -15,6 +15,7 @@ education:
   - 'B.Sc. Computer Science, University of Example, 2021'
 awards:
   - 'Best Paper Award, NLP Workshop 2023'
+  - 'Best Paper Award, NLP Workshop 2024'
 selected_publications:
   - 'he2016deep'
 ---

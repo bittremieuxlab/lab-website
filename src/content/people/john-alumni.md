@@ -1,8 +1,8 @@
 ---
-name: 'John Collaborator Doe'
+name: 'John Alumni Doe'
 email: 'john.doe@university.edu'
 role: 'MSc Student'
-status: 'collaborator'
+status: 'alumni'
 team: ['Mass Spectrometry']
 tags: ['NLP', 'code generation', 'human-AI interaction', 'deep learning']
 photo: 'john-doe.png'
