@@ -6,6 +6,7 @@ import { Cite } from '@citation-js/core';
 import { getCollection } from 'astro:content';
 import HomeLayout from '../layouts/HomeLayout.astro';
 import { SITE } from '../config';
+import { sanitizeTitle } from '../scripts/bibtex';
 import '../styles/home.scss';
 
 type Author = { given?: string; family?: string };
@@ -17,10 +18,13 @@ const featuredPubs = cite.data
   .filter((e: any) => SITE.featuredPublications.includes(e['citation-key']))
   .map((e: any) => ({
     id: e['citation-key'] as string,
-    title: e.title as string,
-    authors: ((e.author as Author[]) ?? [])
-      .map((a) => [a.given, a.family].filter(Boolean).join(' '))
-      .join(', '),
+    title: sanitizeTitle(e.title as string),
+    authors: (() => {
+      const names = ((e.author as Author[]) ?? []).map((a) =>
+        [a.given, a.family].filter(Boolean).join(' ')
+      );
+      return names.length > 3 ? `${names.slice(0, 3).join(', ')} et al.` : names.join(', ');
+    })(),
     year: e.issued?.['date-parts']?.[0]?.[0] ?? 0,
     venue: (e['container-title'] ?? e.booktitle ?? '') as string,
     url: (e.URL ?? '') as string,
@@ -76,17 +80,13 @@ const recentNews = allNews
                     {pub.venue && <span class="text-muted small text-truncate">{pub.venue}</span>}
                   </div>
                   <h5 class="card-title fw-semibold mb-2 flex-grow-1">
-                    {pub.url ? (
-                      <a
-                        href={`/publications#${pub.id}`}
-                        rel="noopener"
-                        class="text-body text-decoration-none stretched-link"
-                      >
-                        {pub.title}
-                      </a>
-                    ) : (
-                      pub.title
-                    )}
+                    <a
+                      href={`/publications#${pub.id}`}
+                      rel="noopener"
+                      class="text-body text-decoration-none stretched-link"
+                    >
+                      {pub.title}
+                    </a>
                   </h5>
                   <p class="card-text text-muted small mb-0">{pub.authors}</p>
                 </div>

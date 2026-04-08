@@ -10,6 +10,9 @@ bio_short: 'Working on ....'
 links:
   github: 'https://github.com/johndoe'
 affiliation: 'University x'
+selected_publications:
+  - 'ElAbiead2025'
+  - 'Naulaerts2015'
 ---
 
 Custom markdown content starting from here.

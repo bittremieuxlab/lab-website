@@ -144,6 +144,9 @@ export default function Search() {
           {results.map((r) => (
             <li key={r.url} class="mb-3 pb-3 border-bottom">
               <a href={r.url} class="fw-semibold">
+                {isPublicationsResult(r.url) && (
+                  <i class="bi bi-journal-text me-1 text-muted small" title="Publication" />
+                )}
                 {r.meta.title ?? r.url}
               </a>
               <p

@@ -19,7 +19,7 @@ export const SITE = {
   heroTitle: 'Bioinformatics Research',
   heroSubtitle:
     'We develop algorithms and software tools to advance the analysis of mass spectrometry data for proteomics and metabolomics.',
-  featuredPublications: ['cvpr2025transformer', 'gpt4', 'neurips2024diffusion'],
+  featuredPublications: ['Yilmaz2022', 'Yilmaz2024', 'Bittremieux2025', 'Shaffer2022'],
 };
 
 export const navLinks = [
