@@ -26,10 +26,10 @@
     "src/assets/profile-images/*.{jpg,jpeg,png,webp,avif}": "node scripts/validate-images.mjs"
   },
   "dependencies": {
-    "@astrojs/preact": "^5.0.0",
+    "@astrojs/preact": "^5.1.1",
     "@citation-js/core": "^0.7.21",
     "@citation-js/plugin-bibtex": "^0.7.21",
-    "astro": "^6.0.3",
+    "astro": "^6.1.4",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "preact": "^10.29.0",
