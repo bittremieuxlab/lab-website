@@ -18,27 +18,19 @@ type Props = {
 
 export default function PeopleGrid({ people, baseUrl }: Props) {
   const [activeRole, setActiveRole] = useState<string | null>(null);
-  const [activeTags, setActiveTags] = useState<string[]>([]);
 
   const roles = [...new Set(people.map((p) => p.role))].sort();
-  const tags = [...new Set(people.flatMap((p) => p.tags))].sort();
 
   const filtered = people.filter((p) => {
     if (activeRole && p.role !== activeRole) return false;
-    if (activeTags.length > 0 && !activeTags.every((t) => p.tags.includes(t))) return false;
     return true;
   });
 
-  function toggleTag(tag: string) {
-    setActiveTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
-  }
-
   function reset() {
     setActiveRole(null);
-    setActiveTags([]);
   }
 
-  const hasFilter = activeRole || activeTags.length > 0;
+  const hasFilter = activeRole;
 
   return (
     <div>
@@ -60,25 +52,6 @@ export default function PeopleGrid({ people, baseUrl }: Props) {
             ))}
           </div>
         </div>
-
-        {tags.length > 0 && (
-          <div class="d-flex align-items-center gap-2 flex-wrap">
-            <span class="text-muted small fw-semibold text-uppercase" style="min-width:3rem">
-              Tags
-            </span>
-            <div class="d-flex flex-wrap gap-1">
-              {tags.map((tag) => (
-                <button
-                  key={tag}
-                  class={`btn btn-sm ${activeTags.includes(tag) ? 'btn-secondary' : 'btn-outline-secondary'}`}
-                  onClick={() => toggleTag(tag)}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
         {hasFilter && (
           <div>
