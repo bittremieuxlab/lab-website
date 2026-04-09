@@ -5,5 +5,67 @@ const pageTitle = 'Contact';
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p>Test</p>
+  <p class="lead text-muted mb-5">Get in touch with the Bittremieux Lab.</p>
+
+  <div class="row g-4">
+    <div class="col-lg-5 d-flex flex-column gap-4">
+      <a id="email-link" class="card border-0 shadow text-decoration-none bg-body-secondary">
+        <div class="card-body d-flex align-items-center gap-3 p-4">
+          <i class="bi bi-envelope fs-2"></i>
+          <div>
+            <h2 class="h6 mb-1 card-title">Email</h2>
+            <span id="email-text" class="text-muted"></span>
+          </div>
+        </div>
+      </a>
+      <script>
+        const parts = [98, 105, 116, 116, 114, 101, 109, 105, 101, 117, 120, 45, 108, 97, 98];
+        const host = [117, 97, 110, 116, 119, 101, 114, 112, 101, 110, 46, 98, 101];
+        const u = String.fromCharCode(...parts);
+        const d = String.fromCharCode(...host);
+        const link = document.getElementById('email-link');
+        const text = document.getElementById('email-text');
+        if (link && text) {
+          link.href = 'mailto:' + u + '@' + d;
+          text.textContent = u + '@' + d;
+        }
+      </script>
+      <a
+        href="https://github.com/bittremieuxlab"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card border-0 shadow text-decoration-none bg-body-secondary"
+      >
+        <div class="card-body d-flex align-items-center gap-3 p-4">
+          <i class="bi bi-github fs-2"></i>
+          <div>
+            <h2 class="h6 mb-1 card-title">GitHub</h2>
+            <span class="text-muted">github.com/bittremieuxlab</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-7">
+      <div class="card border-0 shadow bg-body-secondary h-100">
+        <iframe
+          title="University of Antwerp - Campus Middelheim"
+          src="https://www.google.com/maps?q=University+of+Antwerp+Campus+Middelheim,+Middelheimlaan+1,+2020+Antwerpen&output=embed"
+          width="100%"
+          height="200"
+          class="card-img-top"
+          style="border: 0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="card-body p-4">
+          <h2 class="h6 mb-2"><i class="bi bi-geo-alt me-1"></i>Address</h2>
+          <address class="mb-0 text-muted">
+            University of Antwerp<br />
+            Campus Middelheim<br />
+            Middelheimlaan 1<br />
+            2020 Antwerpen, Belgium
+          </address>
+        </div>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
