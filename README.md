@@ -20,6 +20,10 @@ npm run preview        # Preview production build locally
 ## Project Structure
 
 ```text
+public/
+└── assets/            # Static images and logos served as-is
+scripts/
+└── validate-images.mjs    # Profile image validation (size and dimensions)
 src/
 ├── components/        # Preact (TSX) interactive components + Astro components
 ├── content/           # Markdown content collections
@@ -35,9 +39,10 @@ src/
 ├── styles/            # SCSS stylesheets (Bootstrap + custom)
 ├── assets/
 │   └── profile-images/    # Team member photos (optimized at build time)
-└── config.ts          # Site configuration (lab name, featured publications, nav)
-public/
-└── assets/            # Static images and logos served as-is
+├── scripts/           # TypeScript utility scripts (BibTeX parsing, theme mode)
+├── config.ts          # Site configuration (lab name, featured publications, nav)
+└── content.config.ts  # Content collection Zod schemas
+templates/             # Markdown templates for new content entries
 ```
 
 ## CI/CD
@@ -113,5 +118,4 @@ npm run validate-images
 
 ## Image Credits
 
-- `geralt-dna-9483532_1920.jpg` — https://pixabay.com/illustrations/dna-artificial-intelligence-research-9483532/
 - `geralt-dna-3539309_1920.jpg` — https://pixabay.com/illustrations/dna-analysis-research-3539309/
