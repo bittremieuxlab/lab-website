@@ -44,17 +44,18 @@ education:
 #affiliation: 'Collaborating University Name'
 ---
 
-Hi, I'm Fatemeh, a researcher and PhD student in Computer Science at the University 
-of Antwerp. My background is in Mechanical and Mechatronics Engineering, but during my 
-Master's I became deeply interested in projects at the intersection of AI and biomedical 
+Hi, I'm Fatemeh, a researcher and PhD student in Computer Science at the University
+of Antwerp. My background is in Mechanical and Mechatronics Engineering, but during my
+Master's I became deeply interested in projects at the intersection of AI and biomedical
 research and that curiosity led me to change my academic path entirely.
 
-I now work on applying AI, particularly large language models, to automatically extract and 
-annotate experimental metadata from scientific literature. The goal is to help researchers 
-find, understand and reuse the vast amounts of proteomics data available in public 
+I now work on applying AI, particularly large language models, to automatically extract and
+annotate experimental metadata from scientific literature. The goal is to help researchers
+find, understand and reuse the vast amounts of proteomics data available in public
 repositories in a more reliable and efficient way.
 
 Outside of research:
+
 - ☕ I love coffee
 - 📚 I enjoy reading books
 - 🎬 I like watching movies and series
