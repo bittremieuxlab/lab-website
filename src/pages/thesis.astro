@@ -6,154 +6,88 @@ const pageTitle = 'Thesis';
 
 const allTheses = await getCollection('theses');
 
-const available = allTheses.filter((t) => t.data.status === 'available');
-const ongoing = allTheses.filter((t) => t.data.status === 'ongoing');
-const completed = allTheses
-  .filter((t) => t.data.status === 'completed')
-  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
-
-async function getContent(entry: (typeof allTheses)[number]) {
-  const { Content } = await render(entry);
-  return Content;
-}
-
+const statusBadge: Record<string, string> = {
+  available: 'bg-primary',
+  ongoing: 'bg-warning text-dark',
+  completed: 'bg-secondary',
+};
+const statusLabel: Record<string, string> = {
+  available: 'Available',
+  ongoing: 'Ongoing',
+  completed: 'Completed',
+};
 const typeLabel: Record<string, string> = {
   bachelor: 'Bachelor Thesis',
   master: 'Master Thesis',
   'bachelor/master': 'Bachelor / Master Thesis',
   phd: 'PhD Thesis',
 };
+
+async function getContent(entry: (typeof allTheses)[number]) {
+  const { Content } = await render(entry);
+  return Content;
+}
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p class="lead text-muted mb-5">
-    We regularly offer bachelor and master thesis projects for students interested in
-    bioinformatics, mass spectrometry data analysis, and machine learning.
-  </p>
-
-  <!-- Available Topics -->
   {
-    available.length > 0 && (
-      <section class="mb-5">
-        <h2 class="h4 border-bottom pb-2 mb-4">Available Topics</h2>
-        {await Promise.all(
-          available.map(async (thesis) => {
-            const Content = await getContent(thesis);
-            return (
-              <div class="card border-0 shadow-sm mb-3">
-                <div class="card-body">
-                  <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                    <span class="badge bg-primary">
-                      {typeLabel[thesis.data.type] ?? thesis.data.type}
-                    </span>
-                  </div>
-                  <h3 class="h5 mb-1">{thesis.data.title}</h3>
-                  {thesis.data.topics.length > 0 && (
-                    <p class="text-muted small mb-2">{thesis.data.topics.join(' · ')}</p>
-                  )}
-                  <div class="small">
-                    <Content />
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        )}
-      </section>
-    )
-  }
-
-  <!-- Ongoing -->
-  {
-    ongoing.length > 0 && (
-      <section class="mb-5">
-        <h2 class="h4 border-bottom pb-2 mb-4">Ongoing</h2>
-        {await Promise.all(
-          ongoing.map(async (thesis) => {
-            const Content = await getContent(thesis);
-            return (
-              <div class="card border-0 shadow-sm mb-3">
-                <div class="card-body">
-                  <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                    <span class="badge bg-primary-subtle text-primary-emphasis">
-                      {typeLabel[thesis.data.type] ?? thesis.data.type}
-                    </span>
-                    {thesis.data.student && (
-                      <span class="text-muted small">— {thesis.data.student}</span>
+    allTheses.length === 0 ? (
+      <p class="text-muted">There are currently no thesis projects available.</p>
+    ) : (
+      <div>
+        <div class="mb-5">
+          {await Promise.all(
+            allTheses.map(async (thesis) => {
+              const Content = await getContent(thesis);
+              return (
+                <div class="card border-0 shadow-sm mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
+                      <h3 class="h5 mb-0">{thesis.data.title}</h3>
+                      <div class="d-flex gap-2">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis">
+                          {typeLabel[thesis.data.type] ?? thesis.data.type}
+                        </span>
+                        <span class={`badge ${statusBadge[thesis.data.status]}`}>
+                          {statusLabel[thesis.data.status]}
+                        </span>
+                      </div>
+                    </div>
+                    {(thesis.data.student || thesis.data.year) && (
+                      <p class="text-muted small mb-2">
+                        {[thesis.data.student, thesis.data.year ? `(${thesis.data.year})` : null]
+                          .filter(Boolean)
+                          .join(' ')}
+                      </p>
                     )}
-                  </div>
-                  <h3 class="h5 mb-1">{thesis.data.title}</h3>
-                  {thesis.data.topics.length > 0 && (
-                    <p class="text-muted small mb-2">{thesis.data.topics.join(' · ')}</p>
-                  )}
-                  <div class="small">
-                    <Content />
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        )}
-      </section>
-    )
-  }
-
-  <!-- Completed -->
-  {
-    completed.length > 0 && (
-      <section class="mb-5">
-        <h2 class="h4 border-bottom pb-2 mb-4">Completed</h2>
-        {await Promise.all(
-          completed.map(async (thesis) => {
-            const Content = await getContent(thesis);
-            return (
-              <div class="card border-0 shadow-sm mb-3">
-                <div class="card-body">
-                  <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                    <span class="badge bg-primary-subtle text-primary-emphasis">
-                      {typeLabel[thesis.data.type] ?? thesis.data.type}
-                    </span>
-                    {thesis.data.student && (
-                      <span class="text-muted small">— {thesis.data.student}</span>
+                    {thesis.data.topics.length > 0 && (
+                      <p class="text-muted small mb-2">{thesis.data.topics.join(' · ')}</p>
                     )}
-                    {thesis.data.year && <span class="text-muted small">({thesis.data.year})</span>}
-                  </div>
-                  <h3 class="h5 mb-1">{thesis.data.title}</h3>
-                  {thesis.data.topics.length > 0 && (
-                    <p class="text-muted small mb-2">{thesis.data.topics.join(' · ')}</p>
-                  )}
-                  <div class="small">
-                    <Content />
+                    <div class="small">
+                      <Content />
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })
-        )}
-      </section>
+              );
+            })
+          )}
+        </div>
+
+        <div class="mb-5">
+          <h2 class="h4 border-bottom pb-2 mb-4">How to Apply</h2>
+          <p>
+            Contact us by email with a brief motivation letter and your transcript of records. We
+            will schedule a short meeting to discuss your interests and match you with a suitable
+            project. Custom project proposals are also welcome.
+          </p>
+          <a href="/contact" class="btn btn-primary">
+            Contact Us
+          </a>
+          <a href="/positions" class="btn btn-outline-primary ms-2">
+            Open Positions
+          </a>
+        </div>
+      </div>
     )
   }
-
-  <!-- Requirements -->
-  <section class="mb-5">
-    <h2 class="h4 border-bottom pb-2 mb-4">Requirements</h2>
-    <ul>
-      <li>Background in computer science, bioinformatics, biochemistry, or a related field</li>
-      <li>Interest in data-driven science and algorithm development</li>
-      <li>Basic programming experience (Python, R, or similar)</li>
-      <li>No prior knowledge of mass spectrometry required — we will provide training</li>
-    </ul>
-  </section>
-
-  <!-- How to Apply -->
-  <section class="mb-5">
-    <h2 class="h4 border-bottom pb-2 mb-4">How to Apply</h2>
-    <p>
-      Contact us by email with a brief motivation letter and your transcript of records. We will
-      schedule a short meeting to discuss your interests and match you with a suitable project.
-      Custom project proposals are also welcome.
-    </p>
-    <a href="/contact" class="btn btn-primary">Contact Us</a>
-    <a href="/positions" class="btn btn-outline-primary ms-2">Open Positions</a>
-  </section>
 </BaseLayout>
