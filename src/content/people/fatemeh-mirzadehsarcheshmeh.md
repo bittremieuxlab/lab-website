@@ -10,7 +10,7 @@ status: 'active' # active | alumni | collaborator
 tags: ['Machine Learning', 'Large Language Model', 'Proteomics', 'Mass Spectrometry']
 
 photo:
-  'fatemeh-mirzadehsarcheshmeh.jpg' # Place the file in src/assets/profile-images/
+  'fatemeh-mirzadehsarcheshmeh.png' # Place the file in src/assets/profile-images/
   # Requirements: square crop, min 360×360 px, max 5 MB
   # Filename: lowercase, hyphen-separated
   # Supported formats: jpg, jpeg, png, webp, avif
