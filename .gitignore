@@ -140,7 +140,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Claude
-CLAUDE.md
+# CLAUDE.md
 
 # Astro generated cache
 .astro/

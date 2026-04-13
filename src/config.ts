@@ -1,19 +1,19 @@
 export const SITE = {
-  //   website: 'https://scholar-lite-demo.netlify.app/', // Replace with your actual deployed URL
-  //   author: 'Scholar-Lite Team',
-  //   description: 'A lightweight, modern static website template for academic labs and scholars.',
-  //   title: 'Scholar-Lite',
-  //   ogImage: 'astropaper-og.jpg',
+  //   website:
+  //   author:
+  //   description:
+  //   title:
+  //   ogImage:
   lightAndDarkMode: true,
-  //   postPerPage: 3,
-  //   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
+  //   postPerPage:
+  //   scheduledPostMargin:
 
   // Lab Info
   labName: 'Bittremieux Lab',
   university: 'University of Antwerp',
-  //   logo: '/assets/logo-real.svg', // Logo path
-  //   avatar: '/assets/logo-real.svg', // Avatar for SEO/Schema
-  //   email: 'contact@lab.edu', // Contact email for Join Us page
+  //   logo: , // Logo path
+  //   avatar: , // Avatar for SEO/Schema
+  //   email: , // Contact email for Join Us page
 
   // Home page
   heroTitle: 'Bioinformatics Research',
