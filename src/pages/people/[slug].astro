@@ -46,6 +46,18 @@ const {
   education,
 } = person.data;
 
+const emailParts = email
+  ? (() => {
+      const atIndex = email.indexOf('@');
+      const user = email.slice(0, atIndex);
+      const domain = email.slice(atIndex + 1);
+      return {
+        user: Array.from(user, (c) => c.charCodeAt(0)),
+        domain: Array.from(domain, (c) => c.charCodeAt(0)),
+      };
+    })()
+  : null;
+
 const personPublications = (() => {
   if (!selected_publications || selected_publications.length === 0) return [];
   const bibContent = readFileSync(join(process.cwd(), 'src/data/publications.bib'), 'utf-8');
@@ -94,8 +106,8 @@ const personPublications = (() => {
 
       <div class="d-flex flex-column gap-2 align-items-center">
         {
-          email && (
-            <a href={`mailto:${email}`} class="btn btn-sm btn-outline-secondary w-100">
+          emailParts && (
+            <a id="person-email-link" class="btn btn-sm btn-outline-secondary w-100">
               Email
             </a>
           )
@@ -255,4 +267,12 @@ const personPublications = (() => {
       }
     </div>
   </div>
+  <script define:vars={{ emailParts }}>
+    if (emailParts) {
+      const u = String.fromCharCode(...emailParts.user);
+      const d = String.fromCharCode(...emailParts.domain);
+      const link = document.getElementById('person-email-link');
+      if (link) link.href = 'mailto:' + u + '@' + d;
+    }
+  </script>
 </BaseLayout>
