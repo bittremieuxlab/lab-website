@@ -1,20 +1,23 @@
 ---
-# REQUIRED
+# ----- REQUIRED fields (start)
+
 name: 'Firstname Lastname'
 email: 'firstname.lastname@uantwerpen.be'
 role: 'PhD Student' # Professor | Assistant Professor | PI | Postdoc | PhD Student | MSc Student | Software Engineer | Machine Learning Engineer
 status: 'active' # active | alumni | collaborator
 
-# OPTIONAL — remove (comment) any field you don't want shown
+# ----- REQUIRED fields (end)
+
+# ----- OPTIONAL fields (start) — remove (comment) any field you don't want shown
+
 # tags: keywords shown on your personal page (lowercase, space-separated)
 tags: ['machine learning', 'mass spectrometry']
 
-photo:
-  'firstname-lastname.jpg' # Place the file in src/assets/profile-images/
-  # Requirements: square crop, min 360×360 px, max 5 MB
-  # Filename: lowercase, hyphen-separated
-  # Supported formats: jpg, jpeg, png, webp, avif
-  # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+# Photo requirements: square crop, min 360×360 px, max 5 MB
+# - Filename: lowercase, hyphen-separated
+# - Supported formats: jpg, jpeg, png, webp, avif
+# - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+photo: 'firstname-lastname.jpg' # ! Place the file in src/assets/profile-images/
 
 bio_short: 'One to three sentences describing your research focus.'
 
@@ -27,7 +30,8 @@ links:
   orcid: '0000-0000-0000-0000'
   linkedin: 'https://www.linkedin.com/in/username'
 
-# selected_publications: citation keys from src/data/publications.bib
+# Selected set of publications:
+# Note: All publications (citation keys) must match an existing publication in src/data/publications.bib
 selected_publications:
   - 'citation-key-1'
   - 'citation-key-2'
@@ -42,6 +46,8 @@ awards:
 
 # FOR COLLABORATORS from another institution: also add
 affiliation: 'Collaborating University Name'
+
+# ----- OPTIONAL fields (end)
 ---
 
 Write a longer bio here in Markdown (optional). This appears on the individual person page.

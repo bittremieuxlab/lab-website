@@ -9,12 +9,11 @@ status: 'active' # active | alumni | collaborator
 # tags: keywords shown on your personal page (lowercase, space-separated)
 tags: ['Machine Learning', 'Large Language Model', 'Proteomics', 'Mass Spectrometry']
 
-photo:
-  'fatemeh-mirzadehsarcheshmeh.png' # Place the file in src/assets/profile-images/
-  # Requirements: square crop, min 360×360 px, max 5 MB
-  # Filename: lowercase, hyphen-separated
-  # Supported formats: jpg, jpeg, png, webp, avif
-  # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+# Photo requirements: square crop, min 360×360 px, max 5 MB
+# - Filename: lowercase, hyphen-separated
+# - Supported formats: jpg, jpeg, png, webp, avif
+# - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+photo: 'fatemeh-mirzadehsarcheshmeh.png' # Place the file in src/assets/profile-images/
 
 bio_short: 'I am a PhD student at Adrem Data Lab, focusing on AI driven metadata annotation and quality control in mass spectrometry (proteomics). My project integrates bioinformatics, text mining and machine learning to enhance the findability, interoperability and reusability of public proteomics data.'
 

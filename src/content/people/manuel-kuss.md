@@ -9,12 +9,11 @@ status: 'active'
 # tags: keywords shown on your personal page (lowercase, space-separated)
 # tags: ['machine learning', 'mass spectrometry']
 
-photo:
-  'manuel-kuss.jpg' # Place the file in src/assets/profile-images/
-  # Requirements: square crop, min 360×360 px, max 5 MB
-  # Filename: lowercase, hyphen-separated
-  # Supported formats: jpg, jpeg, png, webp, avif
-  # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+# Photo requirements: square crop, min 360×360 px, max 5 MB
+# - Filename: lowercase, hyphen-separated
+# - Supported formats: jpg, jpeg, png, webp, avif
+# - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+photo: 'manuel-kuss.jpg' # Place the file in src/assets/profile-images/
 
 bio_short: 'Software Engineer with a background in Software Engineering, Internet Computing, IT Security, and Information Systems.'
 
