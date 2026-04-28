@@ -9,12 +9,11 @@ status: 'active' # active | alumni | collaborator
 # tags: keywords shown on your personal page (lowercase, space-separated)
 tags: ['machine learning', 'metabolomics']
 
-photo:
-  'gaetan-dewaele.jpg' # Place the file in src/assets/profile-images/
-  # Requirements: square crop, min 360×360 px, max 5 MB
-  # Filename: lowercase, hyphen-separated
-  # Supported formats: jpg, jpeg, png, webp, avif
-  # The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+# Photo requirements: square crop, min 360×360 px, max 5 MB
+# - Filename: lowercase, hyphen-separated
+# - Supported formats: jpg, jpeg, png, webp, avif
+# - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
+photo: 'gaetan-dewaele.jpg' # Place the file in src/assets/profile-images/
 
 bio_short: 'My research focuses on developing computational methods for small molecule mass spectrometry. Methodological interests include transformers, self-supervised learning/language modeling, generative modeling, uncertainty estimation, and retrieval systems.'
 
