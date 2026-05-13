@@ -25,5 +25,3 @@ education:
 ---
 
 I am a joint PhD student at the **University of Antwerp** and **Université Côte d'Azur**, working at the intersection of machine learning and computational mass spectrometry. My research focuses on training an ML model to predict the identifiability of MS/MS spectra before fragmentation.
-
-.
