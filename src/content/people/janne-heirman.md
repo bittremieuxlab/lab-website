@@ -17,7 +17,7 @@ tags: ['machine learning', 'mass spectrometry', 'metabolomics']
 # - Filename: lowercase, hyphen-separated
 # - Supported formats: jpg, jpeg, png, webp, avif
 # - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
-photo: 'janne-heirman.jpg' # ! Place the file in src/assets/profile-images/
+photo: 'janne-heirman.png' # ! Place the file in src/assets/profile-images/
 
 bio_short: 'My research focuses on machine learning approaches for large-scale small-molecule mass spectrometry data analysis.'
 
