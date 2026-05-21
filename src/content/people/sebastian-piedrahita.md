@@ -31,8 +31,10 @@ links:
 # Selected set of publications:
 # Note: All publications (citation keys) must match an existing publication in src/data/publications.bib
 selected_publications:
-  - 'citation-key-1'
-  - 'citation-key-2'
+  - 'giraldo2021efficient'
+  - 'giraldo2020vocell'
+  - 'giraldo2018laika'
+  - 'vermunicht2025continuous'
 
 education:
   - 'PhD. Computer Engineering, KU Leuven, Belgium, 2021'
@@ -40,8 +42,4 @@ education:
   - 'B.Sc. Electrical Engineering, Universidad de los Andes, Colombia, 2012'
 
 
-# FOR COLLABORATORS from another institution: also add
-affiliation: 'Collaborating University Name'
 
-# ----- OPTIONAL fields (end)
----
