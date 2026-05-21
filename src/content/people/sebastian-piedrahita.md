@@ -21,7 +21,6 @@ photo: 'firstname-lastname.jpg' # ! Place the file in src/assets/profile-images/
 
 bio_short: 'One to three sentences describing your research focus.'
 
-pronouns: 'pronouns string'
 
 links:
   website: 'https://yourwebsite.com'
