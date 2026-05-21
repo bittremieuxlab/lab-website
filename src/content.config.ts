@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'zod';
+import { readdirSync, existsSync } from 'node:fs';
 
 const personRoles = z.enum([
   'Professor',
@@ -23,6 +24,10 @@ const tags = z.enum([
   'immunopeptidomics',
   'large language models',
 ]);
+const PROFILE_IMAGE_DIR = 'src/assets/profile-images';
+const availableProfileImages = existsSync(PROFILE_IMAGE_DIR)
+  ? new Set(readdirSync(PROFILE_IMAGE_DIR))
+  : new Set<string>();
 
 const people = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
@@ -31,8 +36,13 @@ const people = defineCollection({
     email: z.email(),
     role: personRoles,
     status: personStatuses,
-    tags: tags,
-    photo: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    photo: z
+      .string()
+      .refine((f) => availableProfileImages.has(f), {
+        message: `Photo file not found in ${PROFILE_IMAGE_DIR}/`,
+      })
+      .optional(),
     bio_short: z.string().optional(),
     pronouns: z.string().optional(),
     affiliation: z.string().optional(), // institution name for external collaborators
