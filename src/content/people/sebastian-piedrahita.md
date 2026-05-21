@@ -17,13 +17,12 @@ tags: ['machine learning', 'mass spectrometry', 'metabolomics']
 # - Filename: lowercase, hyphen-separated
 # - Supported formats: jpg, jpeg, png, webp, avif
 # - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
-photo: 'firstname-lastname.jpg' # ! Place the file in src/assets/profile-images/
+photo: 'sebastian-piedrahita.jpg' # ! Place the file in src/assets/profile-images/
 
-bio_short: 'One to three sentences describing your research focus.'
+bio_short: 'My research is focused on the development of machine learning models towards small molecule identification using mass spectrometry.'
 
 
 links:
-  website: 'https://yourwebsite.com'
   github: 'https://github.com/chevi1989'
   scholar: 'https://scholar.google.com/citations?user=w-DPc-kAAAAJ&hl=fr'
   orcid: '0000-0002-1691-2915'
@@ -40,9 +39,6 @@ education:
   - 'M.Sc. Computer Engineering, Universidade Federal do Rio Grande do Sul, Brazil, 2016'
   - 'B.Sc. Electrical Engineering, Universidad de los Andes, Colombia, 2012'
 
-awards:
-  - 'Award X, CONFERENCE 2024'
-  - 'Award Y, ... 2025'
 
 # FOR COLLABORATORS from another institution: also add
 affiliation: 'Collaborating University Name'
