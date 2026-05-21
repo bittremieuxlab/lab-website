@@ -13,6 +13,16 @@ const personRoles = z.enum([
   'Machine Learning Engineer',
 ]);
 const personStatuses = z.enum(['active', 'alumni', 'collaborator']);
+const tags = z.enum([
+  'machine learning',
+  'mass spectrometry',
+  'proteomics',
+  'metabolomics',
+  'foodomics',
+  'de novo peptide sequencing',
+  'immunopeptidomics',
+  'large language models',
+]);
 
 const people = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
@@ -21,7 +31,7 @@ const people = defineCollection({
     email: z.email(),
     role: personRoles,
     status: personStatuses,
-    tags: z.array(z.string().toLowerCase()).default([]),
+    tags: tags,
     photo: z.string().optional(),
     bio_short: z.string().optional(),
     pronouns: z.string().optional(),
