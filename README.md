@@ -104,6 +104,7 @@ Photos are validated automatically by `scripts/validate-images.mjs` using `sharp
 
 - **File size** must not exceed 5 MB
 - **Dimensions** must be square (width = height)
+- **Image resolution** must be at least 360 x 360 px
 
 Validation runs in two places:
 
