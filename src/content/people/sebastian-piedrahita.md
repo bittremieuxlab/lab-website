@@ -11,7 +11,7 @@ status: 'active' # active | alumni | collaborator
 # ----- OPTIONAL fields (start) — remove (comment) any field you don't want shown
 
 # tags: keywords shown on your personal page (lowercase, space-separated)
-tags: ['machine learning', 'mass spectrometry']
+tags: ['machine learning', 'mass spectrometry', 'metabolomics']
 
 # Photo requirements: square crop, min 360×360 px, max 5 MB
 # - Filename: lowercase, hyphen-separated
@@ -25,10 +25,10 @@ pronouns: 'pronouns string'
 
 links:
   website: 'https://yourwebsite.com'
-  github: 'https://github.com/username'
-  scholar: 'https://scholar.google.com/citations?user=XXXXXXX'
-  orcid: '0000-0000-0000-0000'
-  linkedin: 'https://www.linkedin.com/in/username'
+  github: 'https://github.com/chevi1989'
+  scholar: 'https://scholar.google.com/citations?user=w-DPc-kAAAAJ&hl=fr'
+  orcid: '0000-0002-1691-2915'
+  linkedin: 'https://www.linkedin.com/in/sebastian-piedrahita-giraldo-1a7a0460/'
 
 # Selected set of publications:
 # Note: All publications (citation keys) must match an existing publication in src/data/publications.bib
@@ -37,8 +37,9 @@ selected_publications:
   - 'citation-key-2'
 
 education:
-  - 'M.Sc. Bioinformatics, University of Antwerp, 2023'
-  - 'B.Sc. Computer Science, KU Leuven, 2021'
+  - 'PhD. Computer Engineering, KU Leuven, Belgium, 2021'
+  - 'M.Sc. Computer Engineering, Universidade Federal do Rio Grande do Sul, Brazil, 2016'
+  - 'B.Sc. Electrical Engineering, Universidad de los Andes, Colombia, 2012'
 
 awards:
   - 'Award X, CONFERENCE 2024'
@@ -49,6 +50,3 @@ affiliation: 'Collaborating University Name'
 
 # ----- OPTIONAL fields (end)
 ---
-
-Write a longer bio here in Markdown (optional). This appears on the individual person page.
-You can use **bold**, _italics_, lists, and other standard Markdown.
