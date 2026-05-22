@@ -41,5 +41,5 @@ education:
   - 'M.Sc. Computer Engineering, Universidade Federal do Rio Grande do Sul, Brazil, 2016'
   - 'B.Sc. Electrical Engineering, Universidad de los Andes, Colombia, 2012'
 
-
+---
 
