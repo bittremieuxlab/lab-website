@@ -28,7 +28,7 @@ links:
   github: 'https://github.com/moira-breens'
   scholar: 'https://scholar.google.com/citations?user=V1cID1IAAAAJ&hl=en'
   orcid: '0009-0002-7400-4146'
-  linkedin: 'www.linkedin.com/in/moira-breëns-88b98031b'
+  linkedin: 'https://www.linkedin.com/in/moira-breëns-88b98031b'
 
 # Selected set of publications:
 # Note: All publications (citation keys) must match an existing publication in src/data/publications.bib
