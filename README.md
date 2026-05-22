@@ -119,3 +119,4 @@ npm run validate-images
 ## Image Credits
 
 - `geralt-dna-3539309_1920.jpg` — https://pixabay.com/illustrations/dna-analysis-research-3539309/
+- `github-logo.svg` and `github-logo-white.svg` — https://brand.github.com/foundations/logo
