@@ -66,7 +66,7 @@ const research = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    tags: z.array(z.string().toLowerCase()).default([]),
+    tags: z.array(tags).default([]),
   }),
 });
 
