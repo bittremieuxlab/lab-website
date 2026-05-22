@@ -24,7 +24,7 @@ bio_short: 'My research focusses on investigating the immunopeptidome using de n
 pronouns: 'she/her'
 
 links:
-#  website: 'https://www.uantwerpen.be/en/staff/moira-breens_27962/'
+  #  website: 'https://www.uantwerpen.be/en/staff/moira-breens_27962/'
   github: 'https://github.com/moira-breens'
   scholar: 'https://scholar.google.com/citations?user=V1cID1IAAAAJ&hl=en'
   orcid: '0009-0002-7400-4146'
@@ -50,4 +50,3 @@ awards:
 
 # ----- OPTIONAL fields (end)
 ---
-
