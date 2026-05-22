@@ -36,7 +36,7 @@ const people = defineCollection({
     email: z.email(),
     role: personRoles,
     status: personStatuses,
-    tags: z.array(z.string()).optional(),
+    tags: tags,
     photo: z
       .string()
       .refine((f) => availableProfileImages.has(f), {
