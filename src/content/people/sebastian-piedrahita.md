@@ -19,7 +19,7 @@ tags: ['machine learning', 'mass spectrometry', 'metabolomics']
 # - The filename here must exactly match the file in src/assets/profile-images/ (including extension)
 photo: 'sebastian-piedrahita.jpg' # ! Place the file in src/assets/profile-images/
 
-bio_short: 'My research is focused on the development of machine learning models towards small molecule identification using mass spectrometry.'
+bio_short: 'My research is focused on the development of machine learning models for small molecule identification using mass spectrometry.'
 
 
 links:
