@@ -5,9 +5,12 @@ import annSoloLogo from '../assets/software-tools/ann-solo.png';
 import casanovoLogo from '../assets/software-tools/casanovo-logo.svg';
 import falconLogo from '../assets/software-tools/falcon-logo.png';
 import gleamsLogo from '../assets/software-tools/gleams-logo.png';
+import githubLogoUrl from '../assets/software-tools/github-logo.svg?url';
+import githubLogoWhiteUrl from '../assets/software-tools/github-logo-white.svg?url';
 import simbaLogo from '../assets/software-tools/simba-logo.png';
 import spectrumUtilsLogo from '../assets/software-tools/spectrum-utils.png';
 import suspectsLogo from '../assets/software-tools/suspects-logo.png';
+import webIconUrl from '../assets/software-tools/web.svg?url';
 
 const pageTitle = 'Software/Tools';
 
@@ -55,6 +58,7 @@ const softwareTools = [
     name: 'gnps-rdd',
     description: 'Reference data-driven metabolomics using the GNPS platform.',
     github: 'https://github.com/bittremieuxlab/gnps-rdd',
+    website: 'https://gnps-rdd.bittremieuxlab.org/',
     image: 'https://placehold.co/600x400?text=gnps-rdd',
   },
   {
@@ -68,15 +72,21 @@ const softwareTools = [
     name: 'Nearest Neighbor Suspect Spectral Library',
     description: 'Nearest neighbor suspect spectral library for untargeted metabolomics.',
     github: 'https://github.com/bittremieux/gnps_suspect_library',
+    website: 'https://suspect-library.bittremieuxlab.org/',
     image: suspectsLogo,
   },
 ];
 
 const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.name));
+const softwareSectionStyle = [
+  `--github-icon: url("${githubLogoUrl}")`,
+  `--github-icon-dark: url("${githubLogoWhiteUrl}")`,
+  `--web-icon: url("${webIconUrl}")`,
+].join('; ');
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <section class="software-section">
+  <section class="software-section" style={softwareSectionStyle}>
     <div class="page-header"></div>
 
     <div class="software-grid">
@@ -110,12 +120,24 @@ const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.
                   href={tool.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="github-link"
+                  class="software-link"
                   aria-label={`View ${tool.name} on GitHub`}
-                  title={`View ${tool.name} on GitHub`}
+                  title="View on GitHub"
                 >
                   <span class="github-mark" aria-hidden="true" />
                 </a>
+                {'website' in tool && tool.website && (
+                  <a
+                    href={tool.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="software-link"
+                    aria-label={`View ${tool.name} software web page`}
+                    title="View software web page"
+                  >
+                    <span class="web-mark" aria-hidden="true" />
+                  </a>
+                )}
               </div>
             </div>
           </article>
@@ -194,7 +216,7 @@ const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.
 
   .software-content p {
     margin: 0;
-    color: #555;
+    color: #5c5b5bff;
     line-height: 1.6;
   }
 
@@ -202,11 +224,12 @@ const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    gap: 0.5rem;
     margin-top: auto;
     padding-top: 0.25rem;
   }
 
-  .github-link {
+  .software-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -221,16 +244,24 @@ const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.
     transition: background-color 0.2s ease;
   }
 
-  .github-link:hover {
+  .software-link:hover {
     background-color: #f3f4f6;
   }
 
-  .github-mark {
+  .github-mark,
+  .web-mark {
     display: block;
     flex: 0 0 auto;
     width: 1.2rem;
     height: 1.2rem;
-    background: url('/assets/software-tools/github-logo.svg') center / contain no-repeat;
+  }
+
+  .github-mark {
+    background: var(--github-icon) center / contain no-repeat;
+  }
+
+  .web-mark {
+    background: var(--web-icon) center / contain no-repeat;
   }
 
   :global(html[data-bs-theme='dark']) .page-header p {
@@ -248,7 +279,7 @@ const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.
   }
 
   :global(html[data-bs-theme='dark']) .software-image {
-    background-color: #343a40;
+    background-color: #5b6672;
   }
 
   :global(html[data-bs-theme='dark']) .software-content h2 {
@@ -259,16 +290,20 @@ const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.
     color: #ced4da;
   }
 
-  :global(html[data-bs-theme='dark']) .github-link {
+  :global(html[data-bs-theme='dark']) .software-link {
     border-color: #6c757d;
     background-color: #343a40;
   }
 
-  :global(html[data-bs-theme='dark']) .github-link:hover {
+  :global(html[data-bs-theme='dark']) .software-link:hover {
     background-color: #3f474f;
   }
 
   :global(html[data-bs-theme='dark']) .github-mark {
-    background-image: url('/assets/software-tools/github-logo-white.svg');
+    background-image: var(--github-icon-dark);
+  }
+
+  :global(html[data-bs-theme='dark']) .web-mark {
+    filter: invert(1);
   }
 </style>
