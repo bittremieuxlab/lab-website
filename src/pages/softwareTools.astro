@@ -2,8 +2,252 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const pageTitle = 'Software/Tools';
+
+const softwareTools = [
+  {
+    name: 'Falcon',
+    description:
+      'Large-scale tandem mass spectrum clustering using fast nearest neighbor searching.',
+    github: 'https://github.com/bittremieuxlab/falcon',
+    image: '/assets/software-tools/falcon-logo.png',
+  },
+  {
+    name: 'GLEAMS',
+    description: 'GLEAMS is a Learned Embedding for Annotating Mass Spectra.',
+    github: 'https://github.com/bittremieuxlab/GLEAMS',
+    image: '/assets/software-tools/gleams-logo.png',
+  },
+  {
+    name: 'ANN-SoLo',
+    description: 'Spectral library searching using approximate nearest neighbor techniques.',
+    github: 'https://github.com/bittremieuxlab/ANN-SoLo',
+    image: '/assets/software-tools/ann-solo.png',
+  },
+  {
+    name: 'spectrum_utils',
+    description:
+      'Python package for efficient mass spectrometry data processing and visualization.',
+    github: 'https://github.com/bittremieux/spectrum_utils/',
+    image: '/assets/software-tools/spectrum-utils.png',
+  },
+  {
+    name: 'Casanovo',
+    description: 'Transformer-based de novo peptide sequencing model for tandem mass spectrometry.',
+    github: 'https://github.com/Noble-Lab/casanovo',
+    image: '/assets/software-tools/casanovo-logo.svg',
+  },
+  {
+    name: 'Simba',
+    description:
+      'Transformer-based neural network that accurately predicts chemical structural similarity from tandem mass spectrometry (MS/MS) spectra.',
+    github: 'https://github.com/bittremieuxlab/simba',
+    image: '/assets/software-tools/simba-logo.png',
+  },
+  {
+    name: 'gnps-rdd',
+    description: 'Reference data-driven metabolomics using the GNPS platform.',
+    github: 'https://github.com/bittremieuxlab/gnps-rdd',
+    image: 'https://placehold.co/600x400?text=gnps-rdd',
+  },
+  {
+    name: 'TreeMS2',
+    description:
+      'TreeMS2 is a Python-based tool for efficient comparison of large-scale tandem mass spectrometry (MS/MS) datasets.',
+    github: 'https://github.com/bittremieuxlab/TreeMS2',
+    image: 'https://placehold.co/600x400?text=TreeMS2',
+  },
+  {
+    name: 'Nearest Neighbor Suspect Spectral Library',
+    description: 'Nearest neighbor suspect spectral library for untargeted metabolomics.',
+    github: 'https://github.com/bittremieux/gnps_suspect_library',
+    image: '/assets/software-tools/suspects-logo.png',
+  },
+];
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p>Test</p>
+  <section class="software-section">
+    <div class="page-header">
+      <p>
+        A collection of software projects and tools related to mass spectrometry, machine learning,
+        and computational metabolomics.
+      </p>
+    </div>
+
+    <div class="software-grid">
+      {
+        softwareTools.map((tool) => (
+          <article class="software-card">
+            <img src={tool.image} alt={`${tool.name} logo`} class="software-image" />
+
+            <div class="software-content">
+              <h2>{tool.name}</h2>
+              <p>{tool.description}</p>
+
+              <div class="software-actions">
+                <a
+                  href={tool.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="github-link"
+                  aria-label={`View ${tool.name} on GitHub`}
+                  title={`View ${tool.name} on GitHub`}
+                >
+                  <span class="github-mark" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .software-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .page-header {
+    margin: 0 auto 3rem;
+    max-width: 800px;
+    text-align: center;
+  }
+
+  .page-header p {
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .software-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .software-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .software-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .software-image {
+    width: 100%;
+    height: 200px;
+    padding: 1.25rem;
+    object-fit: contain;
+    background-color: #f5f5f5;
+  }
+
+  .software-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1rem;
+    min-height: 225px;
+    padding: 1.5rem;
+  }
+
+  .software-content h2 {
+    margin: 0;
+    color: #212529;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .software-content p {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .software-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: auto;
+    padding-top: 0.25rem;
+  }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.35rem;
+    border: 1px solid #111827;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .github-link:hover {
+    background-color: #f3f4f6;
+  }
+
+  .github-mark {
+    display: block;
+    flex: 0 0 auto;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url('/assets/software-tools/github-logo.svg') center / contain no-repeat;
+  }
+
+  :global(html[data-bs-theme='dark']) .page-header p {
+    color: #adb5bd;
+  }
+
+  :global(html[data-bs-theme='dark']) .software-card {
+    border-color: #495057;
+    background-color: #2b3035;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  }
+
+  :global(html[data-bs-theme='dark']) .software-card:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+  }
+
+  :global(html[data-bs-theme='dark']) .software-image {
+    background-color: #343a40;
+  }
+
+  :global(html[data-bs-theme='dark']) .software-content h2 {
+    color: #f8f9fa;
+  }
+
+  :global(html[data-bs-theme='dark']) .software-content p {
+    color: #ced4da;
+  }
+
+  :global(html[data-bs-theme='dark']) .github-link {
+    border-color: #6c757d;
+    background-color: #343a40;
+  }
+
+  :global(html[data-bs-theme='dark']) .github-link:hover {
+    background-color: #3f474f;
+  }
+
+  :global(html[data-bs-theme='dark']) .github-mark {
+    background-image: url('/assets/software-tools/github-logo-white.svg');
+  }
+</style>
