@@ -17,10 +17,9 @@ const statusLabel: Record<string, string> = {
   completed: 'Completed',
 };
 const typeLabel: Record<string, string> = {
-  bachelor: 'Bachelor Thesis',
   master: 'Master Thesis',
-  'bachelor/master': 'Bachelor / Master Thesis',
-  phd: 'PhD Thesis',
+  phd: 'PhD',
+  internship: 'Research Internship',
 };
 
 async function getContent(entry: (typeof allTheses)[number]) {
@@ -30,64 +29,105 @@ async function getContent(entry: (typeof allTheses)[number]) {
 ---
 
 <BaseLayout pageTitle={pageTitle}>
+  <div class="mb-5">
+    <p class="lead">
+      We offer master thesis and research internship projects at the intersection of bioinformatics,
+      machine learning, and mass spectrometry — suitable for students in computer science,
+      bioinformatics, biomedical sciences, and related fields. All projects are supervised by lab
+      members and provide hands-on experience with real-world data and open-source software
+      development.
+    </p>
+    <p>
+      The official listing of available projects is also maintained in the University of Antwerp{
+        ' '
+      }
+      <a
+        href="https://esp.uantwerpen.be/projects?employee=Wout+Bittremieux"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Education Support Platform (ESP)
+      </a>.
+    </p>
+  </div>
+
   {
     allTheses.length === 0 ? (
-      <p class="text-muted">There are currently no thesis projects available.</p>
+      <p class="text-muted mb-5">There are currently no thesis projects available.</p>
     ) : (
-      <div>
-        <div class="mb-5">
-          {await Promise.all(
-            allTheses.map(async (thesis) => {
-              const Content = await getContent(thesis);
-              return (
-                <div class="card border-0 shadow-sm mb-3">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
-                      <h3 class="h5 mb-0">{thesis.data.title}</h3>
-                      <div class="d-flex gap-2">
+      <div class="mb-5">
+        {await Promise.all(
+          allTheses.map(async (thesis) => {
+            const Content = await getContent(thesis);
+            const collapseId = `thesis-${thesis.id.replace(/[^a-z0-9]/gi, '-')}`;
+            return (
+              <div class="card border-0 shadow-sm mb-3">
+                <div
+                  class="card-header bg-transparent border-0 px-4 py-3"
+                  data-bs-toggle="collapse"
+                  data-bs-target={`#${collapseId}`}
+                  aria-expanded="false"
+                  aria-controls={collapseId}
+                  style="cursor: pointer;"
+                >
+                  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                    <h3 class="h5 mb-0 me-2">{thesis.data.title}</h3>
+                    <div class="d-flex gap-2 flex-wrap align-items-center">
+                      {thesis.data.type.map((t) => (
                         <span class="badge bg-secondary-subtle text-secondary-emphasis">
-                          {typeLabel[thesis.data.type] ?? thesis.data.type}
+                          {typeLabel[t] ?? t}
                         </span>
-                        <span class={`badge ${statusBadge[thesis.data.status]}`}>
-                          {statusLabel[thesis.data.status]}
-                        </span>
-                      </div>
-                    </div>
-                    {(thesis.data.student || thesis.data.year) && (
-                      <p class="text-muted small mb-2">
-                        {[thesis.data.student, thesis.data.year ? `(${thesis.data.year})` : null]
-                          .filter(Boolean)
-                          .join(' ')}
-                      </p>
-                    )}
-                    {thesis.data.topics.length > 0 && (
-                      <p class="text-muted small mb-2">{thesis.data.topics.join(' · ')}</p>
-                    )}
-                    <div class="small">
-                      <Content />
+                      ))}
+                      <span class={`badge ${statusBadge[thesis.data.status]}`}>
+                        {statusLabel[thesis.data.status]}
+                      </span>
+                      <i class="bi bi-chevron-down text-muted small" />
                     </div>
                   </div>
+                  {(thesis.data.student || thesis.data.year) && (
+                    <p class="text-muted small mb-0 mt-1">
+                      {[thesis.data.student, thesis.data.year ? `(${thesis.data.year})` : null]
+                        .filter(Boolean)
+                        .join(' ')}
+                    </p>
+                  )}
+                  {thesis.data.topics.length > 0 && (
+                    <p class="text-muted small mb-0 mt-1">{thesis.data.topics.join(' · ')}</p>
+                  )}
                 </div>
-              );
-            })
-          )}
-        </div>
-
-        <div class="mb-5">
-          <h2 class="h4 border-bottom pb-2 mb-4">How to Apply</h2>
-          <p>
-            Contact us by email with a brief motivation letter and your transcript of records. We
-            will schedule a short meeting to discuss your interests and match you with a suitable
-            project. Custom project proposals are also welcome.
-          </p>
-          <a href="/contact" class="btn btn-primary">
-            Contact Us
-          </a>
-          <a href="/positions" class="btn btn-outline-primary ms-2">
-            Open Positions
-          </a>
-        </div>
+                <div id={collapseId} class="collapse">
+                  <div class="card-body px-4 pt-0 pb-3 small">
+                    <hr class="mt-0 mb-3" />
+                    <Content />
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     )
   }
+
+  <div class="mb-5">
+    <h2 class="h4 border-bottom pb-2 mb-4">How to Apply</h2>
+    <p>
+      Interested? Send an email to <a href="/contact">Wout Bittremieux</a> with a brief motivation (a
+      few sentences on why the topic interests you) and your transcript of records. We will schedule a
+      short meeting to discuss your background and find the best match. Custom project proposals related
+      to our research areas are also welcome.
+    </p>
+    <p>
+      For students enrolled at the University of Antwerp, projects are registered through the{' '}
+      <a
+        href="https://esp.uantwerpen.be/projects?employee=Wout+Bittremieux"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ESP platform
+      </a>. Guidelines and assessment forms for the master thesis (including deadlines, see Article
+      39) can be found there as well.
+    </p>
+    <a href="/contact" class="btn btn-primary"> Contact Us </a>
+  </div>
 </BaseLayout>

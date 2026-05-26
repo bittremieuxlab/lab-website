@@ -71,15 +71,17 @@ const positions = defineCollection({
   }),
 });
 
+const thesisType = z.enum(['master', 'phd', 'internship']);
+
 const theses = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/theses' }),
   schema: z.object({
     title: z.string(),
-    type: z.enum(['bachelor', 'master', 'bachelor/master', 'phd']),
+    type: z.union([thesisType, z.array(thesisType)]).transform((v) => (Array.isArray(v) ? v : [v])),
     topics: z.array(z.string()).default([]),
     status: z.enum(['available', 'ongoing', 'completed']).default('available'),
-    student: z.string().optional(), // for ongoing/completed
-    year: z.number().optional(), // for completed
+    student: z.string().optional(),
+    year: z.number().optional(),
   }),
 });
 
