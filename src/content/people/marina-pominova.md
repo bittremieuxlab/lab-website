@@ -7,7 +7,8 @@ status: 'active' # active | alumni | collaborator
 
 # OPTIONAL — remove (comment) any field you don't want shown
 # tags: keywords shown on your personal page (lowercase, space-separated)
-tags: ['machine learning', 'mass spectrometry', 'de novo peptide sequencing', 'large language models']
+tags:
+  ['machine learning', 'mass spectrometry', 'de novo peptide sequencing', 'large language models']
 
 # Photo requirements: square crop, min 360×360 px, max 5 MB
 # - Filename: lowercase, hyphen-separated
