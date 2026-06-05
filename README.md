@@ -40,7 +40,7 @@ src/
 ├── assets/
 │   └── profile-images/    # Team member photos (optimized at build time)
 ├── scripts/           # TypeScript utility scripts (BibTeX parsing, theme mode)
-├── config.ts          # Site configuration (lab name, featured publications, nav)
+├── config.ts          # Site configuration (lab name, nav)
 └── content.config.ts  # Content collection Zod schemas
 templates/             # Markdown templates for new content entries
 ```
