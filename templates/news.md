@@ -1,4 +1,5 @@
 ---
+# IMPORTANT: Filename convention: Start with year, month, and day + append few words to describe the news entry. Example: 2026-01-15-paper-accepted.md
 # REQUIRED
 title: 'Short, descriptive headline'
 date: 2025-01-01 # YYYY-MM-DD
