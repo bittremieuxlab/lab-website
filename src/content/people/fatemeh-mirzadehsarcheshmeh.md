@@ -7,7 +7,7 @@ status: 'active' # active | alumni | collaborator
 
 # OPTIONAL — remove (comment) any field you don't want shown
 # tags: keywords shown on your personal page (lowercase, space-separated)
-tags: ['Machine Learning', 'Large Language Model', 'Proteomics', 'Mass Spectrometry']
+tags: ['machine learning', 'large language model', 'proteomics', 'mass spectrometry']
 
 # Photo requirements: square crop, min 360×360 px, max 5 MB
 # - Filename: lowercase, hyphen-separated
