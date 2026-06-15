@@ -12,6 +12,15 @@ type Props = {
 };
 
 export default function NewsGrid({ news, baseUrl }: Props) {
+  if (news.length === 0) {
+    return (
+      <p class="text-muted">
+        There is no news to share at the moment. Check back soon for updates on our latest research,
+        publications, and lab activities.
+      </p>
+    );
+  }
+
   return (
     <div class="d-flex flex-column gap-3">
       {news.map((item) => {

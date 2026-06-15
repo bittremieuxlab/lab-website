@@ -57,7 +57,7 @@ Publications are linked as follows:
 - If no `url` but a `doi` field exists, the publication links to `https://doi.org/{doi}`
 - If neither `url` nor `doi` are present, the publication is not linked
 
-To feature a publication on the home page, add its citation key to `featuredPublications` in `src/config.ts`. To show it on a person's page, add the key to their `selected_publications` list.
+To show publications on a person's page, add the citation key to their `selected_publications` list.
 
 ### Adding a news item
 
