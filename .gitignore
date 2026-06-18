@@ -147,3 +147,5 @@ vite.config.ts.timestamp-*
 
 # Claude Code local settings (personal, not shared)
 .claude/
+.DS_Store
+.Rhistory
