@@ -26,7 +26,7 @@ pronouns: 'she/her'
 links:
   github: 'https://github.com/Janne98'
   scholar: 'https://scholar.google.com/citations?user=YI_5TnwAAAAJ'
-  orcid: '00009-0002-5435-9564'
+  orcid: '0009-0002-5435-9564'
   linkedin: 'https://www.linkedin.com/in/janne-heirman'
 
 # Selected set of publications:
@@ -41,7 +41,7 @@ education:
   - 'B.Sc. Engineering Technology, KU Leuven, 2019'
 
 awards:
-  - 'ie-net awards 2020, third best engineering techonology thesis in Flanders.'
+  - 'ie-net awards 2020, third best engineering technology thesis in Flanders.'
 
 # FOR COLLABORATORS from another institution: also add
 
