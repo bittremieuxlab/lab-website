@@ -34,5 +34,6 @@ export const navLinks = [
     ],
   },
   { href: '/news', label: 'News' },
+  { href: '/collaborate', label: 'Collaborate' },
   { href: '/contact', label: 'Contact' },
 ];
