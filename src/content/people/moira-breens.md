@@ -11,7 +11,7 @@ status: 'active' # active | alumni | collaborator
 # ----- OPTIONAL fields (start) — remove (comment) any field you don't want shown
 
 # tags: keywords shown on your personal page (lowercase, space-separated)
-tags: ['immunopeptidomics', 'mass spectrometry']
+tags: [immunopeptidomics, 'mass spectrometry']
 
 # Photo requirements: square crop, min 360×360 px, max 5 MB
 # - Filename: lowercase, hyphen-separated
@@ -28,7 +28,7 @@ links:
   github: 'https://github.com/moira-breens'
   scholar: 'https://scholar.google.com/citations?user=V1cID1IAAAAJ&hl=en'
   orcid: '0009-0002-7400-4146'
-  linkedin: 'https://www.linkedin.com/in/moira-breëns-88b98031b'
+  linkedin: 'https://www.linkedin.com/in/moira-bre%C3%ABns-88b98031b'
 
 # Selected set of publications:
 # Note: All publications (citation keys) must match an existing publication in src/data/publications.bib
