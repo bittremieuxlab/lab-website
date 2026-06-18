@@ -48,7 +48,7 @@ Valid person statuses: `active`, `alumni`, `collaborator`.
 
 ### Publications
 
-BibTeX data lives in `src/data/publications.bib`, parsed at build time with citation-js. Featured publications are configured by citation key in `src/config.ts`. Person pages link to publications via the `selected_publications` frontmatter field (array of citation keys).
+BibTeX data lives in `src/data/publications.bib`, parsed at build time with citation-js. Person pages link to publications via the `selected_publications` frontmatter field (array of citation keys).
 
 ### Interactive Components (Preact, in `src/components/`)
 
@@ -73,7 +73,7 @@ Bootstrap 5 + custom SCSS in `src/styles/`. Inter font from Google Fonts. Bootst
 
 `src/config.ts` exports two things:
 
-- `SITE` — lab name, university, hero text, featured publication keys, `lightAndDarkMode` flag
+- `SITE` — lab name, university, hero text, `lightAndDarkMode` flag
 - `navLinks` — navigation structure (supports dropdown children, e.g. the Career submenu)
 
 ## Code Style

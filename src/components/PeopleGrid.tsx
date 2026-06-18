@@ -26,6 +26,9 @@ export default function PeopleGrid({ people, baseUrl }: Props) {
     return true;
   });
 
+  const activeMembers = filtered.filter((p) => p.status !== 'alumni');
+  const alumni = filtered.filter((p) => p.status === 'alumni');
+
   function reset() {
     setActiveRole(null);
   }
@@ -73,9 +76,15 @@ export default function PeopleGrid({ people, baseUrl }: Props) {
           <h3 class="h6 fw-bold text-muted text-uppercase border-bottom pb-2 mb-3 mt-4">
             Active team
           </h3>
-          <PeopleCards people={filtered.filter((p) => p.status !== 'alumni')} baseUrl={baseUrl} />
-          <h3 class="h6 fw-bold text-muted text-uppercase border-bottom pb-2 mb-3 mt-4">Alumni</h3>
-          <PeopleCards people={filtered.filter((p) => p.status === 'alumni')} baseUrl={baseUrl} />
+          <PeopleCards people={activeMembers} baseUrl={baseUrl} />
+          {alumni.length > 0 && (
+            <div>
+              <h3 class="h6 fw-bold text-muted text-uppercase border-bottom pb-2 mb-3 mt-4">
+                Alumni
+              </h3>
+              <PeopleCards people={alumni} baseUrl={baseUrl} />
+            </div>
+          )}
         </div>
       )}
     </div>
