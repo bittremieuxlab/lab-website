@@ -6,7 +6,7 @@ role: 'PhD Student' # Professor | Assistant Professor | PI | Postdoc | PhD Stude
 status: 'active' # active | alumni | collaborator
 
 # OPTIONAL — remove (comment) any field you don't want shown
-tags: ['mass spectrometry', 'foodomics', 'computational metabolomics']
+tags: ['mass spectrometry', 'foodomics', 'metabolomics']
 
 # Photo requirements: square crop, min 360×360 px, max 5 MB
 photo: 'alejandro-mendozacantu.jpg' # Place the file in src/assets/profile-images/
