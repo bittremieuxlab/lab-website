@@ -17,17 +17,23 @@ function isPublicationsResult(url: string) {
   return /^\/publications(\/|#|$)/.test(url);
 }
 
+// Read ?q= synchronously so the first render already has the query.
+// Guarded for SSR: Astro renders this component on the server (no `window`) before hydrating it with client:load.
+function initialQuery() {
+  if (typeof window === 'undefined') return '';
+  return new URLSearchParams(window.location.search).get('q') ?? '';
+}
+
 export default function Search() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<Result[]>([]);
   const [filters, setFilters] = useState<Filters>({});
   const [enabled, setEnabled] = useState<EnabledFilters>({});
   const [pubsOnly, setPubsOnly] = useState(false);
 
-  // Read ?q= from URL and load pagefind filters once
+  // Load pagefind filters once.
   useEffect(() => {
-    const q = new URLSearchParams(window.location.search).get('q') ?? '';
-    if (q) setQuery(q);
+    let ignore = false;
 
     (async () => {
       const pf = await import(/* @vite-ignore */ pagefindPath);
@@ -37,12 +43,29 @@ export default function Search() {
       const visibleFilters = Object.fromEntries(
         Object.entries(allFilters as Filters).filter(([key]) => key !== 'section')
       );
+      if (ignore) return;
       setFilters(visibleFilters);
     })();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
-  // Re-run search when query, active filters, or mode changes
+  // Re-run search when query, active filters, or mode changes.
+  //
+  // The `ignore` cleanup flag is the official React idiom for avoiding race
+  // conditions in effects:
+  //   https://react.dev/learn/synchronizing-with-effects#fetching-data
+  //
+  // Each search is async with no guaranteed resolution order, so when this
+  // effect re-runs quickly (rapid typing, or dev double-invocation) a late
+  // stale search could overwrite newer results. Each render's cleanup sets
+  // that render's `ignore` to true before the next effect runs, so only the
+  // latest search is allowed to call setResults().
   useEffect(() => {
+    let ignore = false;
+
     (async () => {
       const pf = await import(/* @vite-ignore */ pagefindPath);
       const activeFilters = Object.fromEntries(
@@ -69,9 +92,15 @@ export default function Search() {
         }
       }
 
+      if (ignore) return;
+
       // Publications-only mode: keep only results from the publications page
       setResults(pubsOnly ? expanded.filter((r) => isPublicationsResult(r.url)) : expanded);
     })();
+
+    return () => {
+      ignore = true;
+    };
   }, [query, enabled, pubsOnly]);
 
   function toggleFilter(group: string, value: string) {
