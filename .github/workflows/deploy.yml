@@ -50,6 +50,7 @@ jobs:
           node-version: 22.12
 
   deploy:
+    if: github.ref == 'refs/heads/main' # Guard: only publish from main
     needs: build
     runs-on: ubuntu-latest
     permissions:
