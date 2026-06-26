@@ -68,9 +68,12 @@ export default function Search() {
 
     (async () => {
       const pf = await import(/* @vite-ignore */ pagefindPath);
-      const activeFilters = Object.fromEntries(
-        Object.entries(enabled).filter(([, vals]) => vals.length > 0)
-      );
+      // In publications-only mode the filter UI is hidden, so ignore any
+      // lingering `enabled` selections from "All Content" — otherwise an
+      // invisible filter would silently restrict the publication results.
+      const activeFilters = pubsOnly
+        ? {}
+        : Object.fromEntries(Object.entries(enabled).filter(([, vals]) => vals.length > 0));
       const res = await pf.search(query || null, { filters: activeFilters });
       const rawData: any[] = await Promise.all(res.results.map((r: any) => r.data()));
 
