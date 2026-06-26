@@ -21,12 +21,11 @@ on:
   #   branches: [main]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN for GitHub Pages deployment
+# Sets permissions of the GITHUB_TOKEN for GitHub Pages deployment.
+# Scoped per job (least privilege): only deploy needs pages/id-token write.
 # https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the
 # run in-progress and latest queued. Do NOT cancel in-progress runs to
@@ -39,6 +38,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -51,6 +52,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
