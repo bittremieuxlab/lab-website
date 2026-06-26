@@ -41,7 +41,7 @@ education:
   - 'M.Sc. Biochemistry and Biotechnology, University of Antwerp, 2024'
   - 'B.Sc. Biochemistry and Biotechnology, University of Antwerp, 2022'
 
-awards:
+# awards:
 #  - 'Award X, CONFERENCE 2024'
 #  - 'Award Y, ... 2025'
 
