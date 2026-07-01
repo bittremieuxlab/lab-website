@@ -6,7 +6,7 @@ role: 'PhD Student' # Professor | Assistant Professor | PI | Postdoc | PhD Stude
 status: 'active' # active | alumni | collaborator
 
 # OPTIONAL — remove (comment) any field you don't want shown
-tags: ['machine learning', 'computational mass spectrometry', 'metabolomics']
+tags: ['machine learning', 'mass spectrometry', 'metabolomics']
 
 photo: 'madina-bekbergenova.jpg'
 
