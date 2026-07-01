@@ -5,12 +5,9 @@ import annSoloLogo from '../assets/software-tools/ann-solo.png';
 import casanovoLogo from '../assets/software-tools/casanovo-logo.svg';
 import falconLogo from '../assets/software-tools/falcon-logo.png';
 import gleamsLogo from '../assets/software-tools/gleams-logo.png';
-import githubLogoUrl from '../assets/software-tools/github-logo.svg?url';
-import githubLogoWhiteUrl from '../assets/software-tools/github-logo-white.svg?url';
 import simbaLogo from '../assets/software-tools/simba-logo.png';
 import spectrumUtilsLogo from '../assets/software-tools/spectrum-utils.png';
 import suspectsLogo from '../assets/software-tools/suspects-logo.png';
-import webIconUrl from '../assets/software-tools/web.svg?url';
 
 const pageTitle = 'Software/Tools';
 
@@ -78,26 +75,19 @@ const softwareTools = [
 ];
 
 const sortedSoftwareTools = softwareTools.sort((a, b) => a.name.localeCompare(b.name));
-const softwareSectionStyle = [
-  `--github-icon: url("${githubLogoUrl}")`,
-  `--github-icon-dark: url("${githubLogoWhiteUrl}")`,
-  `--web-icon: url("${webIconUrl}")`,
-].join('; ');
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <section class="software-section" style={softwareSectionStyle}>
-    <div class="page-header"></div>
-
+  <section class="software-section">
     <div class="software-grid">
       {
         sortedSoftwareTools.map((tool) => (
-          <article class="software-card">
+          <article class="card h-100 border-0 shadow-sm site-card software-card">
             {typeof tool.image === 'string' ? (
               <img
                 src={tool.image}
                 alt={`${tool.name} logo`}
-                class="software-image"
+                class="card-img-top software-image"
                 loading="eager"
                 fetchpriority="high"
               />
@@ -105,15 +95,15 @@ const softwareSectionStyle = [
               <Image
                 src={tool.image}
                 alt={`${tool.name} logo`}
-                class="software-image"
+                class="card-img-top software-image"
                 loading="eager"
                 fetchpriority="high"
               />
             )}
 
-            <div class="software-content">
-              <h2>{tool.name}</h2>
-              <p>{tool.description}</p>
+            <div class="card-body software-content">
+              <h2 class="card-title">{tool.name}</h2>
+              <p class="card-text">{tool.description}</p>
 
               <div class="software-actions">
                 <a
@@ -124,7 +114,7 @@ const softwareSectionStyle = [
                   aria-label={`View ${tool.name} on GitHub`}
                   title="View on GitHub"
                 >
-                  <span class="github-mark" aria-hidden="true" />
+                  <i class="bi bi-github" aria-hidden="true" />
                 </a>
                 {'website' in tool && tool.website && (
                   <a
@@ -135,7 +125,7 @@ const softwareSectionStyle = [
                     aria-label={`View ${tool.name} software web page`}
                     title="View software web page"
                   >
-                    <span class="web-mark" aria-hidden="true" />
+                    <i class="bi bi-globe" aria-hidden="true" />
                   </a>
                 )}
               </div>
@@ -152,18 +142,6 @@ const softwareSectionStyle = [
     padding: 0.5rem 1.5rem 3rem;
   }
 
-  .page-header {
-    margin: 0 auto 3rem;
-    max-width: 800px;
-    text-align: center;
-  }
-
-  .page-header p {
-    color: #555;
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
-
   .software-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -172,22 +150,7 @@ const softwareSectionStyle = [
   }
 
   .software-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    border: 1px solid #e5e5e5;
-    border-radius: 6px;
     background-color: #fff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-
-  .software-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
   }
 
   .software-image {
@@ -204,19 +167,17 @@ const softwareSectionStyle = [
     flex: 1;
     gap: 1rem;
     min-height: 225px;
-    padding: 1.5rem;
   }
 
-  .software-content h2 {
+  .card-title {
     margin: 0;
-    color: #212529;
     font-size: 1.4rem;
     font-weight: 700;
   }
 
-  .software-content p {
+  .card-text {
     margin: 0;
-    color: #5c5b5bff;
+    color: var(--bs-secondary-color);
     line-height: 1.6;
   }
 
@@ -239,7 +200,7 @@ const softwareSectionStyle = [
     border: 1px solid #111827;
     border-radius: 4px;
     background-color: #fff;
-    color: #fff;
+    color: var(--bs-body-color);
     text-decoration: none;
     transition: background-color 0.2s ease;
   }
@@ -248,46 +209,16 @@ const softwareSectionStyle = [
     background-color: #f3f4f6;
   }
 
-  .github-mark,
-  .web-mark {
-    display: block;
-    flex: 0 0 auto;
-    width: 1.2rem;
-    height: 1.2rem;
-  }
-
-  .github-mark {
-    background: var(--github-icon) center / contain no-repeat;
-  }
-
-  .web-mark {
-    background: var(--web-icon) center / contain no-repeat;
-  }
-
-  :global(html[data-bs-theme='dark']) .page-header p {
-    color: #adb5bd;
+  .software-link .bi {
+    font-size: 1.2rem;
   }
 
   :global(html[data-bs-theme='dark']) .software-card {
-    border-color: #495057;
     background-color: #2b3035;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
-  }
-
-  :global(html[data-bs-theme='dark']) .software-card:hover {
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
   }
 
   :global(html[data-bs-theme='dark']) .software-image {
     background-color: #5b6672;
-  }
-
-  :global(html[data-bs-theme='dark']) .software-content h2 {
-    color: #f8f9fa;
-  }
-
-  :global(html[data-bs-theme='dark']) .software-content p {
-    color: #ced4da;
   }
 
   :global(html[data-bs-theme='dark']) .software-link {
@@ -297,13 +228,5 @@ const softwareSectionStyle = [
 
   :global(html[data-bs-theme='dark']) .software-link:hover {
     background-color: #3f474f;
-  }
-
-  :global(html[data-bs-theme='dark']) .github-mark {
-    background-image: var(--github-icon-dark);
-  }
-
-  :global(html[data-bs-theme='dark']) .web-mark {
-    filter: invert(1);
   }
 </style>
