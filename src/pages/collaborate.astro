@@ -1,0 +1,66 @@
+---
+import { z } from 'zod';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Content, frontmatter } from '../content/collaborate.md';
+
+const pageTitle = 'Collaborate with us!';
+
+const schema = z.object({
+  intro: z.string(),
+  cards: z.array(
+    z.object({
+      icon: z.string(), // any Bootstrap Icons name, without the `bi-` prefix
+      title: z.string(),
+      text: z.string(),
+    })
+  ),
+  offers: z.array(z.string()),
+});
+
+// Validates collaborate.md frontmatter at build time; a typo or missing field fails the build.
+const { intro, cards, offers } = schema.parse(frontmatter);
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <p class="lead text-muted mb-5">{intro}</p>
+
+  <div class="row g-4 mb-5">
+    {
+      cards.map((card) => (
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm h-100 bg-body-secondary">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <i class={`bi bi-${card.icon} fs-2 text-primary`} />
+                <h2 class="h5 mb-0">{card.title}</h2>
+              </div>
+              <p class="text-muted mb-0">{card.text}</p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <section class="mb-5">
+    <h2 class="h4 mb-3">What we offer</h2>
+    <ul class="list-unstyled d-flex flex-column gap-2">
+      {
+        offers.map((item) => (
+          <li class="d-flex align-items-start gap-2">
+            <i class="bi bi-check-lg fs-5 text-primary flex-shrink-0" />
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h4 mb-3">How to get in touch</h2>
+    <div class="text-muted mb-4"><Content /></div>
+    <a href="/contact" class="btn btn-primary">
+      <i class="bi bi-envelope fs-5 me-2"></i>Contact Us
+    </a>
+  </section>
+</BaseLayout>

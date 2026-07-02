@@ -11,7 +11,7 @@ tags:
   [
     'machine learning',
     'mass spectrometry',
-    'computational proteomics',
+    'proteomics',
     'de novo peptide sequencing',
     'immunopeptidomics',
   ]
