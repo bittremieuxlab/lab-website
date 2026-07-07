@@ -11,9 +11,59 @@
 // @import 'bootstrap/scss/buttons';
 // ... only what the site actually uses
 $font-family-sans-serif:
-  'Inter',
+  'IBM Plex Sans',
+  // 'Inter',
   system-ui,
   -apple-system,
   sans-serif;
 
+// Remove the focus "glow" (box-shadow) on text inputs, textareas, and selects
+$input-focus-box-shadow: none;
+$form-select-focus-box-shadow: none;
+
 @import 'bootstrap/scss/bootstrap';
+
+// Modern pill search field (header): soft-filled and borderless at rest, then
+// brightens to a clean outlined field on focus. The leading icon sits inside
+// the pill. Colors track the active Bootstrap theme (light/dark/colorblind).
+.search-field {
+  border: 1px solid var(--bs-border-color);
+  background-color: var(--bs-tertiary-bg);
+  border-radius: 50rem;
+  transition: border-color 0.15s ease-in-out;
+
+  &:focus-within {
+    border-color: $input-focus-border-color;
+  }
+}
+
+// Modern dropdown menu (Career submenu + theme picker): borderless with a soft
+// shadow, rounded corners, a little breathing room, and pill-rounded items that
+// highlight on hover. Driven by Bootstrap's own --bs-dropdown-* variables so it
+// stays theme-aware (light/dark/colorblind).
+.dropdown-menu {
+  --bs-dropdown-border-width: 0;
+  --bs-dropdown-border-radius: 0.75rem;
+  --bs-dropdown-spacer: 0.5rem;
+  --bs-dropdown-padding-x: 0.375rem;
+  --bs-dropdown-padding-y: 0.375rem;
+  --bs-dropdown-item-padding-y: 0.5rem;
+
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
+}
+
+.dropdown-item {
+  border-radius: 0.5rem;
+}
+
+// Subtle fade-in when the menu opens (opacity only, so it doesn't fight Popper's
+// positioning transform).
+.dropdown-menu.show {
+  animation: dropdown-fade 0.12s ease-out;
+}
+
+@keyframes dropdown-fade {
+  from {
+    opacity: 0;
+  }
+}

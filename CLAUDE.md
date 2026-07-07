@@ -67,7 +67,7 @@ Three-tier: `RootLayout.astro` (HTML shell + Header/Footer) → `BaseLayout.astr
 
 ### Styling & Theme
 
-Bootstrap 5 + custom SCSS in `src/styles/`. Inter font from Google Fonts. Bootstrap Icons for iconography. Light/dark mode is enabled (`lightAndDarkMode: true` in `src/config.ts`), toggled via `src/scripts/themeMode.ts`.
+Bootstrap 5 + custom SCSS in `src/styles/`. Bootstrap Icons for iconography. Light/dark mode is enabled (`lightAndDarkMode: true` in `src/config.ts`), toggled via `src/scripts/themeMode.ts`.
 
 ### Site Configuration
 
