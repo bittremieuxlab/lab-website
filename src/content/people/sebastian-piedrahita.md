@@ -21,7 +21,6 @@ photo: 'sebastian-piedrahita.jpg' # ! Place the file in src/assets/profile-image
 
 bio_short: 'My research is focused on the development of machine learning models for small molecule identification using mass spectrometry.'
 
-
 links:
   github: 'https://github.com/chevi1989'
   scholar: 'https://scholar.google.com/citations?user=w-DPc-kAAAAJ&hl=fr'
@@ -40,6 +39,4 @@ education:
   - 'PhD. Computer Engineering, KU Leuven, Belgium, 2021'
   - 'M.Sc. Computer Engineering, Universidade Federal do Rio Grande do Sul, Brazil, 2016'
   - 'B.Sc. Electrical Engineering, Universidad de los Andes, Colombia, 2012'
-
 ---
-
