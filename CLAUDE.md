@@ -31,7 +31,7 @@ Astro file-based routing in `src/pages/`. Dynamic routes use `[slug].astro` with
 - `/news/[slug]` — individual news articles
 - `/research/[slug]` — individual research area pages
 
-Static pages: `publications.astro`, `softwareTools.astro`, `contact.astro`, `positions.astro`, `thesis.astro`.
+Static pages: `publications.astro`, `softwareTools.astro`, `contact.astro`, `positions.astro`. Simple static markdown pages (e.g. `/thesis`) are entries in the `pages` collection, rendered by the dynamic `src/pages/[slug].astro` route.
 
 ### Content Collections
 
@@ -41,7 +41,7 @@ Defined in `src/content.config.ts` using Zod schemas. Five collections loaded vi
 - **news/** — news articles (title, date, description, optional url)
 - **research/** — research areas (name, description, tags)
 - **positions/** — open/closed job positions (title, type: phd|postdoc|internship|other, status, duration, location). Content directory `src/content/positions/` must be created to use this.
-- **theses/** — thesis topics (title, type: bachelor|master|bachelor/master|phd, topics, status: available|ongoing|completed, student, year). Content directory `src/content/theses/` must be created to use this.
+- **pages/** — simple static markdown pages (schema: `title` only). Each entry is served at `/<filename>` by `src/pages/[slug].astro`, rendered through `BaseLayout` like the people/research bodies. Used for informational pages such as `/thesis`.
 
 Valid person roles: `Professor`, `Assistant Professor`, `PI`, `Postdoc`, `PhD Student`, `MSc Student`, `Software Engineer`, `Machine Learning Engineer`.
 Valid person statuses: `active`, `alumni`, `collaborator`.

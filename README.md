@@ -28,10 +28,10 @@ src/
 ├── components/        # Preact (TSX) interactive components + Astro components
 ├── content/           # Markdown content collections
 │   ├── news/          #   News articles
+│   ├── pages/         #   Simple static markdown pages (e.g. Thesis)
 │   ├── people/        #   Team member profiles
 │   ├── positions/     #   Job openings
-│   ├── research/      #   Research areas
-│   └── theses/        #   Thesis opportunities
+│   └── research/      #   Research areas
 ├── data/
 │   └── publications.bib   # BibTeX file (parsed at build time by citation-js)
 ├── layouts/           # Astro page layouts

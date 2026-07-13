@@ -71,18 +71,9 @@ const positions = defineCollection({
   }),
 });
 
-const thesisType = z.enum(['master', 'phd', 'internship']);
-
-const theses = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/theses' }),
-  schema: z.object({
-    title: z.string(),
-    type: z.union([thesisType, z.array(thesisType)]).transform((v) => (Array.isArray(v) ? v : [v])),
-    topics: z.array(z.string()).default([]),
-    status: z.enum(['available', 'ongoing', 'completed']).default('available'),
-    student: z.string().optional(),
-    year: z.number().optional(),
-  }),
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({ title: z.string() }),
 });
 
-export const collections = { people, research, news, theses, positions };
+export const collections = { people, research, news, positions, pages };
