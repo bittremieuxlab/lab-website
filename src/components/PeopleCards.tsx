@@ -21,10 +21,7 @@ export default function PeopleCards({ people, baseUrl }: Props) {
         <div key={person.id} class="col">
           <a
             href={`${baseUrl}/${person.id}`}
-            class="card h-100 text-decoration-none text-reset border-0 shadow-sm"
-            style="transition: box-shadow 0.15s"
-            onMouseOver={(e) => (e.currentTarget.style.boxShadow = '0 .5rem 1rem rgba(0,0,0,.15)')}
-            onMouseOut={(e) => (e.currentTarget.style.boxShadow = '')}
+            class="card h-100 text-decoration-none text-reset border-0 shadow-sm site-card"
           >
             <div class="card-img-top d-flex justify-content-center pt-4">
               {person.photo ? (
