@@ -48,6 +48,9 @@ html[data-bs-theme='light'] {
   --bs-navbar-color: rgba(0, 0, 0, 0.55);
   --bs-navbar-hover-color: rgba(0, 0, 0, 0.7);
   --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
+
+  // Anchor-target highlight flash (e.g. linked publication)
+  --pub-highlight: rgba(230, 159, 0, 0.28);
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +85,10 @@ html[data-bs-theme='dark'] {
   --bs-navbar-color: rgba(255, 255, 255, 0.55);
   --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
   --bs-navbar-active-color: rgba(255, 255, 255, 0.9);
+
+  // Anchor-target highlight flash (e.g. linked publication).
+  // Stronger/more luminous than light mode so it reads on the dark body bg.
+  --pub-highlight: rgba(255, 193, 7, 0.4);
 
   // Button secondary
   .btn-secondary {

@@ -11,26 +11,6 @@ import '../styles/home.scss';
 
 type Author = { given?: string; family?: string };
 
-// Featured publications
-const bibContent = readFileSync(join(process.cwd(), 'src/data/publications.bib'), 'utf-8');
-const cite = new Cite(bibContent);
-const featuredPubs = cite.data
-  .filter((e: any) => SITE.featuredPublications.includes(e['citation-key']))
-  .map((e: any) => ({
-    id: e['citation-key'] as string,
-    title: sanitizeTitle(e.title as string),
-    authors: (() => {
-      const names = ((e.author as Author[]) ?? []).map((a) =>
-        [a.given, a.family].filter(Boolean).join(' ')
-      );
-      return names.length > 3 ? `${names.slice(0, 3).join(', ')} et al.` : names.join(', ');
-    })(),
-    year: e.issued?.['date-parts']?.[0]?.[0] ?? 0,
-    venue: (e['container-title'] ?? e.booktitle ?? '') as string,
-    url: (e.URL ?? '') as string,
-  }))
-  .sort((a: any, b: any) => b.year - a.year);
-
 // Recent news
 const allNews = await getCollection('news');
 const recentNews = allNews
@@ -60,44 +40,6 @@ const recentNews = allNews
     </div>
   </section>
 
-  <!-- Featured Publications -->
-  <section class="py-5 bg-body-secondary">
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-baseline mb-4">
-        <h2 class="h4 fw-bold mb-0">Selected Publications</h2>
-        <a href="/publications" class="text-muted small">View all &rarr;</a>
-      </div>
-      <div class="row g-4">
-        {
-          featuredPubs.map((pub) => (
-            <div class="col-md-4">
-              <div class="card h-100 border-0 shadow-sm pub-card">
-                <div class="card-body d-flex flex-column p-4">
-                  <div class="d-flex align-items-center gap-2 mb-3">
-                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill small">
-                      {pub.year}
-                    </span>
-                    {pub.venue && <span class="text-muted small text-truncate">{pub.venue}</span>}
-                  </div>
-                  <h5 class="card-title fw-semibold mb-2 flex-grow-1">
-                    <a
-                      href={`/publications#${pub.id}`}
-                      rel="noopener"
-                      class="text-body text-decoration-none stretched-link"
-                    >
-                      {pub.title}
-                    </a>
-                  </h5>
-                  <p class="card-text text-muted small mb-0">{pub.authors}</p>
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   <!-- Recent News -->
   <section class="py-5">
     <div class="container">
@@ -105,35 +47,39 @@ const recentNews = allNews
         <h2 class="h4 fw-bold mb-0">Latest News</h2>
         <a href="/news" class="text-muted small">All news &rarr;</a>
       </div>
-      <div class="row g-4">
-        {
-          recentNews.map((item) => (
-            <div class="col-md-4">
-              <div class="card h-100 border-0 shadow-sm pub-card">
-                <div class="card-body d-flex flex-column p-4">
-                  <div class="d-flex align-items-center gap-2 mb-3">
-                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill small">
-                      {item.data.date.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                      })}
-                    </span>
+      {
+        recentNews.length === 0 ? (
+          <p class="text-muted">There is no news to share at the moment.</p>
+        ) : (
+          <div class="row g-4">
+            {recentNews.map((item) => (
+              <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm site-card">
+                  <div class="card-body d-flex flex-column p-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                      <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill small">
+                        {item.data.date.toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                        })}
+                      </span>
+                    </div>
+                    <h5 class="card-title fw-semibold mb-2 flex-grow-1">
+                      <a
+                        href={`/news/${item.id}`}
+                        class="text-body text-decoration-none stretched-link"
+                      >
+                        {item.data.title}
+                      </a>
+                    </h5>
+                    <p class="card-text text-muted small mb-0">{item.data.description}</p>
                   </div>
-                  <h5 class="card-title fw-semibold mb-2 flex-grow-1">
-                    <a
-                      href={`/news/${item.id}`}
-                      class="text-body text-decoration-none stretched-link"
-                    >
-                      {item.data.title}
-                    </a>
-                  </h5>
-                  <p class="card-text text-muted small mb-0">{item.data.description}</p>
                 </div>
               </div>
-            </div>
-          ))
-        }
-      </div>
+            ))}
+          </div>
+        )
+      }
     </div>
   </section>
 </HomeLayout>

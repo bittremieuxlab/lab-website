@@ -40,7 +40,7 @@ src/
 ├── assets/
 │   └── profile-images/    # Team member photos (optimized at build time)
 ├── scripts/           # TypeScript utility scripts (BibTeX parsing, theme mode)
-├── config.ts          # Site configuration (lab name, featured publications, nav)
+├── config.ts          # Site configuration (lab name, nav)
 └── content.config.ts  # Content collection Zod schemas
 templates/             # Markdown templates for new content entries
 ```
@@ -104,6 +104,7 @@ Photos are validated automatically by `scripts/validate-images.mjs` using `sharp
 
 - **File size** must not exceed 5 MB
 - **Dimensions** must be square (width = height)
+- **Image resolution** must be at least 360 x 360 px
 
 Validation runs in two places:
 
@@ -119,3 +120,4 @@ npm run validate-images
 ## Image Credits
 
 - `geralt-dna-3539309_1920.jpg` — https://pixabay.com/illustrations/dna-analysis-research-3539309/
+- `github-logo.svg` and `github-logo-white.svg` — https://brand.github.com/foundations/logo

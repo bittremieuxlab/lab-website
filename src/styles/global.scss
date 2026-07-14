@@ -48,10 +48,48 @@
   }
 }
 
+// ----- shared card hover
+
+.site-card {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.site-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+}
+
 // ----- publications
 
 .publication-list {
   margin-left: 4rem;
+}
+
+// When a publication is reached via an anchor link (e.g. from a person page),
+// leave breathing room above it instead of pinning it to the viewport top, and
+// briefly flash its background so the eye can locate it.
+.publication-list li {
+  scroll-margin-top: 10rem;
+  padding-inline: 0.5rem;
+  margin-inline: -0.5rem;
+  border-radius: 0.375rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .publication-list li:target {
+    animation: pub-target-highlight 2s ease-out;
+  }
+}
+
+@keyframes pub-target-highlight {
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  30% {
+    background-color: var(--pub-highlight);
+  }
 }
 
 // ----- markdown content styling
