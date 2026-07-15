@@ -91,16 +91,9 @@ const positions = defineCollection({
   }),
 });
 
-const theses = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/theses' }),
-  schema: z.object({
-    title: z.string(),
-    type: z.enum(['bachelor', 'master', 'bachelor/master', 'phd']),
-    topics: z.array(z.string()).default([]),
-    status: z.enum(['available', 'ongoing', 'completed']).default('available'),
-    student: z.string().optional(), // for ongoing/completed
-    year: z.number().optional(), // for completed
-  }),
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({ title: z.string() }),
 });
 
-export const collections = { people, research, news, theses, positions };
+export const collections = { people, research, news, positions, pages };
